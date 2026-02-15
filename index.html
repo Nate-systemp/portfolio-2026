@@ -1,19 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Nate</title>
 </head>
-<body>
+
+<body class="loading-active">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <span class="loading-logo-letter" data-index="0">N</span>
+                <span class="loading-logo-letter" data-index="1">A</span>
+                <span class="loading-logo-letter" data-index="2">T</span>
+                <span class="loading-logo-letter" data-index="3">E</span>
+            </div>
+            <div class="loading-bar-container">
+                <div class="loading-bar" id="loadingBar"></div>
+            </div>
+            <div class="loading-percent" id="loadingPercent">0%</div>
+            <button class="loading-start-btn" id="startBtn">
+                <span class="start-text">ENTER</span>
+                <span class="start-arrow">→</span>
+            </button>
+        </div>
+        <div class="loading-footer-text">PORTFOLIO — 2026</div>
+    </div>
+
     <div class="custom-cursor"></div>
     <div class="custom-cursor-dot"></div>
-    <video autoplay muted loop id="bgVideo">
-        <source src="assets/mainbg.mp4" type="video/mp4">
-    </video>
+
     <div class="overlay"></div>
-    <div class="logo"></div>
     <ul class="list">
         <li>
             <span data-text="ABOUT">ABOUT</span>
@@ -27,9 +47,17 @@
     </ul>
 
     <div class="intro-container">
-        <h1 class="intro">
-           
-        </h1>
+        <div class="intro-wrapper">
+            <h1 class="intro-title">NATE</h1>
+            <div class="intro-sub">
+                <span>UI/UX DESIGNER</span>
+                <span class="separator">✦</span>
+                <span>FRONTEND DEV</span>
+            </div>
+            <div class="scroll-indicator">
+                <span>SCROLL TO EXPLORE</span>
+            </div>
+        </div>
     </div>
     <div class="social-icons">
         <div class="icon icon-github" aria-label="GitHub"></div>
@@ -38,116 +66,147 @@
     </div>
     <section id="desc">
         <div class="desc-content">
-           <div class="desc-text">
-             I design clean, usable interfaces for web and mobile,
-             crafting intuitive experiences
-             that balance aesthetics with functionality.
-           </div>
-           <div class="desc-text-mini">
-             Taking up the fourth year of Bachelor of Science in Information Technology
-             at the Pamantasan ng Lungsod
-             ng Valenzuela.
-           </div>
+            <div class="desc-text">
+                I design clean, usable interfaces for web and mobile,
+                crafting intuitive experiences
+                that balance aesthetics with functionality.
+            </div>
+            <div class="desc-text-mini">
+                Taking up the fourth year of Bachelor of Science in Information Technology
+                at the Pamantasan ng Lungsod
+                ng Valenzuela.
+            </div>
         </div>
         <p class="desc-skills">CERTAIN SKILLS I DO</p>
         <div class="descontainer">
-        <hr class="divider">
-        <h1 class="desc-title">UI&UX DESIGN</h1>
-        <hr class="divider">
-        <h1 class="desc-title">WEB DEVELOPMENT</h1>
-        <hr class="divider">
-        <h1 class="desc-title">GAME DESIGN</h1>
-        <hr class="divider">
-        <h1 class="desc-title">DIGITAL POSTER</h1>
-        <hr class="divider">
-        <h1 class="desc-title">APP DEVELOPMENT</h1>
-        <hr class="divider">
-    </div>
+            <hr class="divider">
+            <h1 class="desc-title">UI&UX DESIGN</h1>
+            <hr class="divider">
+            <h1 class="desc-title">WEB DEVELOPMENT</h1>
+            <hr class="divider">
+            <h1 class="desc-title">GAME DESIGN</h1>
+            <hr class="divider">
+            <h1 class="desc-title">DIGITAL POSTER</h1>
+            <hr class="divider">
+            <h1 class="desc-title">APP DEVELOPMENT</h1>
+            <hr class="divider">
+        </div>
         <div class="workintro">
-            <div class="work-text">Here’s some of my works that I worked on during my <br> college as an
+            <div class="work-text">Here's some of my works that I worked on during my <br> college as an
                 IT Student at the Pamantasan ng Lungsod ng<br>Valenzuela.</div>
         </div>
-        <p class="desc-skills">RECENT COLLEGE PROJECTS</p>
+        <p class="desc-skills">SELECTED WORKS</p>
 
-        <div class="works-container">
-            <div class="work-page page-1">
-                <div class="work-one"></div>
-                <div class="work-content-one">
-                    <div class="work-one-name">THE WORK ONE</div>
-                    <div class="work-one-year">2024</div>
+        <div class="works-grid">
+            <a href="project.html?id=1" class="work-card">
+                <div class="work-card-img"></div>
+                <div class="work-card-info">
+                    <span class="work-card-num">01</span>
+                    <h3 class="work-card-title">PROJECT ONE</h3>
+                    <div class="work-card-meta">
+                        <span class="work-card-cat">UI/UX DESIGN</span>
+                        <span class="work-card-year">2024</span>
+                    </div>
                 </div>
-                <hr class="divider-two">
-                <div class="work-two"></div>
-                <div class="work-content-two">
-                    <div class="work-two-name">THE WORK TWO</div>
-                    <div class="work-two-year">2024</div>
+            </a>
+            <a href="project.html?id=2" class="work-card">
+                <div class="work-card-img"></div>
+                <div class="work-card-info">
+                    <span class="work-card-num">02</span>
+                    <h3 class="work-card-title">PROJECT TWO</h3>
+                    <div class="work-card-meta">
+                        <span class="work-card-cat">WEB DEVELOPMENT</span>
+                        <span class="work-card-year">2024</span>
+                    </div>
                 </div>
-                <hr class="divider-two">
-                <div class="work-three"></div>
-                <div class="work-content-three">
-                    <div class="work-three-name">THE WORK THREE</div>
-                    <div class="work-three-year">2025</div>
+            </a>
+            <a href="project.html?id=3" class="work-card">
+                <div class="work-card-img"></div>
+                <div class="work-card-info">
+                    <span class="work-card-num">03</span>
+                    <h3 class="work-card-title">PROJECT THREE</h3>
+                    <div class="work-card-meta">
+                        <span class="work-card-cat">GAME DESIGN</span>
+                        <span class="work-card-year">2025</span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="work-page page-2">
-                <div class="work-four"></div>
-                <div class="work-content-four">
-                    <div class="work-four-name">THE WORK FOUR</div>
-                    <div class="work-four-year">2024</div>
+            </a>
+            <a href="project.html?id=4" class="work-card">
+                <div class="work-card-img"></div>
+                <div class="work-card-info">
+                    <span class="work-card-num">04</span>
+                    <h3 class="work-card-title">PROJECT FOUR</h3>
+                    <div class="work-card-meta">
+                        <span class="work-card-cat">APP DEVELOPMENT</span>
+                        <span class="work-card-year">2024</span>
+                    </div>
                 </div>
-                <hr class="divider-two">
-                <div class="work-five"></div>
-                <div class="work-content-five">
-                    <div class="work-five-name">THE WORK FIVE</div>
-                    <div class="work-five-year">2024</div>
+            </a>
+            <a href="project.html?id=5" class="work-card">
+                <div class="work-card-img"></div>
+                <div class="work-card-info">
+                    <span class="work-card-num">05</span>
+                    <h3 class="work-card-title">PROJECT FIVE</h3>
+                    <div class="work-card-meta">
+                        <span class="work-card-cat">DIGITAL POSTER</span>
+                        <span class="work-card-year">2024</span>
+                    </div>
                 </div>
-                <hr class="divider-two">
-                <div class="work-six"></div>
-                <div class="work-content-six">
-                    <div class="work-six-name">THE WORK SIX</div>
-                    <div class="work-six-year">2025</div>
+            </a>
+            <a href="project.html?id=6" class="work-card">
+                <div class="work-card-img"></div>
+                <div class="work-card-info">
+                    <span class="work-card-num">06</span>
+                    <h3 class="work-card-title">PROJECT SIX</h3>
+                    <div class="work-card-meta">
+                        <span class="work-card-cat">UI/UX DESIGN</span>
+                        <span class="work-card-year">2025</span>
+                    </div>
                 </div>
-         
-            </div>
-
-            <div class="work-page page-3">
-            
-                <div class="work-seven"></div>
-                <div class="work-content-seven">
-                    <div class="work-seven-name">THE WORK SEVEN</div>
-                    <div class="work-seven-year">2024</div>
+            </a>
+            <a href="project.html?id=7" class="work-card">
+                <div class="work-card-img"></div>
+                <div class="work-card-info">
+                    <span class="work-card-num">07</span>
+                    <h3 class="work-card-title">PROJECT SEVEN</h3>
+                    <div class="work-card-meta">
+                        <span class="work-card-cat">WEB DEVELOPMENT</span>
+                        <span class="work-card-year">2024</span>
+                    </div>
                 </div>
-                <hr class="divider-two">
-                <div class="work-eight"></div>
-                <div class="work-content-eight">
-                    <div class="work-eight-name">THE WORK EIGHT</div>
-                    <div class="work-eight-year">2024</div>
+            </a>
+            <a href="project.html?id=8" class="work-card">
+                <div class="work-card-img"></div>
+                <div class="work-card-info">
+                    <span class="work-card-num">08</span>
+                    <h3 class="work-card-title">PROJECT EIGHT</h3>
+                    <div class="work-card-meta">
+                        <span class="work-card-cat">APP DEVELOPMENT</span>
+                        <span class="work-card-year">2024</span>
+                    </div>
                 </div>
-                <hr class="divider-two">
-                <div class="work-nine"></div>
-                <div class="work-content-nine">
-                    <div class="work-nine-name">THE WORK NINE</div>
-                    <div class="work-nine-year">2025</div>
+            </a>
+            <a href="project.html?id=9" class="work-card">
+                <div class="work-card-img"></div>
+                <div class="work-card-info">
+                    <span class="work-card-num">09</span>
+                    <h3 class="work-card-title">PROJECT NINE</h3>
+                    <div class="work-card-meta">
+                        <span class="work-card-cat">GAME DESIGN</span>
+                        <span class="work-card-year">2025</span>
+                    </div>
                 </div>
-    
-            </div>
-
-            <div class="pagination-dots">
-                <span class="dot active" data-page="1"></span>
-                <span class="dot" data-page="2"></span>
-                <span class="dot" data-page="3"></span>
-            </div>
+            </a>
         </div>
 
-       
+
     </section>
 
     <section id="new-section">
         <div class="internintro">
             <h1 class="int-text">INTERNSHIP</h1>
             <p class="intern">Interned at Cubao Sparks Place IT Department, providing technical support,
-                 maintaining systems, managing data, and assisting staff with technical issues. </p>
+                maintaining systems, managing data, and assisting staff with technical issues. </p>
         </div>
         <div class="ojt-wrapper">
             <div class="ojt-content">
@@ -159,12 +218,32 @@
         </div>
         <p class="close">Strengthened practical skills for future IT roles.</p>
     </section>
+    <div class="contact-trigger"></div>
     <section id="contact">
-        
+        <div class="contact-wrapper">
+            <h1 class="contact-head">LET'S WORK <br> TOGETHER</h1>
+            <div class="contact-body">
+                <a href="mailto:contact@nate.design" class="contact-mail">natederek@gmail.com</a>
+                <p class="contact-sub">Available for freelance work and collaborations.</p>
+            </div>
+
+            <div class="contact-footer">
+                <div class="footer-links">
+                    <a href="#" class="f-link">GITHUB</a>
+                    <a href="#" class="f-link">LINKEDIN</a>
+                    <a href="#" class="f-link">INSTAGRAM</a>
+                </div>
+                <div class="footer-copy">
+                    <span>&copy; 2026 NATE</span>
+                    <span>DESIGNED & DEVELOPED</span>
+                </div>
+            </div>
+        </div>
     </section>
 </body>
-    <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
-    <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1/bundled/lenis.min.js"></script>
-    <script src="script.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1/bundled/lenis.min.js"></script>
+<script src="script.js"></script>
+
 </html>

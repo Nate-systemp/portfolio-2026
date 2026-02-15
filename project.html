@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="project.css">
+    <title>Project — Nate</title>
+</head>
+
+<body class="project-body">
+    <div class="custom-cursor"></div>
+
+    <!-- Back Navigation -->
+    <a href="index.html" class="back-link">
+        <span class="back-arrow">←</span>
+        <span class="back-text">BACK</span>
+    </a>
+
+    <!-- Hero Section -->
+    <section class="project-hero">
+        <div class="project-hero-img" id="heroImg"></div>
+        <div class="project-hero-overlay">
+            <span class="project-num" id="projectNum">01</span>
+        </div>
+    </section>
+
+    <!-- Project Info -->
+    <section class="project-info">
+        <div class="project-info-header">
+            <h1 class="project-title" id="projectTitle">PROJECT ONE</h1>
+            <div class="project-tags">
+                <span class="project-category" id="projectCat">UI/UX DESIGN</span>
+                <span class="project-year" id="projectYear">2024</span>
+            </div>
+        </div>
+
+        <div class="project-divider"></div>
+
+        <div class="project-description">
+            <p class="project-desc-label">OVERVIEW</p>
+            <p class="project-desc-text" id="projectDesc">
+                A brief description of the project, what it aimed to achieve,
+                and the technologies or tools used in its creation.
+            </p>
+        </div>
+
+        <div class="project-divider"></div>
+
+        <div class="project-story">
+            <p class="project-story-label">THE STORY</p>
+            <p class="project-story-text" id="projectStory">
+                The creative journey behind this project — from initial concept
+                to final execution, including challenges faced and solutions found.
+            </p>
+        </div>
+
+        <div class="project-divider"></div>
+
+        <!-- Gallery -->
+        <div class="project-gallery">
+            <p class="project-gallery-label">GALLERY</p>
+            <div class="project-gallery-grid" id="projectGallery">
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+                <div class="gallery-item"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Navigation -->
+    <section class="project-footer-nav">
+        <a href="#" class="project-nav-link prev" id="prevProject">
+            <span class="nav-label">PREVIOUS</span>
+            <span class="nav-title" id="prevTitle">—</span>
+        </a>
+        <a href="#" class="project-nav-link next" id="nextProject">
+            <span class="nav-label">NEXT</span>
+            <span class="nav-title" id="nextTitle">—</span>
+        </a>
+    </section>
+
+</body>
+
+<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+<script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1/bundled/lenis.min.js"></script>
+<script src="project.js"></script>
+
+</html>

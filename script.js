@@ -6,7 +6,6 @@ function raf(time) {
   requestAnimationFrame(raf);
 }
 
-
 lenis.on("scroll", ScrollTrigger.update);
 
 gsap.ticker.add((time) => {
@@ -15,13 +14,140 @@ gsap.ticker.add((time) => {
 
 gsap.ticker.lagSmoothing(0);
 
+// Stop Lenis scroll until loading is dismissed
+lenis.stop();
+
 gsap.registerPlugin(ScrollTrigger);
 
-// Keep intro in the first 100vh: fade + blur out as you scroll past the first screen
-gsap.to(".intro", {
-  filter: "blur(6px)",
-  y: -300,
-  scale: 0.8,
+window.addEventListener("load", () => {
+  ScrollTrigger.refresh();
+});
+
+// ============================================
+// LOADING SCREEN
+// ============================================
+const loadingScreen = document.getElementById("loadingScreen");
+const loadingBar = document.getElementById("loadingBar");
+const loadingPercent = document.getElementById("loadingPercent");
+const startBtn = document.getElementById("startBtn");
+const loadingLetters = document.querySelectorAll(".loading-logo-letter");
+
+// 1) Animate letters in with stagger
+const loadTl = gsap.timeline();
+
+loadTl.to(loadingLetters, {
+  y: 0,
+  opacity: 1,
+  duration: 0.8,
+  stagger: 0.12,
+  ease: "power4.out",
+  delay: 0.3
+});
+
+// 2) Simulate loading progress
+let progress = 0;
+const loadingInterval = setInterval(() => {
+  progress += Math.random() * 12 + 3;
+  if (progress >= 100) {
+    progress = 100;
+    clearInterval(loadingInterval);
+
+    // Loading complete — show button
+    loadingPercent.textContent = "100%";
+    loadingBar.style.width = "100%";
+
+    gsap.to(startBtn, {
+      opacity: 1,
+      y: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: 0.3
+    });
+
+    // Subtle pulse on letters once loaded
+    gsap.to(loadingLetters, {
+      color: "#FF1919",
+      duration: 1.2,
+      stagger: 0.08,
+      ease: "power2.inOut",
+      yoyo: true,
+      repeat: -1,
+      repeatDelay: 0.5
+    });
+  } else {
+    loadingPercent.textContent = Math.floor(progress) + "%";
+    loadingBar.style.width = progress + "%";
+  }
+}, 180);
+
+// 3) ENTER button click — dismiss loading screen
+startBtn.addEventListener("click", () => {
+  // Stop the letter pulse
+  gsap.killTweensOf(loadingLetters);
+
+  // Exit animation
+  const exitTl = gsap.timeline({
+    onComplete: () => {
+      loadingScreen.classList.add("hidden");
+      document.body.classList.remove("loading-active");
+      lenis.start();
+
+      // Start intro animations after loading screen is gone
+      introTl.play();
+    }
+  });
+
+  exitTl
+    .to(loadingLetters, {
+      y: -60,
+      opacity: 0,
+      stagger: 0.05,
+      duration: 0.5,
+      ease: "power3.in"
+    })
+    .to([".loading-bar-container", ".loading-percent", startBtn, ".loading-footer-text"], {
+      opacity: 0,
+      y: -20,
+      duration: 0.4,
+      ease: "power2.in"
+    }, "-=0.3")
+    .to(loadingScreen, {
+      clipPath: "inset(0 0 100% 0)",
+      duration: 0.9,
+      ease: "power3.inOut"
+    }, "-=0.1");
+});
+
+// ============================================
+// INTRO ANIMATIONS (paused — plays after loading)
+// ============================================
+const introTl = gsap.timeline({ paused: true });
+
+introTl.to(".intro-title", {
+  y: 0,
+  opacity: 1,
+  duration: 1.5,
+  ease: "power4.out",
+  delay: 0.2
+})
+  .to(".intro-sub", {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    ease: "power3.out"
+  }, "-=1")
+  .to(".scroll-indicator", {
+    y: 0,
+    opacity: 0.6,
+    duration: 1,
+    ease: "power2.out"
+  }, "-=0.5");
+
+// Scroll-out animation for Intro
+gsap.to(".intro-container", {
+  filter: "blur(10px)",
+  scale: 0.9,
+  opacity: 0,
   ease: "none",
   scrollTrigger: {
     trigger: "body",
@@ -92,7 +218,7 @@ gsap.to("#bgVideo", {
 
 // Horizontal scroll carousel effect for desc-title elements
 document.querySelectorAll(".desc-title").forEach((title) => {
-  gsap.fromTo(title, 
+  gsap.fromTo(title,
     { x: "100%" },
     {
       x: "0%",
@@ -120,7 +246,7 @@ gsap.to(".work-text", {
 });
 
 // Parallax effect on close with fade
-gsap.fromTo(".close", 
+gsap.fromTo(".close",
   { y: 70, opacity: 0 },
   {
     y: 0,
@@ -136,7 +262,7 @@ gsap.fromTo(".close",
 );
 
 // Parallax effect on intern
-gsap.fromTo(".int-text", 
+gsap.fromTo(".int-text",
   { y: 80, opacity: 0 },
   {
     y: 0,
@@ -151,7 +277,7 @@ gsap.fromTo(".int-text",
   }
 );
 
-gsap.fromTo(".intern", 
+gsap.fromTo(".intern",
   { y: 60, opacity: 0 },
   {
     y: 0,
@@ -167,7 +293,7 @@ gsap.fromTo(".intern",
 );
 
 gsap.utils.toArray([".ojt-one", ".ojt-two", ".ojt-three", ".ojt-four"]).forEach((ojt, i) => {
-  gsap.fromTo(ojt, 
+  gsap.fromTo(ojt,
     { y: 100, opacity: 0, scale: 0.95 },
     {
       y: 0,
@@ -197,125 +323,24 @@ gsap.to(".ojt-content", {
 });
 
 
-// Smooth scroll animations for work items
-gsap.utils.toArray([".work-one", ".work-two", ".work-three"]).forEach((work, i) => {
-  gsap.fromTo(work, 
-    { y: 100, opacity: 0 },
+// Staggered reveal for work cards
+gsap.utils.toArray(".work-card").forEach((card, i) => {
+  gsap.fromTo(card,
+    { y: 80, opacity: 0, scale: 0.95 },
     {
       y: 0,
       opacity: 1,
+      scale: 1,
       duration: 1,
-      ease: "power2.out",
+      ease: "power3.out",
       scrollTrigger: {
-        trigger: work,
-        start: "top 105%",
-        end: "top 45%",
+        trigger: card,
+        start: "top 95%",
+        end: "top 60%",
         scrub: true
       }
     }
   );
-});
-
-gsap.utils.toArray([".work-content-one", ".work-content-two", ".work-content-three"]).forEach((content) => {
-  gsap.fromTo(content, 
-    { y: 50, opacity: 0 },
-    {
-      y: 0,
-      opacity: 1,
-      duration: 1,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: content,
-        start: "top 105%",
-        end: "top 90%",
-        scrub: 1
-      }
-    }
-  );
-});
-
-// Work pagination with pinning and smooth animation
-let currentPage = 1;
-let isAnimating = false;
-let lastProgress = 0;
-const workPages = document.querySelectorAll('.work-page');
-const dots = document.querySelectorAll('.dot');
-const worksContainer = document.querySelector('.works-container');
-
-workPages[0].classList.add('active');
-
-function changePage(page) {
-  if (page === currentPage || isAnimating) return;
-  
-  isAnimating = true;
-  const oldPage = currentPage;
-  currentPage = page;
-  
-  if (currentPage === 3) {
-    canScrollPast = true;
-  }
-  
-  gsap.to(workPages[oldPage - 1], { 
-    x: '-100%',
-    duration: 0.8,
-    ease: 'power2.inOut',
-    onComplete: () => {
-      workPages[oldPage - 1].classList.remove('active');
-    }
-  });
-  
-  gsap.fromTo(workPages[page - 1], 
-    { x: '100%' },
-    { 
-      x: '0%',
-      duration: 0.8,
-      ease: 'power2.inOut',
-      onStart: () => {
-        workPages[page - 1].classList.add('active');
-      }, 
-      onComplete: () => {
-        isAnimating = false;
-      }
-    }
-  );
-  
-  dots.forEach(d => d.classList.remove('active'));
-  dots[page - 1].classList.add('active');
-}
-
-dots.forEach(dot => {
-  dot.addEventListener('click', () => {
-    changePage(parseInt(dot.dataset.page));
-  });
-});
-ScrollTrigger.create({
-  trigger: worksContainer,
-  start: 'top top',
-  end: '+=200%',
-  pin: true,
-  onUpdate: (self) => {
-    if (isAnimating) return;
-
-    const progress = self.progress;
-
-    let newPage;
-    if (progress < 0.33) {
-      newPage = 1;
-    } else if (progress < 0.66) {
-      newPage = 2;
-    } else {
-      newPage = 3;
-    }
-
-    if (newPage !== currentPage) {
-      changePage(newPage);
-    }
-
-    // Prevent scrolling past until page 3
-    if (currentPage < 3 && progress >= 0.99) {
-      self.scroll(self.start + (self.end - self.start) * 0.98);
-    }
-  }
 });
 
 
@@ -326,7 +351,7 @@ document.querySelectorAll(".desc-skills").forEach((skill) => {
   const typingText = text.substring(2);
   skill.textContent = prefix;
   let typingInterval = null;
-  
+
   ScrollTrigger.create({
     trigger: skill,
     start: "top 80%",
@@ -382,20 +407,108 @@ document.addEventListener('mousemove', (e) => {
 function animateCursor() {
   cursorX += (mouseX - cursorX) * 0.05;
   cursorY += (mouseY - cursorY) * 0.05;
-  
+
   cursor.style.left = cursorX + 'px';
   cursor.style.top = cursorY + 'px';
-  
+
   requestAnimationFrame(animateCursor);
 }
 
 animateCursor();
 
-// Hover detection
-const hoverElements = document.querySelectorAll('a, button, .desc-title, .logo, .list li, .social-icons .icon, .intro-container');
+// Hover detection for big cursor
+const hoverElements = document.querySelectorAll('a, button, .desc-title, .logo, .intro-container');
 hoverElements.forEach(el => {
   el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
   el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// Hover detection for hiding cursor (nav items and icons)
+const hideCursorElements = document.querySelectorAll('.list span[data-text], .social-icons .icon');
+hideCursorElements.forEach(el => {
+  el.addEventListener('mouseenter', () => cursor.classList.add('hide'));
+  el.addEventListener('mouseleave', () => cursor.classList.remove('hide'));
+});
+
+// Contact Section Animations - Melting/Rising Reveal
+const contactSection = document.querySelector("#contact");
+
+// 1. The main reveal animation
+gsap.to("#contact", {
+  y: "0%",
+  borderRadius: "0% 0% 0 0",
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".contact-trigger",
+    start: "top bottom", // when top of trigger hits bottom of viewport
+    end: "bottom bottom", // when bottom of trigger hits bottom of viewport
+    scrub: true,
+    onUpdate: (self) => {
+      // Optional: Manage pointer events based on visibility
+      if (self.progress > 0.1) {
+        contactSection.style.pointerEvents = "auto";
+      } else {
+        contactSection.style.pointerEvents = "none";
+      }
+    }
+  }
+});
+
+// 2. Parallax/Fade-in for content inside contact section
+// We want this to happen as the section fills the screen
+const contactContentTl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".contact-trigger",
+    start: "top 40%", // start animating content a bit later
+    end: "bottom bottom",
+    scrub: 1
+  }
+});
+
+contactContentTl.to(".contact-head", {
+  y: 0,
+  opacity: 1,
+  duration: 1,
+  ease: "power2.out"
+})
+  .to(".contact-body", {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    ease: "power2.out"
+  }, "<0.2") // Start slightly after head
+  .to(".contact-footer", {
+    y: 0,
+    opacity: 1,
+    duration: 1,
+    ease: "power2.out"
+  }, "<0.2");
+
+// Dynamic exit for previous content as contact section rises - Scale down and lift up
+gsap.to("#new-section", {
+  scale: 0.9,
+  y: -150,
+  filter: "blur(10px)",
+  opacity: 0,
+  transformOrigin: "center top",
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".contact-trigger",
+    start: "top bottom",
+    end: "center bottom",
+    scrub: true
+  }
+});
+
+// Also keep fading out the intro/desc elements
+gsap.to([".intro-container", "#desc"], {
+  opacity: 0,
+  scrollTrigger: {
+    trigger: ".contact-trigger",
+    start: "top bottom",
+    end: "center bottom",
+    scrub: true
+  }
 });
 
 
