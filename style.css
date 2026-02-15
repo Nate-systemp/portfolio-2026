@@ -726,76 +726,99 @@ body.loading-active {
 }
 
 #new-section {
-    min-height: 150vh;
+    min-height: 100vh;
     width: 100vw;
     background: #F9F5F0;
     padding: 0;
     position: relative;
     left: 50%;
     margin-left: -50vw;
-    padding-top: 10%;
+    padding-top: 0% !important;
+    margin-top: 0;
+    z-index: 3;
+    overflow: hidden;
+    /* Crucial for scaling text */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.internintro {
+    margin: 0;
+    padding-top: 0;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    overflow: hidden;
+    /* Masking for slide-up reveal */
 }
 
 .int-text {
     font-family: 'Tusker Grotesk', sans-serif;
     color: #202020;
-    margin-left: 14.5%;
     font-weight: 400;
-    opacity: 0;
-    transform: translateY(80px);
+    font-size: 15vw;
+    /* Reduced from 25vw */
+    line-height: 1;
+    margin: 0;
+    text-align: center;
+    transform-origin: center center;
+    /* Removed scaling will-change */
 }
 
 .intern {
     font-family: 'Poppins', sans-serif;
-    font-size: 32px;
-    font-weight: 300;
-    color: #202020;
-    margin-left: 14.5%;
-    max-width: 980px;
-    margin-top: -7%;
+    font-size: 18px;
+    max-width: 600px;
+    margin: 30px auto 0;
+    text-align: center;
     opacity: 0;
-    transform: translateY(60px);
-}
-
-.ojt-one,
-.ojt-two,
-.ojt-three,
-.ojt-four {
-    height: 400px;
-    width: 750px;
-    background-color: #161616;
-    flex-shrink: 0;
+    transform: translateY(30px);
+    will-change: transform, opacity;
 }
 
 .ojt-wrapper {
-    overflow: hidden;
     width: 100%;
-    margin-top: 5%;
-    padding: 0 14.5%;
-}
-
-.ojt-wrapper::-webkit-scrollbar {
-    display: none;
+    height: 400px;
+    /* Fixed height for the card container */
+    margin-top: 5vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
 }
 
 .ojt-content {
-    display: flex;
-    gap: 40px;
-    width: fit-content;
-    align-items: center;
+    position: relative;
+    width: 600px;
+    height: 400px;
+    /* Cards will be stacked here */
+}
+
+/* Base style for all cards */
+.ojt-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #161616;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transform-origin: center bottom;
+    will-change: transform, opacity;
 }
 
 .close {
     font-family: 'Poppins', sans-serif;
-    font-size: 32px;
+    font-size: 16px;
     font-weight: 300;
     color: #FF1919;
-    margin-left: 54.5%;
-    margin-top: 5%;
-    max-width: 580px;
-    text-align: right;
+    text-align: center;
+    margin: 50px auto 0;
+    max-width: 600px;
     opacity: 0;
-    transform: translateY(70px);
 }
 
 #contact {
@@ -812,8 +835,7 @@ body.loading-active {
     border-radius: 50% 50% 0 0;
     margin-left: 0;
     padding-top: 10%;
-    pointer-events: none;
-    /* Let clicks pass until visible */
+    /* Normal scroll flow */
 }
 
 /* When the section is fully visible (via JS), we enable pointer events */

@@ -261,66 +261,54 @@ gsap.fromTo(".close",
   }
 );
 
-// Parallax effect on intern
-gsap.fromTo(".int-text",
-  { y: 80, opacity: 0 },
-  {
-    y: 0,
-    opacity: 1,
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".int-text",
-      start: "top 100%",
-      end: "top 60%",
-      scrub: true
-    }
-  }
-);
-
-gsap.fromTo(".intern",
-  { y: 60, opacity: 0 },
-  {
-    y: 0,
-    opacity: 1,
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".intern",
-      start: "top 100%",
-      end: "top 65%",
-      scrub: true
-    }
-  }
-);
-
-gsap.utils.toArray([".ojt-one", ".ojt-two", ".ojt-three", ".ojt-four"]).forEach((ojt, i) => {
-  gsap.fromTo(ojt,
-    { y: 100, opacity: 0, scale: 0.95 },
-    {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ojt,
-        start: "top 110%",
-        end: "top 60%",
-        scrub: true
-      }
-    }
-  );
-});
-
-// Scroll-based horizontal movement for ojt-content
-gsap.to(".ojt-content", {
-  x: -1200,
-  ease: "none",
+// ============================================
+// INTERNSHIP KINETIC ANIMATION
+// ============================================
+const ojtSection = document.querySelector("#new-section");
+const ojtTl = gsap.timeline({
   scrollTrigger: {
-    trigger: ".ojt-wrapper",
-    start: "top 80%",
-    end: "bottom 20%",
-    scrub: 1
+    trigger: "#new-section",
+    start: "top top",
+    end: "+=200%", // Pin for 2 screens worth of scroll
+    pin: true,
+    scrub: 1,
+    anticipatePin: 1
   }
 });
+
+ojtTl
+  // 1. Text slides up from below (Formal)
+  .fromTo(".int-text",
+    { y: "150px", opacity: 0 },
+    { y: "0px", opacity: 1, duration: 2, ease: "none" }
+  )
+  // 2. Subtext fades in
+  .to(".intern", { opacity: 1, y: 0, duration: 1, ease: "none" }, "-=0.5")
+
+  // 3. Cards fan out from center stack
+  .fromTo(".ojt-1",
+    { x: 0, rotation: 0, scale: 0.9 },
+    { x: -350, rotation: -15, scale: 1, duration: 2, ease: "none" },
+    "-=1"
+  )
+  .fromTo(".ojt-2",
+    { x: 0, rotation: 0, scale: 0.95 },
+    { x: -120, rotation: -5, scale: 1, duration: 2, ease: "none" },
+    "<"
+  )
+  .fromTo(".ojt-3",
+    { x: 0, rotation: 0, scale: 0.95 },
+    { x: 120, rotation: 5, scale: 1, duration: 2, ease: "none" },
+    "<"
+  )
+  .fromTo(".ojt-4",
+    { x: 0, rotation: 0, scale: 0.9 },
+    { x: 350, rotation: 15, scale: 1, duration: 2, ease: "none" },
+    "<"
+  )
+
+  // 4. Close text fades in
+  .to(".close", { opacity: 1, y: 0, duration: 1, ease: "none" }, "-=0.5");
 
 
 // Staggered reveal for work cards
@@ -485,17 +473,18 @@ contactContentTl.to(".contact-head", {
   }, "<0.2");
 
 // Dynamic exit for previous content as contact section rises - Scale down and lift up
+// Dynamic exit for previous content as contact section rises - Scale down and lift up
+// Dynamic exit: Internship stays visible (parallax lag) as Contact covers it
 gsap.to("#new-section", {
-  scale: 0.9,
-  y: -150,
-  filter: "blur(10px)",
-  opacity: 0,
+  scale: 0.95,
+  y: 200, // Counter-scroll
+  filter: "brightness(0.4)",
   transformOrigin: "center top",
   ease: "none",
   scrollTrigger: {
     trigger: ".contact-trigger",
     start: "top bottom",
-    end: "center bottom",
+    end: "bottom bottom",
     scrub: true
   }
 });
