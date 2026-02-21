@@ -815,11 +815,49 @@ body.loading-active {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #161616;
     border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     transform-origin: center bottom;
     will-change: transform, opacity;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/* Subtle dark overlay so cards feel cohesive */
+.ojt-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 12px;
+    transition: background 0.4s ease;
+}
+
+.ojt-card:hover::after {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Individual card images */
+.ojt-1 {
+    background-image: url('assets/ojt-one.jpg');
+    background-color: #161616;
+}
+
+.ojt-2 {
+    background-image: url('assets/ojt-two.jpg');
+    background-color: #161616;
+}
+
+.ojt-3 {
+    background-image: url('assets/ojt-three.jpg');
+    background-color: #161616;
+}
+
+.ojt-4 {
+    background-image: url('assets/ojt-four.jpg');
+    background-color: #161616;
 }
 
 .close {

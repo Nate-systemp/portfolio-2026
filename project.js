@@ -25,10 +25,12 @@ const projects = [
         id: 1,
         num: "01",
         title: "PROJECT ONE",
-        category: "UI/UX DESIGN",
-        year: "2024",
-        description: "A mobile-first banking application redesign focused on simplifying complex financial workflows into intuitive, accessible interfaces for everyday users.",
-        story: "This project began as a deep dive into fintech UX patterns. I spent weeks researching how people interact with their money digitally, conducting user interviews and mapping out pain points. The biggest challenge was simplifying multi-step transactions without losing critical information. The final design reduced task completion time by 40% in testing.",
+        category: "GAME DESIGN",
+        year: "2025",
+        description: "A math game puzzle for the elementary school students designed for a thesis project for the Math Majors.",
+        story: "The game is a 2D puzzle game where the player has to solve math problems to progress through the game. The game is designed to be fun and educational, and it is suitable for children aged 6-12.",
+        
+        gallery: ["assets/FRACERA1.png", "assets/FRACERA2.png", "assets/FRACERA3.png"],
     },
     {
         id: 2,
@@ -111,7 +113,6 @@ const params = new URLSearchParams(window.location.search);
 const projectId = parseInt(params.get("id")) || 1;
 const project = projects.find(p => p.id === projectId) || projects[0];
 
-// Fill in data
 document.getElementById("projectNum").textContent = project.num;
 document.getElementById("projectTitle").textContent = project.title;
 document.getElementById("projectCat").textContent = project.category;
@@ -119,6 +120,29 @@ document.getElementById("projectYear").textContent = project.year;
 document.getElementById("projectDesc").textContent = project.description;
 document.getElementById("projectStory").textContent = project.story;
 document.title = `${project.title} — Nate`;
+
+// Apply cover image to hero
+const heroImg = document.getElementById("heroImg");
+if (heroImg && project.cover) {
+    heroImg.style.backgroundImage = `url('${project.cover}')`;
+    heroImg.style.backgroundSize = "cover";
+    heroImg.style.backgroundPosition = "center";
+}
+
+// Populate gallery dynamically
+const galleryGrid = document.getElementById("projectGallery");
+if (galleryGrid && project.gallery && project.gallery.length > 0) {
+    galleryGrid.innerHTML = ""; // Clear placeholder items
+    project.gallery.forEach((imgSrc, index) => {
+        const item = document.createElement("div");
+        item.className = "gallery-item";
+        item.style.backgroundImage = `url('${imgSrc}')`;
+        item.style.backgroundSize = "cover";
+        item.style.backgroundPosition = "center";
+        item.dataset.index = index;
+        galleryGrid.appendChild(item);
+    });
+}
 
 // Prev / Next Navigation
 const currentIndex = projects.findIndex(p => p.id === projectId);
