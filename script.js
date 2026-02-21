@@ -14,6 +14,86 @@ gsap.ticker.add((time) => {
 
 gsap.ticker.lagSmoothing(0);
 
+// ============================================
+// NAVIGATION LOGIC
+// ============================================
+const navLinks = document.querySelectorAll('.list li span[data-text]');
+const targets = ["#desc", ".workintro", "#contact"];
+
+navLinks.forEach((link, i) => {
+  link.style.cursor = "pointer"; // Ensure pointer cursor despite global CSS
+  link.addEventListener('click', () => {
+    // 1. Creative Click Animation: Quick scale down/up ripple
+    gsap.to(link, {
+      scale: 0.9,
+      letterSpacing: "5px",
+      color: "#FF1919",
+      duration: 0.2,
+      yoyo: true,
+      repeat: 1,
+      ease: "power2.inOut",
+      onComplete: () => {
+        gsap.to(link, { letterSpacing: "2px", color: "transparent", duration: 0.5 }); // Reset
+      }
+    });
+
+    // 2. Smooth Scroll with "Bold" Easing
+    if (targets[i]) {
+      lenis.scrollTo(targets[i], {
+        offset: i === 1 ? -100 : 0, // Offset for Work section
+        duration: 2.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential ease
+      });
+    }
+  });
+});
+
+// 1. Magnetic Hover for Menu and Icons
+const magnets = document.querySelectorAll('.icon, .list li span');
+
+magnets.forEach((magnet) => {
+  magnet.addEventListener("mousemove", (e) => {
+    const bounding = magnet.getBoundingClientRect();
+    const x = e.clientX - bounding.left - bounding.width / 2;
+    const y = e.clientY - bounding.top - bounding.height / 2;
+
+    gsap.to(magnet, {
+      x: x * 0.45,
+      y: y * 0.45,
+      scale: 1.05,
+      rotation: x * 0.03,
+      duration: 0.6,
+      ease: "power3.out"
+    });
+  });
+
+  magnet.addEventListener("mouseleave", () => {
+    gsap.to(magnet, {
+      x: 0,
+      y: 0,
+      scale: 1,
+      rotation: 0,
+      duration: 1.5,
+      ease: "elastic.out(1, 0.3)"
+    });
+  });
+});
+
+// 2. Hero Title (NATE) Parallax
+const introTitle = document.querySelector(".intro-title");
+if (introTitle) {
+  window.addEventListener("mousemove", (e) => {
+    const moveX = (e.clientX - window.innerWidth / 2) * 0.015;
+    const moveY = (e.clientY - window.innerHeight / 2) * 0.015;
+    gsap.to(introTitle, {
+      x: moveX,
+      y: moveY,
+      duration: 1.5,
+      ease: "power2.out"
+    });
+  });
+}
+
 // Stop Lenis scroll until loading is dismissed
 lenis.stop();
 
@@ -418,38 +498,18 @@ hideCursorElements.forEach(el => {
   el.addEventListener('mouseleave', () => cursor.classList.remove('hide'));
 });
 
-// Contact Section Animations - Melting/Rising Reveal
+// Contact Section Animations - Standard Scroll Reveal
 const contactSection = document.querySelector("#contact");
 
-// 1. The main reveal animation
-gsap.to("#contact", {
-  y: "0%",
-  borderRadius: "0% 0% 0 0",
-  ease: "none",
-  scrollTrigger: {
-    trigger: ".contact-trigger",
-    start: "top bottom", // when top of trigger hits bottom of viewport
-    end: "bottom bottom", // when bottom of trigger hits bottom of viewport
-    scrub: true,
-    onUpdate: (self) => {
-      // Optional: Manage pointer events based on visibility
-      if (self.progress > 0.1) {
-        contactSection.style.pointerEvents = "auto";
-      } else {
-        contactSection.style.pointerEvents = "none";
-      }
-    }
-  }
-});
+// 1. (Removed fixed reveal) - Contact section now scrolls naturally
 
 // 2. Parallax/Fade-in for content inside contact section
-// We want this to happen as the section fills the screen
 const contactContentTl = gsap.timeline({
   scrollTrigger: {
-    trigger: ".contact-trigger",
-    start: "top 40%", // start animating content a bit later
+    trigger: "#contact",
+    start: "top 80%", // start animating content when section is visible
     end: "bottom bottom",
-    scrub: 1
+    toggleActions: "play none none reverse"
   }
 });
 
@@ -472,30 +532,13 @@ contactContentTl.to(".contact-head", {
     ease: "power2.out"
   }, "<0.2");
 
-// Dynamic exit for previous content as contact section rises - Scale down and lift up
-// Dynamic exit for previous content as contact section rises - Scale down and lift up
-// Dynamic exit: Internship stays visible (parallax lag) as Contact covers it
-gsap.to("#new-section", {
-  scale: 0.95,
-  y: 200, // Counter-scroll
-  filter: "brightness(0.4)",
-  transformOrigin: "center top",
-  ease: "none",
-  scrollTrigger: {
-    trigger: ".contact-trigger",
-    start: "top bottom",
-    end: "bottom bottom",
-    scrub: true
-  }
-});
-
-// Also keep fading out the intro/desc elements
+// Simple fade out for previous sections as we reach contact
 gsap.to([".intro-container", "#desc"], {
   opacity: 0,
   scrollTrigger: {
-    trigger: ".contact-trigger",
+    trigger: "#contact",
     start: "top bottom",
-    end: "center bottom",
+    end: "top 20%",
     scrub: true
   }
 });
