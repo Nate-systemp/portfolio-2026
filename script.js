@@ -542,5 +542,83 @@ gsap.to([".intro-container", "#desc"], {
     scrub: true
   }
 });
+// ============================================
+// CONTACT WAVE — Scroll-Reactive Canvas
+// ============================================
+(function () {
+  const canvas = document.getElementById('contactWave');
+  if (!canvas) return;
 
+  const ctx = canvas.getContext('2d');
 
+  // Scroll velocity tracker (shared with Lenis listener below)
+  let scrollVel = 0;
+  let targetAmp = 0;   // amplitude we're easing toward
+  let currentAmp = 0;  // smoothed amplitude
+
+  // Track velocity from Lenis
+  lenis.on('scroll', (e) => {
+    scrollVel = e.velocity;
+  });
+
+  // Resize canvas to match element
+  function resize() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Wave parameters
+  const layers = [
+    // { color, alpha, frequency, speed, phaseOffset, baseY-ratio }
+    { color: '#F9F5F0', alpha: 0.06, freq: 2.2, speed: 0.4, phase: 0, baseY: 0.45 },
+    { color: '#FF1919', alpha: 0.55, freq: 1.6, speed: 0.65, phase: 1.2, baseY: 0.58 },
+    { color: '#F9F5F0', alpha: 0.08, freq: 3.1, speed: 0.25, phase: 2.5, baseY: 0.40 },
+    { color: '#111111', alpha: 1.00, freq: 1.2, speed: 0.50, phase: 0.7, baseY: 0.78 }, // fills bottom
+  ];
+
+  let time = 0;
+
+  function drawWave(layer, amplitude) {
+    const { color, alpha, freq, speed, phase, baseY } = layer;
+    const w = canvas.width;
+    const h = canvas.height;
+    const y0 = h * baseY;
+
+    ctx.beginPath();
+    ctx.moveTo(0, h); // start bottom-left
+
+    for (let x = 0; x <= w; x++) {
+      // Two overlapping sine waves = organic shape
+      const t1 = Math.sin((x / w) * Math.PI * 2 * freq + time * speed + phase);
+      const t2 = Math.sin((x / w) * Math.PI * 2 * freq * 0.5 + time * speed * 1.3 + phase + 1);
+      const y = y0 + (t1 * 0.65 + t2 * 0.35) * amplitude;
+      ctx.lineTo(x, y);
+    }
+
+    ctx.lineTo(w, h);
+    ctx.closePath();
+    ctx.fillStyle = color;
+    ctx.globalAlpha = alpha;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+
+  function animate() {
+    // Ease amplitude toward scroll velocity
+    targetAmp = Math.min(Math.abs(scrollVel) * 6, 55) + 12; // 12px base, up to ~67px
+    currentAmp += (targetAmp - currentAmp) * 0.06; // lazy follow
+    scrollVel *= 0.92; // decay velocity
+
+    time += 0.012;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    layers.forEach(layer => drawWave(layer, currentAmp));
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+})();
