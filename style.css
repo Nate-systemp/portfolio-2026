@@ -218,7 +218,7 @@ body.loading-active {
 
 .intro-container {
     position: fixed;
-    top: 68%;
+    top: 58%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 2;
