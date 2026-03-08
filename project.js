@@ -24,7 +24,7 @@ const projects = [
     {
         id: 1,
         num: "01",
-        title: "PROJECT ONE",
+        title: "FRACERA",
         category: "GAME DESIGN",
         year: "2025",
         description: "A math game puzzle for the elementary school students designed for a thesis project for the Math Majors.",
@@ -35,11 +35,13 @@ const projects = [
     {
         id: 2,
         num: "02",
-        title: "PROJECT TWO",
-        category: "WEB DEVELOPMENT",
+        title: "SWIVEL QUIVER",
+        category: "GAME DESIGN",
         year: "2024",
-        description: "A full-stack web platform built to streamline student enrollment and course management for university departments.",
-        story: "Built from scratch using modern web technologies, this project required handling complex database relationships and real-time updates. The greatest learning was architecting a system that scales — from 50 students in testing to thousands in production.",
+        description: "A 2D one-button archery game where the player has to shoot arrows at targets to progress through the game. The game is designed to be fun and educational, and it is suitable for children aged 6-12.",
+        story: "Built from scratch using aspire, this project required handling complex database relationships and real-time updates. The greatest learning was architecting a system that scales — from 50 students in testing to thousands in production.",
+        
+        gallery: ["assets/SQ1.png", "assets/SQ2.png", "assets/SQ3.png"],
     },
     {
         id: 3,
