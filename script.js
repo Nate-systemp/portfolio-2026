@@ -485,7 +485,7 @@ function animateCursor() {
 animateCursor();
 
 // Hover detection for big cursor
-const hoverElements = document.querySelectorAll('a, button, .desc-title, .logo, .intro-container');
+const hoverElements = document.querySelectorAll('a:not(.work-card), button, .desc-title, .logo, .intro-container');
 hoverElements.forEach(el => {
   el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
   el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
