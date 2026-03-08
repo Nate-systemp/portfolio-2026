@@ -345,16 +345,23 @@ gsap.fromTo(".close",
 // INTERNSHIP KINETIC ANIMATION
 // ============================================
 const ojtSection = document.querySelector("#new-section");
+const isMobile = window.innerWidth <= 768;
+
 const ojtTl = gsap.timeline({
   scrollTrigger: {
     trigger: "#new-section",
     start: "top top",
-    end: "+=200%", // Pin for 2 screens worth of scroll
+    end: isMobile ? "+=150%" : "+=200%",
     pin: true,
     scrub: 1,
     anticipatePin: 1
   }
 });
+
+// Responsive card offsets
+const cardSpread = isMobile
+  ? { far: 100, near: 40, rotFar: 10, rotNear: 3 }
+  : { far: 350, near: 120, rotFar: 15, rotNear: 5 };
 
 ojtTl
   // 1. Text slides up from below (Formal)
@@ -368,22 +375,22 @@ ojtTl
   // 3. Cards fan out from center stack
   .fromTo(".ojt-1",
     { x: 0, rotation: 0, scale: 0.9 },
-    { x: -350, rotation: -15, scale: 1, duration: 2, ease: "none" },
+    { x: -cardSpread.far, rotation: -cardSpread.rotFar, scale: 1, duration: 2, ease: "none" },
     "-=1"
   )
   .fromTo(".ojt-2",
     { x: 0, rotation: 0, scale: 0.95 },
-    { x: -120, rotation: -5, scale: 1, duration: 2, ease: "none" },
+    { x: -cardSpread.near, rotation: -cardSpread.rotNear, scale: 1, duration: 2, ease: "none" },
     "<"
   )
   .fromTo(".ojt-3",
     { x: 0, rotation: 0, scale: 0.95 },
-    { x: 120, rotation: 5, scale: 1, duration: 2, ease: "none" },
+    { x: cardSpread.near, rotation: cardSpread.rotNear, scale: 1, duration: 2, ease: "none" },
     "<"
   )
   .fromTo(".ojt-4",
     { x: 0, rotation: 0, scale: 0.9 },
-    { x: 350, rotation: 15, scale: 1, duration: 2, ease: "none" },
+    { x: cardSpread.far, rotation: cardSpread.rotFar, scale: 1, duration: 2, ease: "none" },
     "<"
   )
 
