@@ -125,6 +125,12 @@ document.getElementById("projectDesc").textContent = project.description;
 document.getElementById("projectStory").textContent = project.story;
 document.title = `${project.title} — Nate`;
 
+// Update back link to skip loading and scroll to the right card
+const backLink = document.querySelector(".back-link");
+if (backLink) {
+    backLink.href = `index.html?from=project&projectId=${projectId}`;
+}
+
 // Apply cover image to hero
 const heroImg = document.getElementById("heroImg");
 if (heroImg && project.cover) {

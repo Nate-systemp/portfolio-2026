@@ -112,91 +112,139 @@ const loadingPercent = document.getElementById("loadingPercent");
 const startBtn = document.getElementById("startBtn");
 const loadingLetters = document.querySelectorAll(".loading-logo-letter");
 
-// 1) Animate letters in with stagger
-const loadTl = gsap.timeline();
+// Check if returning from a project page
+const urlParams = new URLSearchParams(window.location.search);
+const comingFromProject = urlParams.get("from") === "project";
+const returnProjectId = urlParams.get("projectId");
 
-loadTl.to(loadingLetters, {
-  y: 0,
-  opacity: 1,
-  duration: 0.8,
-  stagger: 0.12,
-  ease: "power4.out",
-  delay: 0.3
-});
+if (comingFromProject) {
+  // ── SKIP LOADING — returning from project page ──
 
-// 2) Simulate loading progress
-let progress = 0;
-const loadingInterval = setInterval(() => {
-  progress += Math.random() * 12 + 3;
-  if (progress >= 100) {
-    progress = 100;
-    clearInterval(loadingInterval);
+  // Immediately hide loading screen
+  loadingScreen.classList.add("hidden");
+  document.body.classList.remove("loading-active");
 
-    // Loading complete — show button
-    loadingPercent.textContent = "100%";
-    loadingBar.style.width = "100%";
+  // Set intro elements to their final visible state (no animation)
+  gsap.set(".intro-title", { y: 0, opacity: 1 });
+  gsap.set(".intro-sub", { y: 0, opacity: 1 });
+  gsap.set(".scroll-indicator", { y: 0, opacity: 0.6 });
 
-    gsap.to(startBtn, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      ease: "power3.out",
-      delay: 0.3
+  // Start smooth scroll
+  lenis.start();
+
+  // Clean URL (remove query params)
+  window.history.replaceState({}, "", window.location.pathname);
+
+  // Scroll to the work card they came from
+  if (returnProjectId) {
+    window.addEventListener("load", () => {
+      ScrollTrigger.refresh();
+      // Find the matching work card by its href
+      const targetCard = document.querySelector(
+        `.work-card[href="project.html?id=${returnProjectId}"]`
+      );
+      if (targetCard) {
+        // Small delay to let layout settle, then scroll
+        setTimeout(() => {
+          lenis.scrollTo(targetCard, {
+            offset: -100,
+            duration: 0.01,
+            immediate: true
+          });
+        }, 100);
+      }
     });
-
-    // Subtle pulse on letters once loaded
-    gsap.to(loadingLetters, {
-      color: "#FF1919",
-      duration: 1.2,
-      stagger: 0.08,
-      ease: "power2.inOut",
-      yoyo: true,
-      repeat: -1,
-      repeatDelay: 0.5
-    });
-  } else {
-    loadingPercent.textContent = Math.floor(progress) + "%";
-    loadingBar.style.width = progress + "%";
   }
-}, 180);
 
-// 3) ENTER button click — dismiss loading screen
-startBtn.addEventListener("click", () => {
-  // Stop the letter pulse
-  gsap.killTweensOf(loadingLetters);
+} else {
+  // ── NORMAL LOADING FLOW ──
 
-  // Exit animation
-  const exitTl = gsap.timeline({
-    onComplete: () => {
-      loadingScreen.classList.add("hidden");
-      document.body.classList.remove("loading-active");
-      lenis.start();
+  // 1) Animate letters in with stagger
+  const loadTl = gsap.timeline();
 
-      // Start intro animations after loading screen is gone
-      introTl.play();
-    }
+  loadTl.to(loadingLetters, {
+    y: 0,
+    opacity: 1,
+    duration: 0.8,
+    stagger: 0.12,
+    ease: "power4.out",
+    delay: 0.3
   });
 
-  exitTl
-    .to(loadingLetters, {
-      y: -60,
-      opacity: 0,
-      stagger: 0.05,
-      duration: 0.5,
-      ease: "power3.in"
-    })
-    .to([".loading-bar-container", ".loading-percent", startBtn, ".loading-footer-text"], {
-      opacity: 0,
-      y: -20,
-      duration: 0.4,
-      ease: "power2.in"
-    }, "-=0.3")
-    .to(loadingScreen, {
-      clipPath: "inset(0 0 100% 0)",
-      duration: 0.9,
-      ease: "power3.inOut"
-    }, "-=0.1");
-});
+  // 2) Simulate loading progress
+  let progress = 0;
+  const loadingInterval = setInterval(() => {
+    progress += Math.random() * 12 + 3;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(loadingInterval);
+
+      // Loading complete — show button
+      loadingPercent.textContent = "100%";
+      loadingBar.style.width = "100%";
+
+      gsap.to(startBtn, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        delay: 0.3
+      });
+
+      // Subtle pulse on letters once loaded
+      gsap.to(loadingLetters, {
+        color: "#FF1919",
+        duration: 1.2,
+        stagger: 0.08,
+        ease: "power2.inOut",
+        yoyo: true,
+        repeat: -1,
+        repeatDelay: 0.5
+      });
+    } else {
+      loadingPercent.textContent = Math.floor(progress) + "%";
+      loadingBar.style.width = progress + "%";
+    }
+  }, 180);
+
+  // 3) ENTER button click — dismiss loading screen
+  startBtn.addEventListener("click", () => {
+    // Stop the letter pulse
+    gsap.killTweensOf(loadingLetters);
+
+    // Exit animation
+    const exitTl = gsap.timeline({
+      onComplete: () => {
+        loadingScreen.classList.add("hidden");
+        document.body.classList.remove("loading-active");
+        lenis.start();
+
+        // Start intro animations after loading screen is gone
+        introTl.play();
+      }
+    });
+
+    exitTl
+      .to(loadingLetters, {
+        y: -60,
+        opacity: 0,
+        stagger: 0.05,
+        duration: 0.5,
+        ease: "power3.in"
+      })
+      .to([".loading-bar-container", ".loading-percent", startBtn, ".loading-footer-text"], {
+        opacity: 0,
+        y: -20,
+        duration: 0.4,
+        ease: "power2.in"
+      }, "-=0.3")
+      .to(loadingScreen, {
+        clipPath: "inset(0 0 100% 0)",
+        duration: 0.9,
+        ease: "power3.inOut"
+      }, "-=0.1");
+  });
+}
 
 // ============================================
 // INTRO ANIMATIONS (paused — plays after loading)
@@ -417,6 +465,27 @@ gsap.utils.toArray(".work-card").forEach((card, i) => {
     }
   );
 });
+
+// ============================================
+// WORKS GRID — Show More / Less Toggle
+// ============================================
+const worksToggle = document.getElementById("worksToggle");
+const worksGrid = document.querySelector(".works-grid");
+const toggleText = worksToggle ? worksToggle.querySelector(".works-toggle-text") : null;
+
+if (worksToggle && worksGrid) {
+  worksToggle.addEventListener("click", () => {
+    const isExpanded = worksGrid.classList.toggle("expanded");
+    worksToggle.classList.toggle("active", isExpanded);
+
+    if (toggleText) {
+      toggleText.textContent = isExpanded ? "LESS WORKS" : "MORE WORKS";
+    }
+
+    // Refresh ScrollTrigger after layout change
+    setTimeout(() => ScrollTrigger.refresh(), 700);
+  });
+}
 
 
 // Typing effect on desc-skills elements
