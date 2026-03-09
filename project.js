@@ -29,7 +29,7 @@ const projects = [
         year: "2025",
         description: "A math game puzzle for the elementary school students designed for a thesis project for the Math Majors.",
         story: "The game is a 2D puzzle game where the player has to solve math problems to progress through the game. The game is designed to be fun and educational, and it is suitable for children aged 6-12.",
-        
+
         gallery: ["assets/FRACERA1.png", "assets/FRACERA2.png", "assets/FRACERA3.png"],
     },
     {
@@ -40,17 +40,19 @@ const projects = [
         year: "2024",
         description: "A 2D one-button archery game where the player has to shoot arrows at targets to progress through the game. The game is designed to be fun and educational, and it is suitable for children aged 6-12.",
         story: "Built from scratch using aspire, this project required handling complex database relationships and real-time updates. The greatest learning was architecting a system that scales — from 50 students in testing to thousands in production.",
-        
+
         gallery: ["assets/SQ1.png", "assets/SQ2.png", "assets/SQ3.png"],
     },
     {
         id: 3,
         num: "03",
-        title: "PROJECT THREE",
+        title: "OUTFALL",
         category: "GAME DESIGN",
         year: "2025",
-        description: "A 2D puzzle platformer featuring hand-drawn environments and physics-based mechanics, designed as a thesis project.",
-        story: "The vision was to merge traditional Filipino art motifs with modern game design. Every sprite was hand-illustrated, and the puzzle mechanics were inspired by local folk stories. The project won recognition at the university's annual tech showcase.",
+        description: "A TTRPG Game Design for the Game Design and Development Class.",
+        story: "Outfall is a post-apocalyptic TTRPG where players take on the role of survivors in a world ravaged by a mysterious plague. The game is set in the Philippines, and it features a unique blend of horror, action, and survival elements.",
+
+        gallery: ["assets/OF1.png", "assets/OF2.png", "assets/OF3.png"],
     },
     {
         id: 4,
@@ -422,7 +424,7 @@ if (cursor) {
     animateCursor();
 
     // Cursor grow on interactive elements
-    const hoverElements = document.querySelectorAll('a, .gallery-item');
+    const hoverElements = document.querySelectorAll('a');
     hoverElements.forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
