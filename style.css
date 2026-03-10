@@ -12,10 +12,18 @@
     font-style: normal;
 }
 
+
 @font-face {
     font-family: 'Tusker Grotesk Medium';
     src: url('assets/fonts/TuskerGrotesk-5500Medium.ttf') format('truetype');
     font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'ITC Avant Garde Gothic';
+    src: url('assets/fonts/ITCAvantGardeStd-Bold.otf') format('opentype');
+    font-weight: bold;
     font-style: normal;
 }
 
