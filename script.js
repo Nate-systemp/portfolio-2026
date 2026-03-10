@@ -482,8 +482,19 @@ if (worksToggle && worksGrid) {
       toggleText.textContent = isExpanded ? "LESS WORKS" : "MORE WORKS";
     }
 
+    // NEW: If collapsing, scroll to the toggle to avoid jump and unintended reveal of footer
+    if (!isExpanded) {
+      lenis.scrollTo(worksToggle, {
+        offset: -window.innerHeight + 150, // Keep button visible near bottom
+        duration: 1.5,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    }
+
     // Refresh ScrollTrigger after layout change
-    setTimeout(() => ScrollTrigger.refresh(), 700);
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100); // Shorter timeout for snappier refresh
   });
 }
 
@@ -524,18 +535,20 @@ document.querySelectorAll(".desc-skills").forEach((skill) => {
 const introContainer = document.querySelector(".intro-container");
 const introReveal = document.querySelector(".intro-reveal");
 
-introContainer.addEventListener("mousemove", (e) => {
-  const rect = introContainer.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-  introReveal.style.clipPath = `circle(300px at ${x}px ${y}px)`;
-  introReveal.style.setProperty('--mouse-x', x + 'px');
-  introReveal.style.setProperty('--mouse-y', y + 'px');
-});
+if (introContainer && introReveal) {
+  introContainer.addEventListener("mousemove", (e) => {
+    const rect = introContainer.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    introReveal.style.clipPath = `circle(300px at ${x}px ${y}px)`;
+    introReveal.style.setProperty('--mouse-x', x + 'px');
+    introReveal.style.setProperty('--mouse-y', y + 'px');
+  });
 
-introContainer.addEventListener("mouseleave", () => {
-  introReveal.style.clipPath = `circle(20px at 50% 50%)`;
-});
+  introContainer.addEventListener("mouseleave", () => {
+    introReveal.style.clipPath = `circle(20px at 50% 50%)`;
+  });
+}
 
 
 // Custom cursor
