@@ -1,5 +1,6 @@
 const lenis = new Lenis();
 let canScrollPast = false;
+const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
 lenis.on("scroll", ScrollTrigger.update);
 
@@ -16,77 +17,74 @@ const navLinks = document.querySelectorAll('.list li span[data-text]');
 const targets = ["#desc", ".workintro", "#contact"];
 
 navLinks.forEach((link, i) => {
-  link.style.cursor = "pointer"; // Ensure pointer cursor despite global CSS
+  link.style.cursor = "pointer";
   link.addEventListener('click', () => {
-    // 1. Creative Click Animation: Quick scale down/up ripple
+    // Quick, lightweight click feedback
     gsap.to(link, {
-      scale: 0.9,
-      letterSpacing: "5px",
-      color: "#FF1919",
-      duration: 0.2,
+      scale: 0.92,
+      duration: 0.15,
       yoyo: true,
       repeat: 1,
-      ease: "power2.inOut",
-      onComplete: () => {
-        gsap.to(link, { letterSpacing: "2px", color: "transparent", duration: 0.5 }); // Reset
-      }
+      ease: "power2.inOut"
     });
 
-    // 2. Smooth Scroll with "Bold" Easing
+    // Fast, smooth scroll — reduced from 2.5s to 1.2s for responsiveness
     if (targets[i]) {
       lenis.scrollTo(targets[i], {
-        offset: i === 1 ? -100 : 0, // Offset for Work section
-        duration: 2.5,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential ease
+        offset: i === 1 ? -100 : 0,
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
     }
   });
 });
 
-// 1. Magnetic Hover for Menu and Icons
-const magnets = document.querySelectorAll('.icon, .list li span');
+// 1. Magnetic Hover for Menu and Icons (desktop only)
+if (!isTouchDevice) {
+  const magnets = document.querySelectorAll('.icon, .list li span');
 
-magnets.forEach((magnet) => {
-  magnet.addEventListener("mousemove", (e) => {
-    const bounding = magnet.getBoundingClientRect();
-    const x = e.clientX - bounding.left - bounding.width / 2;
-    const y = e.clientY - bounding.top - bounding.height / 2;
+  magnets.forEach((magnet) => {
+    magnet.addEventListener("mousemove", (e) => {
+      const bounding = magnet.getBoundingClientRect();
+      const x = e.clientX - bounding.left - bounding.width / 2;
+      const y = e.clientY - bounding.top - bounding.height / 2;
 
-    gsap.to(magnet, {
-      x: x * 0.45,
-      y: y * 0.45,
-      scale: 1.05,
-      rotation: x * 0.03,
-      duration: 0.6,
-      ease: "power3.out"
+      gsap.to(magnet, {
+        x: x * 0.45,
+        y: y * 0.45,
+        scale: 1.05,
+        rotation: x * 0.03,
+        duration: 0.6,
+        ease: "power3.out"
+      });
+    });
+
+    magnet.addEventListener("mouseleave", () => {
+      gsap.to(magnet, {
+        x: 0,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+        duration: 1.5,
+        ease: "elastic.out(1, 0.3)"
+      });
     });
   });
 
-  magnet.addEventListener("mouseleave", () => {
-    gsap.to(magnet, {
-      x: 0,
-      y: 0,
-      scale: 1,
-      rotation: 0,
-      duration: 1.5,
-      ease: "elastic.out(1, 0.3)"
+  // 2. Hero Title (NATE) Parallax (desktop only)
+  const introTitle = document.querySelector(".intro-title");
+  if (introTitle) {
+    window.addEventListener("mousemove", (e) => {
+      const moveX = (e.clientX - window.innerWidth / 2) * 0.015;
+      const moveY = (e.clientY - window.innerHeight / 2) * 0.015;
+      gsap.to(introTitle, {
+        x: moveX,
+        y: moveY,
+        duration: 1.5,
+        ease: "power2.out"
+      });
     });
-  });
-});
-
-// 2. Hero Title (NATE) Parallax
-const introTitle = document.querySelector(".intro-title");
-if (introTitle) {
-  window.addEventListener("mousemove", (e) => {
-    const moveX = (e.clientX - window.innerWidth / 2) * 0.015;
-    const moveY = (e.clientY - window.innerHeight / 2) * 0.015;
-    gsap.to(introTitle, {
-      x: moveX,
-      y: moveY,
-      duration: 1.5,
-      ease: "power2.out"
-    });
-  });
+  }
 }
 
 // Stop Lenis scroll until loading is dismissed
@@ -390,6 +388,7 @@ gsap.fromTo(".close",
 // ============================================
 const ojtSection = document.querySelector("#new-section");
 const isMobile = window.innerWidth <= 768;
+const isTablet = window.innerWidth <= 1024 && window.innerWidth > 768;
 
 const ojtTl = gsap.timeline({
   scrollTrigger: {
@@ -404,11 +403,13 @@ const ojtTl = gsap.timeline({
 
 // Responsive card offsets
 const cardSpread = isMobile
-  ? { far: 100, near: 40, rotFar: 10, rotNear: 3 }
-  : { far: 350, near: 120, rotFar: 15, rotNear: 5 };
+  ? { far: 80, near: 30, rotFar: 8, rotNear: 2 }
+  : isTablet
+    ? { far: 200, near: 70, rotFar: 10, rotNear: 4 }
+    : { far: 350, near: 120, rotFar: 15, rotNear: 5 };
 
 ojtTl
-  // 1. Text slides up from below (Formal)
+  // 1. Text slides up from below
   .fromTo(".int-text",
     { y: "150px", opacity: 0 },
     { y: "0px", opacity: 1, duration: 2, ease: "none" }
@@ -527,60 +528,64 @@ document.querySelectorAll(".desc-skills").forEach((skill) => {
   });
 });
 
-// Circle follows cursor on intro hover
-const introContainer = document.querySelector(".intro-container");
-const introReveal = document.querySelector(".intro-reveal");
+// Circle follows cursor on intro hover (desktop only)
+if (!isTouchDevice) {
+  const introContainer = document.querySelector(".intro-container");
+  const introReveal = document.querySelector(".intro-reveal");
 
-if (introContainer && introReveal) {
-  introContainer.addEventListener("mousemove", (e) => {
-    const rect = introContainer.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    introReveal.style.clipPath = `circle(300px at ${x}px ${y}px)`;
-    introReveal.style.setProperty('--mouse-x', x + 'px');
-    introReveal.style.setProperty('--mouse-y', y + 'px');
-  });
+  if (introContainer && introReveal) {
+    introContainer.addEventListener("mousemove", (e) => {
+      const rect = introContainer.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      introReveal.style.clipPath = `circle(300px at ${x}px ${y}px)`;
+      introReveal.style.setProperty('--mouse-x', x + 'px');
+      introReveal.style.setProperty('--mouse-y', y + 'px');
+    });
 
-  introContainer.addEventListener("mouseleave", () => {
-    introReveal.style.clipPath = `circle(20px at 50% 50%)`;
-  });
+    introContainer.addEventListener("mouseleave", () => {
+      introReveal.style.clipPath = `circle(20px at 50% 50%)`;
+    });
+  }
+
+
+  // Custom cursor — use transform instead of left/top to avoid layout thrashing
+  const cursor = document.querySelector('.custom-cursor');
+  if (cursor) {
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+      cursorX += (mouseX - cursorX) * 0.05;
+      cursorY += (mouseY - cursorY) * 0.05;
+
+      cursor.style.transform = `translate(${cursorX - 15}px, ${cursorY - 15}px)`;
+
+      requestAnimationFrame(animateCursor);
+    }
+
+    animateCursor();
+
+    // Hover detection for big cursor
+    const hoverElements = document.querySelectorAll('a:not(.work-card):not(.icon), button, .desc-title, .logo, .intro-container');
+    hoverElements.forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    // Hover detection for hiding cursor (nav items and icons)
+    const hideCursorElements = document.querySelectorAll('.list span[data-text], .social-icons .icon');
+    hideCursorElements.forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hide'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hide'));
+    });
+  }
 }
-
-
-// Custom cursor — use transform instead of left/top to avoid layout thrashing
-const cursor = document.querySelector('.custom-cursor');
-let mouseX = 0, mouseY = 0;
-let cursorX = 0, cursorY = 0;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
-
-function animateCursor() {
-  cursorX += (mouseX - cursorX) * 0.05;
-  cursorY += (mouseY - cursorY) * 0.05;
-
-  cursor.style.transform = `translate(${cursorX - 15}px, ${cursorY - 15}px)`;
-
-  requestAnimationFrame(animateCursor);
-}
-
-animateCursor();
-
-// Hover detection for big cursor
-const hoverElements = document.querySelectorAll('a:not(.work-card), button, .desc-title, .logo, .intro-container');
-hoverElements.forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
-
-// Hover detection for hiding cursor (nav items and icons)
-const hideCursorElements = document.querySelectorAll('.list span[data-text], .social-icons .icon');
-hideCursorElements.forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hide'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hide'));
-});
 
 // Contact Section Animations - Standard Scroll Reveal
 const contactSection = document.querySelector("#contact");

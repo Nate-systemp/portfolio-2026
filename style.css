@@ -222,6 +222,8 @@ body.loading-active {
     background-color: #F9F5F0;
     z-index: 2;
     justify-content: center;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .intro-container {
@@ -339,6 +341,7 @@ body.loading-active {
 
 /* Social icons using SVG masks so they can fill vertically like the logo/text */
 .social-icons .icon {
+    display: block;
     width: 30px;
     height: 30px;
     background-image: linear-gradient(#F9F5F0 0%, #F9F5F0 50%, #FF1919 50%, #FF1919 100%);
@@ -351,6 +354,9 @@ body.loading-active {
     -webkit-mask-position: center;
     mask-position: center;
     background-color: transparent;
+    text-decoration: none;
+    pointer-events: auto;
+    cursor: pointer;
 }
 
 .social-icons .icon-github {
@@ -1166,14 +1172,18 @@ body.loading-active {
         max-width: 100%;
     }
 
+    #new-section {
+        overflow: hidden;
+    }
+
     .ojt-content {
         width: 500px;
         height: 300px;
     }
 
     .close {
-        margin-left: 30%;
-        max-width: 100%;
+        text-align: center;
+        max-width: 80%;
     }
 
     .contact-mail {
@@ -1181,12 +1191,17 @@ body.loading-active {
     }
 
     .int-text {
-        margin-left: 5%;
+        text-align: center;
     }
 
     .intern {
-        margin-left: 5%;
-        font-size: 24px;
+        font-size: 20px;
+        text-align: center;
+    }
+
+    /* Faster tap on nav links */
+    .list li span[data-text] {
+        touch-action: manipulation;
     }
 }
 
@@ -1399,10 +1414,18 @@ body.loading-active {
         font-size: 12px;
     }
 
+    /* ── WORKS TOGGLE ── */
+    .works-toggle {
+        margin: 30px auto 0;
+        padding: 14px 36px;
+        font-size: 11px;
+    }
+
     /* ── INTERNSHIP SECTION ── */
     #new-section {
         min-height: 80vh;
         padding: 10% 0;
+        overflow: hidden;
     }
 
     .internintro {
