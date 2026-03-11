@@ -1,11 +1,6 @@
 const lenis = new Lenis();
 let canScrollPast = false;
 
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-
 lenis.on("scroll", ScrollTrigger.update);
 
 gsap.ticker.add((time) => {
@@ -272,9 +267,9 @@ introTl.to(".intro-title", {
   }, "-=0.5");
 
 // Scroll-out animation for Intro
+// NOTE: Using scale + opacity instead of filter:blur for much better scroll perf
 gsap.to(".intro-container", {
-  filter: "blur(10px)",
-  scale: 0.9,
+  scale: 0.85,
   opacity: 0,
   ease: "none",
   scrollTrigger: {
@@ -332,9 +327,10 @@ gsap.to(".overlay", {
   }
 });
 
-// Blur and dim the video as desc section covers it
+// Dim the video as desc section covers it
+// NOTE: Removed filter:blur — animating CSS filters on scroll causes severe jank
 gsap.to("#bgVideo", {
-  filter: "blur(0px) brightness(7)",
+  opacity: 0,
   ease: "none",
   scrollTrigger: {
     trigger: "#desc",
@@ -551,7 +547,7 @@ if (introContainer && introReveal) {
 }
 
 
-// Custom cursor
+// Custom cursor — use transform instead of left/top to avoid layout thrashing
 const cursor = document.querySelector('.custom-cursor');
 let mouseX = 0, mouseY = 0;
 let cursorX = 0, cursorY = 0;
@@ -565,8 +561,7 @@ function animateCursor() {
   cursorX += (mouseX - cursorX) * 0.05;
   cursorY += (mouseY - cursorY) * 0.05;
 
-  cursor.style.left = cursorX + 'px';
-  cursor.style.top = cursorY + 'px';
+  cursor.style.transform = `translate(${cursorX - 15}px, ${cursorY - 15}px)`;
 
   requestAnimationFrame(animateCursor);
 }
@@ -633,6 +628,7 @@ gsap.to([".intro-container", "#desc"], {
 });
 // ============================================
 // CONTACT WAVE — Scroll-Reactive Canvas
+// Only animate when the contact section is visible (IntersectionObserver)
 // ============================================
 (function () {
   const canvas = document.getElementById('contactWave');
@@ -640,17 +636,16 @@ gsap.to([".intro-container", "#desc"], {
 
   const ctx = canvas.getContext('2d');
 
-  // Scroll velocity tracker (shared with Lenis listener below)
   let scrollVel = 0;
-  let targetAmp = 0;   // amplitude we're easing toward
-  let currentAmp = 0;  // smoothed amplitude
+  let targetAmp = 0;
+  let currentAmp = 0;
+  let waveRunning = false; // Only animate when in viewport
+  let waveRAF = null;
 
-  // Track velocity from Lenis
   lenis.on('scroll', (e) => {
     scrollVel = e.velocity;
   });
 
-  // Resize canvas to match element
   function resize() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
@@ -658,13 +653,11 @@ gsap.to([".intro-container", "#desc"], {
   resize();
   window.addEventListener('resize', resize);
 
-  // Wave parameters
   const layers = [
-    // { color, alpha, frequency, speed, phaseOffset, baseY-ratio }
     { color: '#F9F5F0', alpha: 0.06, freq: 2.2, speed: 0.4, phase: 0, baseY: 0.45 },
     { color: '#FF1919', alpha: 0.55, freq: 1.6, speed: 0.65, phase: 1.2, baseY: 0.58 },
     { color: '#F9F5F0', alpha: 0.08, freq: 3.1, speed: 0.25, phase: 2.5, baseY: 0.40 },
-    { color: '#111111', alpha: 1.00, freq: 1.2, speed: 0.50, phase: 0.7, baseY: 0.78 }, // fills bottom
+    { color: '#111111', alpha: 1.00, freq: 1.2, speed: 0.50, phase: 0.7, baseY: 0.78 },
   ];
 
   let time = 0;
@@ -676,10 +669,10 @@ gsap.to([".intro-container", "#desc"], {
     const y0 = h * baseY;
 
     ctx.beginPath();
-    ctx.moveTo(0, h); // start bottom-left
+    ctx.moveTo(0, h);
 
-    for (let x = 0; x <= w; x++) {
-      // Two overlapping sine waves = organic shape
+    // Step by 2px instead of 1px for half the draw calls — visually identical
+    for (let x = 0; x <= w; x += 2) {
       const t1 = Math.sin((x / w) * Math.PI * 2 * freq + time * speed + phase);
       const t2 = Math.sin((x / w) * Math.PI * 2 * freq * 0.5 + time * speed * 1.3 + phase + 1);
       const y = y0 + (t1 * 0.65 + t2 * 0.35) * amplitude;
@@ -695,19 +688,39 @@ gsap.to([".intro-container", "#desc"], {
   }
 
   function animate() {
-    // Ease amplitude toward scroll velocity
-    targetAmp = Math.min(Math.abs(scrollVel) * 6, 55) + 12; // 12px base, up to ~67px
-    currentAmp += (targetAmp - currentAmp) * 0.06; // lazy follow
-    scrollVel *= 0.92; // decay velocity
+    if (!waveRunning) return; // Stop loop when out of view
 
+    targetAmp = Math.min(Math.abs(scrollVel) * 6, 55) + 12;
+    currentAmp += (targetAmp - currentAmp) * 0.06;
+    scrollVel *= 0.92;
     time += 0.012;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
     layers.forEach(layer => drawWave(layer, currentAmp));
 
-    requestAnimationFrame(animate);
+    waveRAF = requestAnimationFrame(animate);
   }
 
-  animate();
+  // Only run the wave animation when the contact section is visible
+  const contactSection = document.getElementById('contact');
+  if (contactSection && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!waveRunning) {
+            waveRunning = true;
+            animate();
+          }
+        } else {
+          waveRunning = false;
+          if (waveRAF) cancelAnimationFrame(waveRAF);
+        }
+      });
+    }, { threshold: 0 });
+    observer.observe(contactSection);
+  } else {
+    // Fallback: always run if no IntersectionObserver
+    waveRunning = true;
+    animate();
+  }
 })();

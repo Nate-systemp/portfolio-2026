@@ -39,8 +39,7 @@ html {
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
-    background: url('assets/mainbg.svg') no-repeat center center fixed;
-    background-size: cover;
+    background-color: #0a0a0a;
 }
 
 body {
@@ -50,7 +49,8 @@ body {
     padding: 0 5%;
     font-size: 80px;
     z-index: 1;
-    background: transparent;
+    background: url('assets/mainbg.svg') no-repeat center center;
+    background-size: cover;
 }
 
 body::before {
@@ -234,6 +234,7 @@ body.loading-active {
     text-align: center;
     mix-blend-mode: difference;
     pointer-events: none;
+    will-change: transform, opacity;
 }
 
 .intro-wrapper {
@@ -806,6 +807,8 @@ body.loading-active {
 
 .custom-cursor {
     position: fixed;
+    top: 0;
+    left: 0;
     width: 30px;
     height: 30px;
     background: #F9F5F0;
@@ -814,7 +817,7 @@ body.loading-active {
     z-index: 9999;
     transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
     mix-blend-mode: difference;
-    transform: translate(-50%, -50%);
+    will-change: transform;
 }
 
 .custom-cursor.hover {
@@ -844,6 +847,7 @@ body.loading-active {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    contain: layout style;
 }
 
 .internintro {
@@ -909,7 +913,7 @@ body.loading-active {
     border-radius: 12px;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
     transform-origin: center bottom;
-    will-change: transform, opacity;
+    will-change: transform;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
