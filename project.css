@@ -8,6 +8,11 @@
     overflow-x: hidden;
 }
 
+/* Hide the main website gradient SVG from bleeding into project page */
+.project-body::before {
+    display: none !important;
+}
+
 /* Initial hidden states for GSAP entrance */
 .project-hero {
     will-change: clip-path;
