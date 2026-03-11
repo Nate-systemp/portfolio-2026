@@ -37,7 +37,7 @@
     font-size: 14px;
     font-weight: 300;
     letter-spacing: 2px;
-    mix-blend-mode: difference;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Legibility without blend-mode lag */
     transition: gap 0.3s ease;
 }
 

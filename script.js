@@ -293,28 +293,7 @@ gsap.to(".list span[data-text]", {
   }
 });
 
-// Animate social icons fill
-gsap.to(".social-icons .icon", {
-  backgroundPosition: "0% 100%",
-  ease: "none",
-  scrollTrigger: {
-    trigger: "#desc",
-    start: "top 80%",
-    end: "top 20%",
-    scrub: true
-  }
-});
-
-gsap.to(".overlay", {
-  opacity: 1.2,
-  ease: "none",
-  scrollTrigger: {
-    trigger: "#desc",
-    start: "top 100%",
-    end: "top 20%",
-    scrub: true
-  }
-});
+// Animate social icons and overlay removed for performance
 
 // Dim the video as desc section covers it
 // NOTE: Removed filter:blur — animating CSS filters on scroll causes severe jank
@@ -644,8 +623,8 @@ gsap.to([".intro-container", "#desc"], {
     ctx.beginPath();
     ctx.moveTo(0, h);
 
-    // Step by 2px instead of 1px for half the draw calls — visually identical
-    for (let x = 0; x <= w; x += 2) {
+    // Step by 15px instead of 2px for MASSIVE performance savings on low-end devices
+    for (let x = 0; x <= w; x += 15) {
       const t1 = Math.sin((x / w) * Math.PI * 2 * freq + time * speed + phase);
       const t2 = Math.sin((x / w) * Math.PI * 2 * freq * 0.5 + time * speed * 1.3 + phase + 1);
       const y = y0 + (t1 * 0.65 + t2 * 0.35) * amplitude;

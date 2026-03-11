@@ -64,6 +64,8 @@ body::before {
     background-size: cover;
     z-index: 0;
     pointer-events: none;
+    transform: translateZ(0); /* Hardware accelerate fixed backgrounds */
+    will-change: transform;
 }
 
 /* ============================================

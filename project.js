@@ -423,8 +423,7 @@ if (cursor) {
     function animateCursor() {
         cursorX += (mouseX - cursorX) * 0.05;
         cursorY += (mouseY - cursorY) * 0.05;
-        cursor.style.left = cursorX + 'px';
-        cursor.style.top = cursorY + 'px';
+        cursor.style.transform = `translate(${cursorX - 15}px, ${cursorY - 15}px)`;
         requestAnimationFrame(animateCursor);
     }
     animateCursor();
