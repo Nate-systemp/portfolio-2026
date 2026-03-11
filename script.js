@@ -279,16 +279,7 @@ gsap.to(".intro-container", {
 });
 
 // Animate logo fill
-gsap.to(".logo", {
-  backgroundPosition: "0% 100%",
-  ease: "none",
-  scrollTrigger: {
-    trigger: "#desc",
-    start: "top 80%",
-    end: "top 20%",
-    scrub: true
-  }
-});
+
 
 // Animate nav items fill
 gsap.to(".list span[data-text]", {
@@ -327,16 +318,7 @@ gsap.to(".overlay", {
 
 // Dim the video as desc section covers it
 // NOTE: Removed filter:blur — animating CSS filters on scroll causes severe jank
-gsap.to("#bgVideo", {
-  opacity: 0,
-  ease: "none",
-  scrollTrigger: {
-    trigger: "#desc",
-    start: "top 70%",
-    end: "top 20%",
-    scrub: true
-  }
-});
+
 
 // Horizontal scroll carousel effect for desc-title elements
 document.querySelectorAll(".desc-title").forEach((title) => {
@@ -368,20 +350,7 @@ gsap.to(".work-text", {
 });
 
 // Parallax effect on close with fade
-gsap.fromTo(".close",
-  { y: 70, opacity: 0 },
-  {
-    y: 0,
-    opacity: 1,
-    ease: "none",
-    scrollTrigger: {
-      trigger: ".close",
-      start: "top 105%",
-      end: "top 70%",
-      scrub: true
-    }
-  }
-);
+
 
 // ============================================
 // INTERNSHIP KINETIC ANIMATION
@@ -439,8 +408,7 @@ ojtTl
     "<"
   )
 
-  // 4. Close text fades in
-  .to(".close", { opacity: 1, y: 0, duration: 1, ease: "none" }, "-=0.5");
+
 
 
 // Staggered reveal for work cards
