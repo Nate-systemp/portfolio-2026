@@ -441,6 +441,15 @@ body.loading-active {
 
 .descontainer {
     margin-top: 5%;
+    position: relative;
+    z-index: 2;
+    background: #F9F5F0;
+}
+
+.workintro {
+    position: relative;
+    z-index: 1;
+    background: #F9F5F0;
 }
 
 .divider {
@@ -1360,8 +1369,11 @@ body.loading-active {
     }
 
     .divider {
-        width: 100%;
-        margin: -1% 0;
+        width: 100vw;
+        left: 50%;
+        margin-left: -50vw;
+        margin-top: -1%;
+        margin-bottom: -1%;
     }
 
     /* ── WORK SECTION ── */
