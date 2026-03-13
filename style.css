@@ -850,122 +850,123 @@ body.loading-active {
 }
 
 #new-section {
-    min-height: 100vh;
-    margin-top: 0;
     width: 100%;
     background: #F9F5F0;
-    padding: 0;
+    padding: 100px 14% 80px;
     position: relative;
     z-index: 3;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    box-sizing: border-box;
 }
 
-.internintro {
-    margin: 0;
-    padding-top: 0;
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    /* Masking for slide-up reveal removed overflow:hidden to prevent clipping */
+.intern-header {
+    margin-bottom: 40px;
+}
+
+.intern-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: #999;
+    font-weight: 400;
+    margin: 0 0 12px 0;
 }
 
 .int-text {
     font-family: 'Tusker Grotesk', sans-serif;
     color: #202020;
     font-weight: 400;
-    font-size: 15vw;
-    line-height: 1;
+    font-size: 12vw;
+    line-height: 0.9;
     margin: 0;
-    margin-top: -5vh;
-    text-align: center;
-    transform-origin: center center;
 }
 
-.intern {
+.intern-body {
+    max-width: 600px;
+    margin-bottom: 60px;
+}
+
+.intern-desc {
     font-family: 'Poppins', sans-serif;
     font-size: 18px;
-    max-width: 600px;
-    margin: 15px auto 0;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(30px);
-    will-change: transform, opacity;
-    position: relative;
-    z-index: 1;
+    color: #3a3a3a;
+    font-weight: 300;
+    line-height: 1.7;
+    margin: 0 0 16px 0;
 }
 
-.ojt-wrapper {
-    width: 100%;
-    height: 400px;
-    /* Fixed height for the card container */
-    margin-top: 15px;
-    position: relative;
+.intern-meta {
     display: flex;
-    justify-content: center;
     align-items: center;
-    perspective: 1000px;
+    gap: 12px;
 }
 
-.ojt-content {
-    position: relative;
-    width: 600px;
-    height: 400px;
-    /* Cards will be stacked here */
+.intern-meta-item {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #999;
+    font-weight: 400;
 }
 
-/* Base style for all cards */
-.ojt-card {
-    position: absolute;
-    top: 0;
-    left: 0;
+.intern-meta-divider {
+    color: #ccc;
+    font-size: 14px;
+}
+
+/* ── OJT Photo Grid ── */
+.ojt-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.ojt-photo {
     width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    transform-origin: center bottom;
-    will-change: transform;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: #161616;
     overflow: hidden;
+    position: relative;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Subtle dark overlay so cards feel cohesive */
-.ojt-card::after {
+.ojt-photo::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.25);
-    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
     transition: background 0.4s ease;
 }
 
-.ojt-card:hover::after {
-    background: rgba(0, 0, 0, 0.05);
+.ojt-photo:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
 }
 
-/* Individual card images */
+.ojt-photo:hover::after {
+    background: rgba(0, 0, 0, 0);
+}
+
+/* Individual photo images */
 .ojt-1 {
     background-image: url('assets/ojt-one.jpg');
-    background-color: #161616;
 }
 
 .ojt-2 {
     background-image: url('assets/ojt-two.jpg');
-    background-color: #161616;
 }
 
 .ojt-3 {
     background-image: url('assets/ojt-three.jpg');
-    background-color: #161616;
 }
 
 .ojt-4 {
     background-image: url('assets/ojt-four.jpg');
-    background-color: #161616;
 }
 
 .close {
@@ -1177,30 +1178,19 @@ body.loading-active {
     }
 
     #new-section {
-        overflow: hidden;
-    }
-
-    .ojt-content {
-        width: 500px;
-        height: 300px;
-    }
-
-    .close {
-        text-align: center;
-        max-width: 80%;
-    }
-
-    .contact-mail {
-        font-size: 28px;
+        padding: 80px 5% 60px;
     }
 
     .int-text {
-        text-align: center;
+        font-size: 14vw;
     }
 
-    .intern {
-        font-size: 20px;
-        text-align: center;
+    .intern-desc {
+        font-size: 16px;
+    }
+
+    .ojt-grid {
+        gap: 12px;
     }
 
     /* Faster tap on nav links */
@@ -1434,56 +1424,49 @@ body.loading-active {
 
     /* ── INTERNSHIP SECTION ── */
     #new-section {
-        min-height: 80vh;
-        padding: 10% 0;
-        width: 100%;
-        overflow: hidden;
+        padding: 60px 6% 50px;
     }
 
-    .internintro {
-        text-align: center;
-        padding: 0 6%;
+    .intern-header {
+        margin-bottom: 24px;
+    }
+
+    .intern-label {
+        font-size: 10px;
+        letter-spacing: 3px;
     }
 
     .int-text {
-        font-size: 12vw;
-        margin-top: 0;
-        text-align: center;
+        font-size: 14vw;
     }
 
-    .intern {
+    .intern-body {
+        margin-bottom: 36px;
+    }
+
+    .intern-desc {
         font-size: 14px;
-        max-width: 90%;
-        margin: 10px auto 0;
-        text-align: center;
         line-height: 1.6;
     }
 
-    .ojt-wrapper {
-        width: 100%;
-        height: auto;
-        min-height: 200px;
-        margin-top: 15px;
-        padding: 0 3%;
-        overflow: hidden;
+    .intern-meta {
+        gap: 8px;
+        flex-wrap: wrap;
     }
 
-    .ojt-content {
-        width: 100%;
-        max-width: 300px;
-        height: 200px;
-        margin: 0 auto;
+    .intern-meta-item {
+        font-size: 10px;
+        letter-spacing: 2px;
     }
 
-    .ojt-card {
-        border-radius: 8px;
+    .ojt-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
 
-    .close {
-        font-size: 13px;
-        text-align: center;
-        max-width: 85%;
-        margin: 20px auto 0;
+    .ojt-photo {
+        aspect-ratio: 16 / 10;
+        border-radius: 6px;
     }
 
     /* ── CONTACT SECTION ── */

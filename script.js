@@ -332,62 +332,46 @@ gsap.to(".work-text", {
 
 
 // ============================================
-// INTERNSHIP KINETIC ANIMATION
+// INTERNSHIP SECTION — Lightweight Scroll Reveal
 // ============================================
-const ojtSection = document.querySelector("#new-section");
-const isMobile = window.innerWidth <= 768;
-const isTablet = window.innerWidth <= 1024 && window.innerWidth > 768;
-
-const ojtTl = gsap.timeline({
+gsap.from(".intern-header", {
+  y: 60,
+  opacity: 0,
+  duration: 1,
+  ease: "power3.out",
   scrollTrigger: {
-    trigger: "#new-section",
-    start: "top top",
-    end: isMobile ? "+=150%" : "+=200%",
-    pin: true,
-    scrub: 1,
-    anticipatePin: 1
+    trigger: ".intern-header",
+    start: "top 85%",
+    toggleActions: "play none none reverse"
   }
 });
 
-// Responsive card offsets
-const cardSpread = isMobile
-  ? { far: 80, near: 30, rotFar: 8, rotNear: 2 }
-  : isTablet
-    ? { far: 200, near: 70, rotFar: 10, rotNear: 4 }
-    : { far: 350, near: 120, rotFar: 15, rotNear: 5 };
+gsap.from(".intern-body", {
+  y: 40,
+  opacity: 0,
+  duration: 1,
+  ease: "power3.out",
+  scrollTrigger: {
+    trigger: ".intern-body",
+    start: "top 85%",
+    toggleActions: "play none none reverse"
+  }
+});
 
-ojtTl
-  // 1. Text slides up from below
-  .fromTo(".int-text",
-    { y: "150px", opacity: 0 },
-    { y: "0px", opacity: 1, duration: 2, ease: "none" }
-  )
-  // 2. Subtext fades in
-  .to(".intern", { opacity: 1, y: 0, duration: 1, ease: "none" }, "-=0.5")
-
-  // 3. Cards fan out from center stack
-  .fromTo(".ojt-1",
-    { x: 0, rotation: 0, scale: 0.9 },
-    { x: -cardSpread.far, rotation: -cardSpread.rotFar, scale: 1, duration: 2, ease: "none" },
-    "-=1"
-  )
-  .fromTo(".ojt-2",
-    { x: 0, rotation: 0, scale: 0.95 },
-    { x: -cardSpread.near, rotation: -cardSpread.rotNear, scale: 1, duration: 2, ease: "none" },
-    "<"
-  )
-  .fromTo(".ojt-3",
-    { x: 0, rotation: 0, scale: 0.95 },
-    { x: cardSpread.near, rotation: cardSpread.rotNear, scale: 1, duration: 2, ease: "none" },
-    "<"
-  )
-  .fromTo(".ojt-4",
-    { x: 0, rotation: 0, scale: 0.9 },
-    { x: cardSpread.far, rotation: cardSpread.rotFar, scale: 1, duration: 2, ease: "none" },
-    "<"
-  )
-
-
+gsap.utils.toArray(".ojt-photo").forEach((photo, i) => {
+  gsap.from(photo, {
+    y: 50,
+    opacity: 0,
+    duration: 0.8,
+    delay: i * 0.1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: photo,
+      start: "top 90%",
+      toggleActions: "play none none reverse"
+    }
+  });
+});
 
 
 // Staggered reveal for work cards
