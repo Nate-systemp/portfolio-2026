@@ -193,28 +193,26 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-top: 30px;
-    perspective: 800px;
     align-items: start;
 }
 
 .gallery-item {
-    height: 220px;
+    aspect-ratio: 4 / 3;
     background-color: #1a1a1a;
     border-radius: 6px;
     overflow: hidden;
     background-size: cover;
     background-position: center;
-    transition: height 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-                box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-                border-radius 0.5s ease;
-    will-change: height;
     cursor: pointer;
+    transform-origin: center center;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+                box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform;
 }
 
 .gallery-item:hover {
-    height: 480px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-    border-radius: 8px;
+    transform: scale(1.06);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 /* ============================================
