@@ -296,6 +296,7 @@ body.loading-active {
     z-index: 2;
     padding: 100px 14% 150px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .about-layout {
@@ -317,7 +318,6 @@ body.loading-active {
 .about-heading-wrap {
     position: relative;
     cursor: default;
-    /* Optional: helps ensure wrapping logic applies to both equally */
     width: 100%;
 }
 
@@ -331,17 +331,23 @@ body.loading-active {
     letter-spacing: 1px;
 }
 
-.about-heading-masked {
+.about-reveal-layer {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    color: #F9F5F0;
     background-color: #202020;
     pointer-events: none;
+    z-index: 3;
+    padding: 100px 14% 150px;
+    box-sizing: border-box;
     clip-path: circle(var(--mask-size, 0px) at var(--mask-x, 50%) var(--mask-y, 50%));
     -webkit-clip-path: circle(var(--mask-size, 0px) at var(--mask-x, 50%) var(--mask-y, 50%));
+}
+
+.about-heading-masked {
+    color: #F9F5F0;
 }
 
 /* ============================================
@@ -1575,7 +1581,7 @@ body.loading-active {
     }
 
     /* ── ABOUT ME SECTION ── */
-    #about {
+    #about, .about-reveal-layer {
         padding: 80px 5% 100px;
     }
 
@@ -1749,7 +1755,7 @@ body.loading-active {
     }
 
     /* ── ABOUT ME SECTION ── */
-    #about {
+    #about, .about-reveal-layer {
         padding: 60px 6% 80px;
     }
 

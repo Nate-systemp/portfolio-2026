@@ -404,18 +404,18 @@ if (worksToggle && worksGrid) {
 // ============================================
 if (!isTouchDevice) {
   const cursor = document.querySelector('.custom-cursor');
-  const maskedHeading = document.querySelector('.about-heading-masked');
+  const revealLayer = document.querySelector('.about-reveal-layer');
+  const aboutSection = document.getElementById('about');
   let curX = 0, curY = 0;
   let maskSize = 0;
   let isAboutHovered = false;
 
-  const aboutWrap = document.querySelector('.about-heading-wrap');
-  if (aboutWrap) {
-    aboutWrap.addEventListener('mouseenter', () => {
+  if (aboutSection) {
+    aboutSection.addEventListener('mouseenter', () => {
       isAboutHovered = true;
       if (cursor) cursor.classList.add('about-mode');
     });
-    aboutWrap.addEventListener('mouseleave', () => {
+    aboutSection.addEventListener('mouseleave', () => {
       isAboutHovered = false;
       if (cursor) cursor.classList.remove('about-mode');
     });
@@ -428,18 +428,17 @@ if (!isTouchDevice) {
       cursor.style.transform = `translate3d(${curX}px, ${curY}px, 0) translate(-50%, -50%)`;
     }
 
-    // Mask logic for exactly syncing the reveal text size and position with the cursor
-    // 200 radius = 400px diameter to perfectly match the updated CSS cursor size
+    // Mask logic for exactly syncing the reveal layer size and position with the cursor
     maskSize += ((isAboutHovered ? 200 : 0) - maskSize) * 0.15;
-    if (maskedHeading && maskSize > 0.5) {
-      const rect = maskedHeading.getBoundingClientRect();
+    if (revealLayer && aboutSection && maskSize > 0.5) {
+      const rect = aboutSection.getBoundingClientRect();
       const localX = curX - rect.left;
       const localY = curY - rect.top;
-      maskedHeading.style.setProperty('--mask-x', `${localX}px`);
-      maskedHeading.style.setProperty('--mask-y', `${localY}px`);
-      maskedHeading.style.setProperty('--mask-size', `${maskSize}px`);
-    } else if (maskedHeading) {
-      maskedHeading.style.setProperty('--mask-size', `0px`);
+      revealLayer.style.setProperty('--mask-x', `${localX}px`);
+      revealLayer.style.setProperty('--mask-y', `${localY}px`);
+      revealLayer.style.setProperty('--mask-size', `${maskSize}px`);
+    } else if (revealLayer) {
+      revealLayer.style.setProperty('--mask-size', `0px`);
     }
 
     requestAnimationFrame(updateCursor);
