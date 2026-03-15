@@ -217,6 +217,13 @@ function startIntroAnimations() {
 const introContainer = document.querySelector('.intro-container');
 const descTitles = document.querySelectorAll('.desc-title');
 
+// Color-fill elements
+const descSection = document.getElementById('desc');
+const logo = document.querySelector('.logo');
+const navSpans = document.querySelectorAll('.list span[data-text]');
+const socialIcons = document.querySelectorAll('.social-icons .icon');
+const fillTargets = [...(logo ? [logo] : []), ...navSpans, ...socialIcons];
+
 function updateScrollEffects() {
   if (introContainer) {
     const progress = Math.min(scrollY / (window.innerHeight * 0.5), 1);
@@ -224,16 +231,30 @@ function updateScrollEffects() {
     introContainer.style.transform = `translate(-50%, -50%) scale(${1 - progress * 0.15})`;
   }
 
+  // Desc-title parallax
   const viewportHeight = window.innerHeight;
   descTitles.forEach((title, i) => {
     const rect = title.getBoundingClientRect();
     if (rect.top < viewportHeight && rect.bottom > 0) {
       const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
-      const direction = i % 2 === 0 ? 1 : -1; // alternate left/right
+      const direction = i % 2 === 0 ? 1 : -1;
       const move = (scrollProgress - 0.5) * 200 * direction;
       title.style.transform = `translate3d(${move}px, 0, 0)`;
     }
   });
+
+  // Nav / icon color fill — toggle when #desc top enters view
+  if (descSection) {
+    const descTop = descSection.getBoundingClientRect().top;
+    const isOverWhite = descTop <= 0;
+    fillTargets.forEach(el => {
+      if (isOverWhite) {
+        el.classList.add('fill-active');
+      } else {
+        el.classList.remove('fill-active');
+      }
+    });
+  }
 }
 
 // ============================================
