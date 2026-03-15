@@ -1548,11 +1548,17 @@ body.loading-active {
 
     /* ── INTERNSHIP SECTION ── */
     #new-section {
-        padding: 60px 6% 50px;
+        padding: 50px 6% 40px;
     }
 
-    .intern-header {
-        margin-bottom: 24px;
+    .intern-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .intern-left {
+        position: relative;
+        top: auto;
     }
 
     .intern-label {
@@ -1561,16 +1567,14 @@ body.loading-active {
     }
 
     .int-text {
-        font-size: 14vw;
-    }
-
-    .intern-body {
-        margin-bottom: 36px;
+        font-size: clamp(36px, 10vw, 56px);
+        margin-bottom: 20px;
     }
 
     .intern-desc {
         font-size: 14px;
         line-height: 1.6;
+        max-width: 100%;
     }
 
     .intern-meta {
@@ -1584,13 +1588,13 @@ body.loading-active {
     }
 
     .ojt-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
     }
 
     .ojt-photo {
-        aspect-ratio: 16 / 10;
-        border-radius: 6px;
+        aspect-ratio: 1 / 1;
+        border-radius: 8px;
     }
 
     /* ── CONTACT SECTION ── */
@@ -1741,20 +1745,15 @@ body.loading-active {
 
     /* ── INTERNSHIP ── */
     .int-text {
-        font-size: 14vw;
+        font-size: clamp(32px, 9vw, 44px);
     }
 
-    .intern {
-        font-size: 13px;
+    .ojt-grid {
+        gap: 6px;
     }
 
-    .ojt-content {
-        max-width: 240px;
-        height: 160px;
-    }
-
-    .close {
-        font-size: 12px;
+    .ojt-photo {
+        border-radius: 6px;
     }
 
     /* ── CONTACT ── */
