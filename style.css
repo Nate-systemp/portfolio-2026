@@ -302,7 +302,7 @@ body.loading-active {
 .about-layout {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .about-label {
@@ -329,6 +329,7 @@ body.loading-active {
     line-height: 1.1;
     margin: 0;
     letter-spacing: 1px;
+    text-align: center;
 }
 
 .about-reveal-layer {
