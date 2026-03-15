@@ -1226,6 +1226,12 @@ body.loading-active {
     .desc-title {
         font-size: 72px;
         margin: 0 5%;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .desc-title.panning {
+        animation: panText var(--pan-duration, 3s) cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
     .desc-skills {
@@ -1421,8 +1427,12 @@ body.loading-active {
     .desc-title {
         font-size: 36px;
         margin: 0 6%;
-        white-space: normal;
-        word-break: break-word;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .desc-title.panning {
+        animation: panText var(--pan-duration, 2.5s) cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
     .desc-subtitle {
@@ -1740,5 +1750,23 @@ body.loading-active {
     .custom-cursor,
     .custom-cursor-dot {
         display: none !important;
+    }
+}
+
+/* ============================================
+   DESC-TITLE PAN ANIMATION (tablet/mobile)
+   ============================================ */
+@keyframes panText {
+    0% {
+        transform: translateX(0);
+    }
+    30% {
+        transform: translateX(var(--pan-offset, -200px));
+    }
+    70% {
+        transform: translateX(var(--pan-offset, -200px));
+    }
+    100% {
+        transform: translateX(0);
     }
 }

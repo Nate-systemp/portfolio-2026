@@ -231,17 +231,19 @@ function updateScrollEffects() {
     introContainer.style.transform = `translate(-50%, -50%) scale(${1 - progress * 0.15})`;
   }
 
-  // Desc-title parallax
-  const viewportHeight = window.innerHeight;
-  descTitles.forEach((title, i) => {
-    const rect = title.getBoundingClientRect();
-    if (rect.top < viewportHeight && rect.bottom > 0) {
-      const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
-      const direction = i % 2 === 0 ? 1 : -1;
-      const move = (scrollProgress - 0.5) * 200 * direction;
-      title.style.transform = `translate3d(${move}px, 0, 0)`;
-    }
-  });
+  // Desc-title parallax (desktop only — on smaller screens the pan animation takes over)
+  if (window.innerWidth > 1024) {
+    const viewportHeight = window.innerHeight;
+    descTitles.forEach((title, i) => {
+      const rect = title.getBoundingClientRect();
+      if (rect.top < viewportHeight && rect.bottom > 0) {
+        const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+        const direction = i % 2 === 0 ? 1 : -1;
+        const move = (scrollProgress - 0.5) * 200 * direction;
+        title.style.transform = `translate3d(${move}px, 0, 0)`;
+      }
+    });
+  }
 
   // Nav / icon color fill
   // The white background spans from the top of #desc to the top of #contact
@@ -299,6 +301,35 @@ document.querySelectorAll(".desc-skills").forEach((skill) => {
     }
   }, { threshold: 0.8 });
   typeObserver.observe(skill);
+});
+
+// ============================================
+// DESC-TITLE PAN ON TAP (tablet/phone)
+// ============================================
+// On screens ≤1024px, clicking a desc-title triggers a horizontal pan
+// animation so the user can read the full clipped text.
+descTitles.forEach(title => {
+  title.addEventListener('click', () => {
+    if (window.innerWidth > 1024) return;          // desktop: use hover instead
+    if (title.classList.contains('panning')) return; // already animating
+
+    // Calculate how much text overflows
+    const overflow = title.scrollWidth - title.clientWidth;
+    if (overflow <= 0) return; // nothing to pan
+
+    // Set custom properties for the keyframes
+    const panPx = -(overflow + 20);                         // 20px extra breathing room
+    const duration = Math.max(2, Math.min(overflow / 80, 5)); // 2s–5s adaptive
+    title.style.setProperty('--pan-offset', `${panPx}px`);
+    title.style.setProperty('--pan-duration', `${duration}s`);
+
+    title.classList.add('panning');
+
+    title.addEventListener('animationend', function handler() {
+      title.classList.remove('panning');
+      title.removeEventListener('animationend', handler);
+    });
+  });
 });
 
 // ============================================
