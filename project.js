@@ -420,13 +420,37 @@ if (cursor) {
         mouseY = e.clientY;
     });
 
+    // Use IntersectionObserver to start/stop cursor animation for efficiency
+    let isCursorActive = false;
+    let cursorRAF = null;
+
     function animateCursor() {
+        if (!isCursorActive) return;
         cursorX += (mouseX - cursorX) * 0.05;
         cursorY += (mouseY - cursorY) * 0.05;
         cursor.style.transform = `translate(${cursorX - 15}px, ${cursorY - 15}px)`;
-        requestAnimationFrame(animateCursor);
+        cursorRAF = requestAnimationFrame(animateCursor);
     }
-    animateCursor();
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    isCursorActive = true;
+                    animateCursor();
+                } else {
+                    isCursorActive = false;
+                    if (cursorRAF) cancelAnimationFrame(cursorRAF);
+                }
+            });
+        }, { threshold: 0 });
+        // Since the cursor is fixed to the body, we can observe the document body
+        // Or if we want to be more specific, we only run it while the tab is active
+        observer.observe(document.body);
+    } else {
+        isCursorActive = true;
+        animateCursor();
+    }
 
     // Cursor grow on interactive elements
     const hoverElements = document.querySelectorAll('a');

@@ -73,8 +73,12 @@ if (!isTouchDevice) {
 
   // 2. Hero Title (NATE) Parallax (desktop only)
   const introTitle = document.querySelector(".intro-title");
-  if (introTitle) {
-    window.addEventListener("mousemove", (e) => {
+  const introContainer = document.querySelector(".intro-container");
+  if (introTitle && introContainer) {
+    let isHeroVisible = false;
+
+    const heroMouseParallax = (e) => {
+      if (!isHeroVisible) return;
       const moveX = (e.clientX - window.innerWidth / 2) * 0.015;
       const moveY = (e.clientY - window.innerHeight / 2) * 0.015;
       gsap.to(introTitle, {
@@ -83,7 +87,24 @@ if (!isTouchDevice) {
         duration: 1.5,
         ease: "power2.out"
       });
-    });
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isHeroVisible = entry.isIntersecting;
+          if (isHeroVisible) {
+            window.addEventListener("mousemove", heroMouseParallax);
+          } else {
+            window.removeEventListener("mousemove", heroMouseParallax);
+          }
+        });
+      }, { threshold: 0 });
+      observer.observe(introContainer);
+    } else {
+      isHeroVisible = true;
+      window.addEventListener("mousemove", heroMouseParallax);
+    }
   }
 }
 
@@ -465,14 +486,34 @@ if (!isTouchDevice) {
   const introReveal = document.querySelector(".intro-reveal");
 
   if (introContainer && introReveal) {
-    introContainer.addEventListener("mousemove", (e) => {
+    let isIntroVisible = false;
+
+    const introRevealHandler = (e) => {
+      if (!isIntroVisible) return;
       const rect = introContainer.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       introReveal.style.clipPath = `circle(300px at ${x}px ${y}px)`;
       introReveal.style.setProperty('--mouse-x', x + 'px');
       introReveal.style.setProperty('--mouse-y', y + 'px');
-    });
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          isIntroVisible = entry.isIntersecting;
+          if (isIntroVisible) {
+            introContainer.addEventListener("mousemove", introRevealHandler);
+          } else {
+            introContainer.removeEventListener("mousemove", introRevealHandler);
+          }
+        });
+      }, { threshold: 0 });
+      observer.observe(introContainer);
+    } else {
+      isIntroVisible = true;
+      introContainer.addEventListener("mousemove", introRevealHandler);
+    }
 
     introContainer.addEventListener("mouseleave", () => {
       introReveal.style.clipPath = `circle(20px at 50% 50%)`;
@@ -491,16 +532,37 @@ if (!isTouchDevice) {
       mouseY = e.clientY;
     });
 
+    // Use IntersectionObserver to start/stop cursor animation for efficiency
+    let isCursorActive = false;
+    let cursorRAF = null;
+
     function animateCursor() {
+      if (!isCursorActive) return;
       cursorX += (mouseX - cursorX) * 0.05;
       cursorY += (mouseY - cursorY) * 0.05;
 
       cursor.style.transform = `translate(${cursorX - 15}px, ${cursorY - 15}px)`;
 
-      requestAnimationFrame(animateCursor);
+      cursorRAF = requestAnimationFrame(animateCursor);
     }
 
-    animateCursor();
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            isCursorActive = true;
+            animateCursor();
+          } else {
+            isCursorActive = false;
+            if (cursorRAF) cancelAnimationFrame(cursorRAF);
+          }
+        });
+      }, { threshold: 0 });
+      observer.observe(document.body);
+    } else {
+      isCursorActive = true;
+      animateCursor();
+    }
 
     // Hover detection for big cursor
     const hoverElements = document.querySelectorAll('a:not(.work-card):not(.icon), button, .desc-title, .logo, .intro-container');
