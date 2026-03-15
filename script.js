@@ -243,11 +243,21 @@ function updateScrollEffects() {
     }
   });
 
-  // Nav / icon color fill — toggle when #desc top enters view
+  // Nav / icon color fill
+  // The white background spans from the top of #desc to the top of #contact
   if (descSection) {
     const descTop = descSection.getBoundingClientRect().top;
-    const isOverWhite = descTop <= 0;
+    const contactSection = document.getElementById('contact');
+    const contactTop = contactSection ? contactSection.getBoundingClientRect().top : Infinity;
+    
     fillTargets.forEach(el => {
+      // Find the vertical center of the element
+      const rect = el.getBoundingClientRect();
+      const elCenterY = rect.top + (rect.height / 2);
+      
+      // Is this specific element over the white background area?
+      const isOverWhite = elCenterY >= descTop && elCenterY <= contactTop;
+      
       if (isOverWhite) {
         el.classList.add('fill-active');
       } else {
