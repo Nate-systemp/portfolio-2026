@@ -964,7 +964,7 @@ body.loading-active {
     /* Resting depth — cards should pop off the page even idle */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
     border: 1px solid rgba(32, 32, 32, 0.06);
-    border-left: 3px solid rgba(255, 25, 25, 0.3);
+    border-left: 3px solid rgba(0, 0, 0, 0.3);
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
         box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
         border-color 0.4s ease;
@@ -974,7 +974,7 @@ body.loading-active {
 .work-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 25, 25, 0.08);
-    border-left-color: #FF1919;
+    border-left-color: #202020;
 }
 
 .work-card-img {
