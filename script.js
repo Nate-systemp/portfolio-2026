@@ -1,17 +1,91 @@
 /**
  * VANILLA HIGH-PERFORMANCE SCRIPTS
- * No external animation libraries — pure native JS + CSS transitions.
- * Lenis removed: it hijacks wheel events and causes lag on weaker devices.
+ * Custom lightweight smooth scroll — no Lenis, no GSAP.
  */
 
 // ============================================
-// INITIALIZATION & GLOBAL STATE
+// LIGHTWEIGHT SMOOTH SCROLL ENGINE
+// ============================================
+// Unlike Lenis, this doesn't fight the browser. It accumulates
+// wheel delta and smoothly interpolates toward the target, clearing
+// the target when the user stops scrolling. No stacking, no lag.
+class SmoothScroll {
+  constructor(opts = {}) {
+    this.ease = opts.ease || 0.08;
+    this.targetY = window.scrollY;
+    this.currentY = window.scrollY;
+    this.isRunning = false;
+    this.wheelMultiplier = opts.wheelMultiplier || 1;
+
+    // Only apply on non-touch devices
+    if (!('ontouchstart' in window) && navigator.maxTouchPoints === 0) {
+      window.addEventListener('wheel', (e) => this._onWheel(e), { passive: false });
+    }
+
+    // Sync on native scroll (keyboard, scrollbar drag, middle-click)
+    window.addEventListener('scroll', () => {
+      if (!this.isRunning) {
+        this.targetY = window.scrollY;
+        this.currentY = window.scrollY;
+      }
+    }, { passive: true });
+  }
+
+  _onWheel(e) {
+    e.preventDefault();
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    this.targetY += e.deltaY * this.wheelMultiplier;
+    this.targetY = Math.max(0, Math.min(this.targetY, maxScroll));
+
+    if (!this.isRunning) {
+      this.isRunning = true;
+      this._animate();
+    }
+  }
+
+  _animate() {
+    const diff = this.targetY - this.currentY;
+
+    // Stop looping when close enough — prevents idle CPU usage
+    if (Math.abs(diff) < 0.5) {
+      this.currentY = this.targetY;
+      window.scrollTo(0, this.currentY);
+      this.isRunning = false;
+      return;
+    }
+
+    this.currentY += diff * this.ease;
+    window.scrollTo(0, this.currentY);
+    requestAnimationFrame(() => this._animate());
+  }
+
+  scrollTo(target, offset = 0) {
+    let el;
+    if (typeof target === 'string') el = document.querySelector(target);
+    else el = target;
+    if (!el) return;
+
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    this.targetY = Math.max(0, Math.min(el.getBoundingClientRect().top + window.scrollY + offset, maxScroll));
+    this.currentY = window.scrollY;
+
+    if (!this.isRunning) {
+      this.isRunning = true;
+      this._animate();
+    }
+  }
+}
+
+const smoothScroll = new SmoothScroll({ ease: 0.08, wheelMultiplier: 1 });
+
+// ============================================
+// GLOBAL STATE
 // ============================================
 let scrollY = 0;
 let mouseX = 0, mouseY = 0;
 const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-// Throttled scroll tracker — only reads scrollY once per frame
+// Throttled scroll tracker
 let ticking = false;
 window.addEventListener('scroll', () => {
   if (!ticking) {
@@ -32,21 +106,6 @@ if (!isTouchDevice) {
 }
 
 // ============================================
-// SMOOTH SCROLL-TO (Native Replacement for Lenis)
-// ============================================
-function smoothScrollTo(target, offset = 0) {
-  let el;
-  if (typeof target === 'string') {
-    el = document.querySelector(target);
-  } else {
-    el = target;
-  }
-  if (!el) return;
-  const y = el.getBoundingClientRect().top + window.scrollY + offset;
-  window.scrollTo({ top: y, behavior: 'smooth' });
-}
-
-// ============================================
 // NAVIGATION LOGIC
 // ============================================
 const navLinks = document.querySelectorAll('.list li span[data-text]');
@@ -56,12 +115,12 @@ navLinks.forEach((link, i) => {
   link.style.cursor = "pointer";
   link.addEventListener('click', () => {
     if (targets[i]) {
-      smoothScrollTo(targets[i], i === 1 ? -100 : 0);
+      smoothScroll.scrollTo(targets[i], i === 1 ? -100 : 0);
     }
   });
 });
 
-// Magnetic Hover (Vanilla)
+// Magnetic Hover
 if (!isTouchDevice) {
   const magnets = document.querySelectorAll('.icon, .list li span');
   magnets.forEach(magnet => {
@@ -83,7 +142,7 @@ if (!isTouchDevice) {
 }
 
 // ============================================
-// LOADING SCREEN (Vanilla)
+// LOADING SCREEN
 // ============================================
 const loadingScreen = document.getElementById("loadingScreen");
 const loadingBar = document.getElementById("loadingBar");
@@ -97,7 +156,6 @@ const isReturning = urlParams.get("from") === "project";
 function dismissLoading() {
   loadingScreen.style.clipPath = "inset(0 0 100% 0)";
   loadingScreen.style.transition = "clip-path 0.9s cubic-bezier(0.7, 0, 0.3, 1)";
-  
   setTimeout(() => {
     loadingScreen.classList.add("hidden");
     document.body.classList.remove("loading-active");
@@ -129,12 +187,11 @@ if (isReturning) {
       loadingPercent.textContent = `${Math.floor(progress)}%`;
     }
   }, 150);
-
   startBtn.addEventListener('click', dismissLoading);
 }
 
 // ============================================
-// INTRO ANIMATIONS (Vanilla)
+// INTRO ANIMATIONS
 // ============================================
 function startIntroAnimations() {
   const title = document.querySelector('.intro-title');
@@ -158,7 +215,7 @@ function startIntroAnimations() {
 // SCROLL EFFECTS (Throttled via rAF)
 // ============================================
 const introContainer = document.querySelector('.intro-container');
-const descTitle = document.querySelector('.desc-title');
+const descTitles = document.querySelectorAll('.desc-title');
 
 function updateScrollEffects() {
   if (introContainer) {
@@ -167,15 +224,16 @@ function updateScrollEffects() {
     introContainer.style.transform = `translate(-50%, -50%) scale(${1 - progress * 0.15})`;
   }
 
-  if (descTitle) {
-    const rect = descTitle.getBoundingClientRect();
-    const viewportHeight = window.innerHeight;
+  const viewportHeight = window.innerHeight;
+  descTitles.forEach((title, i) => {
+    const rect = title.getBoundingClientRect();
     if (rect.top < viewportHeight && rect.bottom > 0) {
       const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
-      const move = (scrollProgress - 0.5) * 200;
-      descTitle.style.transform = `translate3d(${move}px, 0, 0)`;
+      const direction = i % 2 === 0 ? 1 : -1; // alternate left/right
+      const move = (scrollProgress - 0.5) * 200 * direction;
+      title.style.transform = `translate3d(${move}px, 0, 0)`;
     }
-  }
+  });
 }
 
 // ============================================
@@ -191,7 +249,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
 
-// Typewriter Effect (Vanilla)
+// Typewriter Effect
 document.querySelectorAll(".desc-skills").forEach((skill) => {
   const fullText = skill.textContent.trim();
   const prefix = fullText.substring(0, 2);
@@ -224,7 +282,7 @@ if (worksToggle && worksGrid) {
     const isExpanded = worksGrid.classList.toggle("expanded");
     if (toggleText) toggleText.textContent = isExpanded ? "LESS WORKS" : "MORE WORKS";
     if (!isExpanded) {
-      smoothScrollTo(worksToggle, -window.innerHeight + 150);
+      smoothScroll.scrollTo(worksToggle, -window.innerHeight + 150);
     }
   });
 }
@@ -235,7 +293,7 @@ if (worksToggle && worksGrid) {
 if (!isTouchDevice) {
   const cursor = document.querySelector('.custom-cursor');
   let curX = 0, curY = 0;
-  
+
   function updateCursor() {
     curX += (mouseX - curX) * 0.15;
     curY += (mouseY - curY) * 0.15;
@@ -280,7 +338,7 @@ if (!isTouchDevice) {
     if (!isWaveVisible) return;
     time += 0.5;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     layers.forEach(l => {
       ctx.beginPath();
       ctx.moveTo(0, canvas.height);
@@ -296,7 +354,6 @@ if (!isTouchDevice) {
     requestAnimationFrame(animateWave);
   }
 
-  // Only animate wave when visible
   const waveObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

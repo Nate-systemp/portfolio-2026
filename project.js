@@ -1,7 +1,58 @@
 /**
  * PROJECT PAGE — VANILLA SCRIPTS
- * No Lenis. No GSAP. Pure native performance.
+ * Custom lightweight smooth scroll. No Lenis. No GSAP.
  */
+
+// ============================================
+// LIGHTWEIGHT SMOOTH SCROLL ENGINE
+// ============================================
+class SmoothScroll {
+  constructor(opts = {}) {
+    this.ease = opts.ease || 0.08;
+    this.targetY = window.scrollY;
+    this.currentY = window.scrollY;
+    this.isRunning = false;
+    this.wheelMultiplier = opts.wheelMultiplier || 1;
+
+    if (!('ontouchstart' in window) && navigator.maxTouchPoints === 0) {
+      window.addEventListener('wheel', (e) => this._onWheel(e), { passive: false });
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!this.isRunning) {
+        this.targetY = window.scrollY;
+        this.currentY = window.scrollY;
+      }
+    }, { passive: true });
+  }
+
+  _onWheel(e) {
+    e.preventDefault();
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    this.targetY += e.deltaY * this.wheelMultiplier;
+    this.targetY = Math.max(0, Math.min(this.targetY, maxScroll));
+
+    if (!this.isRunning) {
+      this.isRunning = true;
+      this._animate();
+    }
+  }
+
+  _animate() {
+    const diff = this.targetY - this.currentY;
+    if (Math.abs(diff) < 0.5) {
+      this.currentY = this.targetY;
+      window.scrollTo(0, this.currentY);
+      this.isRunning = false;
+      return;
+    }
+    this.currentY += diff * this.ease;
+    window.scrollTo(0, this.currentY);
+    requestAnimationFrame(() => this._animate());
+  }
+}
+
+const smoothScroll = new SmoothScroll({ ease: 0.08, wheelMultiplier: 1 });
 
 // ============================================
 // GLOBAL STATE
@@ -10,7 +61,6 @@ let scrollY = 0;
 let mouseX = 0, mouseY = 0;
 const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-// Throttled scroll — one read per frame
 let ticking = false;
 window.addEventListener('scroll', () => {
     if (!ticking) {
@@ -70,7 +120,6 @@ const params = new URLSearchParams(window.location.search);
 const id = parseInt(params.get("id")) || 1;
 const project = projects.find(p => p.id === id) || projects[0];
 
-// Populate DOM
 document.getElementById("projectNum").textContent = project.num;
 document.getElementById("projectTitle").textContent = project.title;
 document.getElementById("projectCat").textContent = project.category;
@@ -91,7 +140,6 @@ if (galleryGrid && project.gallery) {
     });
 }
 
-// Nav Links
 const backLink = document.querySelector(".back-link");
 if (backLink) backLink.href = `index.html?from=project&projectId=${id}`;
 
@@ -101,7 +149,7 @@ if (backLink) backLink.href = `index.html?from=project&projectId=${id}`;
 window.addEventListener('load', () => {
     const hero = document.querySelector('.project-hero');
     const heroImg = document.querySelector('.project-hero-img');
-    
+
     if (hero && heroImg) {
         hero.style.clipPath = "inset(0% 0% 0% 0%)";
         hero.style.transition = "clip-path 1.6s cubic-bezier(0.7, 0, 0.3, 1)";
@@ -109,7 +157,6 @@ window.addEventListener('load', () => {
         heroImg.style.transition = "transform 3s cubic-bezier(0.2, 1, 0.3, 1)";
     }
 
-    // Scroll Reveal Observer
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -122,7 +169,7 @@ window.addEventListener('load', () => {
 });
 
 // ============================================
-// PARALLAX (Throttled via scroll handler)
+// PARALLAX (Throttled)
 // ============================================
 const heroImg = document.querySelector('.project-hero-img');
 const heroNum = document.querySelector('.project-num');
