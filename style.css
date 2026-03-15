@@ -64,7 +64,8 @@ body::before {
     background-size: cover;
     z-index: 0;
     pointer-events: none;
-    transform: translateZ(0); /* Hardware accelerate fixed backgrounds */
+    transform: translateZ(0);
+    /* Hardware accelerate fixed backgrounds */
     will-change: transform;
 }
 
@@ -839,7 +840,8 @@ body.loading-active {
 .custom-cursor.hover {
     width: 250px;
     height: 250px;
-    background: rgba(255, 25, 25, 0.05); /* very light subtle red */
+    background: rgba(255, 25, 25, 0.05);
+    /* very light subtle red */
     border-color: rgba(255, 25, 25, 0.2);
 }
 
@@ -931,7 +933,7 @@ body.loading-active {
     overflow: hidden;
     position: relative;
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-                box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .ojt-photo::after {
@@ -954,19 +956,19 @@ body.loading-active {
 
 /* Individual photo images */
 .ojt-1 {
-    background-image: url('assets/ojt-one.jpg');
+    background-image: url('assets/ojt-one.webp');
 }
 
 .ojt-2 {
-    background-image: url('assets/ojt-two.jpg');
+    background-image: url('assets/ojt-two.webp');
 }
 
 .ojt-3 {
-    background-image: url('assets/ojt-three.jpg');
+    background-image: url('assets/ojt-three.webp');
 }
 
 .ojt-4 {
-    background-image: url('assets/ojt-four.jpg');
+    background-image: url('assets/ojt-four.webp');
 }
 
 .close {

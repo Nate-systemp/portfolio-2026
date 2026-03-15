@@ -30,7 +30,7 @@ const projects = [
         description: "A math game puzzle for the elementary school students designed for a thesis project for the Math Majors.",
         story: "The game is a 2D puzzle game where the player has to solve math problems to progress through the game. The game is designed to be fun and educational, and it is suitable for children aged 6-12.",
 
-        gallery: ["assets/FRACERA1.png", "assets/FRACERA2.png", "assets/FRACERA3.png"],
+        gallery: ["assets/FRACERA1.webp", "assets/FRACERA2.webp", "assets/FRACERA3.webp"],
     },
     {
         id: 2,
@@ -41,7 +41,7 @@ const projects = [
         description: "A 2D one-button archery game where the player has to shoot arrows at targets to progress through the game. The game is designed to be fun and educational, and it is suitable for children aged 6-12.",
         story: "Built from scratch using aspire, this project required handling complex database relationships and real-time updates. The greatest learning was architecting a system that scales — from 50 students in testing to thousands in production.",
 
-        gallery: ["assets/SQ1.png", "assets/SQ2.png", "assets/SQ3.png"],
+        gallery: ["assets/SQ1.webp", "assets/SQ2.webp", "assets/SQ3.webp"],
     },
     {
         id: 3,
@@ -52,7 +52,7 @@ const projects = [
         description: "A TTRPG Game Design for the Game Design and Development Class.",
         story: "Outfall is a post-apocalyptic TTRPG where players take on the role of survivors in a world ravaged by a mysterious plague. The game is set in the Philippines, and it features a unique blend of horror, action, and survival elements.",
 
-        gallery: ["assets/OF1.png", "assets/OF2.png", "assets/OF3.png"],
+        gallery: ["assets/OF1.webp", "assets/OF2.webp", "assets/OF3.webp"],
     },
     {
         id: 4,
