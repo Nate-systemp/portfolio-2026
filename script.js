@@ -1,21 +1,28 @@
 /**
  * VANILLA HIGH-PERFORMANCE SCRIPTS
- * Removed GSAP entirely for maximum efficiency and reduced bundle size.
+ * No external animation libraries — pure native JS + CSS transitions.
+ * Lenis removed: it hijacks wheel events and causes lag on weaker devices.
  */
 
 // ============================================
 // INITIALIZATION & GLOBAL STATE
 // ============================================
-const lenis = new Lenis();
 let scrollY = 0;
 let mouseX = 0, mouseY = 0;
 const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-function updateGlobalState() {
-  scrollY = window.scrollY;
-  requestAnimationFrame(updateGlobalState);
-}
-requestAnimationFrame(updateGlobalState);
+// Throttled scroll tracker — only reads scrollY once per frame
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      scrollY = window.scrollY;
+      updateScrollEffects();
+      ticking = false;
+    });
+    ticking = true;
+  }
+}, { passive: true });
 
 if (!isTouchDevice) {
   window.addEventListener('mousemove', (e) => {
@@ -24,12 +31,20 @@ if (!isTouchDevice) {
   }, { passive: true });
 }
 
-// Lenis render loop
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
+// ============================================
+// SMOOTH SCROLL-TO (Native Replacement for Lenis)
+// ============================================
+function smoothScrollTo(target, offset = 0) {
+  let el;
+  if (typeof target === 'string') {
+    el = document.querySelector(target);
+  } else {
+    el = target;
+  }
+  if (!el) return;
+  const y = el.getBoundingClientRect().top + window.scrollY + offset;
+  window.scrollTo({ top: y, behavior: 'smooth' });
 }
-requestAnimationFrame(raf);
 
 // ============================================
 // NAVIGATION LOGIC
@@ -41,11 +56,7 @@ navLinks.forEach((link, i) => {
   link.style.cursor = "pointer";
   link.addEventListener('click', () => {
     if (targets[i]) {
-      lenis.scrollTo(targets[i], {
-        offset: i === 1 ? -100 : 0,
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-      });
+      smoothScrollTo(targets[i], i === 1 ? -100 : 0);
     }
   });
 });
@@ -97,14 +108,12 @@ function dismissLoading() {
 if (isReturning) {
   loadingScreen.classList.add("hidden");
   document.body.classList.remove("loading-active");
-  // Immediate reveal for returning users
   const introEls = document.querySelectorAll('.intro-title, .intro-sub, .scroll-indicator');
   introEls.forEach(el => {
     el.style.opacity = "1";
     el.style.transform = "translateY(0)";
   });
 } else {
-  // Simulate loading
   let progress = 0;
   const loadInterval = setInterval(() => {
     progress += Math.random() * 15 + 2;
@@ -145,7 +154,9 @@ function startIntroAnimations() {
   show(scrollInd, 700);
 }
 
-// Intro Scroll Effect (Vanilla)
+// ============================================
+// SCROLL EFFECTS (Throttled via rAF)
+// ============================================
 const introContainer = document.querySelector('.intro-container');
 const descTitle = document.querySelector('.desc-title');
 
@@ -161,12 +172,11 @@ function updateScrollEffects() {
     const viewportHeight = window.innerHeight;
     if (rect.top < viewportHeight && rect.bottom > 0) {
       const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
-      const move = (scrollProgress - 0.5) * 200; // Move range
+      const move = (scrollProgress - 0.5) * 200;
       descTitle.style.transform = `translate3d(${move}px, 0, 0)`;
     }
   }
 }
-window.addEventListener('scroll', updateScrollEffects, { passive: true });
 
 // ============================================
 // REVEAL ANIMATIONS (Intersection Observer)
@@ -214,7 +224,7 @@ if (worksToggle && worksGrid) {
     const isExpanded = worksGrid.classList.toggle("expanded");
     if (toggleText) toggleText.textContent = isExpanded ? "LESS WORKS" : "MORE WORKS";
     if (!isExpanded) {
-      lenis.scrollTo(worksToggle, { offset: -window.innerHeight + 150, duration: 1.5 });
+      smoothScrollTo(worksToggle, -window.innerHeight + 150);
     }
   });
 }
@@ -236,7 +246,6 @@ if (!isTouchDevice) {
   }
   updateCursor();
 
-  // Cursor interactions
   const hovers = document.querySelectorAll('a, button, .desc-title, .intro-container');
   hovers.forEach(h => {
     h.addEventListener('mouseenter', () => cursor.classList.add('hover'));
@@ -251,8 +260,8 @@ if (!isTouchDevice) {
   const canvas = document.getElementById('contactWave');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  
-  let time = 0;
+  let isWaveVisible = false;
+
   function resize() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
@@ -266,7 +275,9 @@ if (!isTouchDevice) {
     { color: '#111111', alpha: 1.00, freq: 1.2, speed: 0.012, phase: 0.7, baseY: 0.78 },
   ];
 
+  let time = 0;
   function animateWave() {
+    if (!isWaveVisible) return;
     time += 0.5;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     
@@ -284,5 +295,17 @@ if (!isTouchDevice) {
     });
     requestAnimationFrame(animateWave);
   }
-  animateWave();
+
+  // Only animate wave when visible
+  const waveObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        isWaveVisible = true;
+        animateWave();
+      } else {
+        isWaveVisible = false;
+      }
+    });
+  }, { threshold: 0 });
+  waveObserver.observe(canvas);
 })();

@@ -1,24 +1,27 @@
 /**
- * PROJECT PAGE VANILLA SCRIPTS
- * GSAP removed for maximum performance.
+ * PROJECT PAGE — VANILLA SCRIPTS
+ * No Lenis. No GSAP. Pure native performance.
  */
 
-const lenis = new Lenis();
+// ============================================
+// GLOBAL STATE
+// ============================================
 let scrollY = 0;
 let mouseX = 0, mouseY = 0;
 const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-
-function updateState() {
-    scrollY = window.scrollY;
-    requestAnimationFrame(updateState);
-}
-requestAnimationFrame(updateState);
+// Throttled scroll — one read per frame
+let ticking = false;
+window.addEventListener('scroll', () => {
+    if (!ticking) {
+        requestAnimationFrame(() => {
+            scrollY = window.scrollY;
+            updateParallax();
+            ticking = false;
+        });
+        ticking = true;
+    }
+}, { passive: true });
 
 if (!isTouchDevice) {
     window.addEventListener('mousemove', (e) => {
@@ -96,7 +99,6 @@ if (backLink) backLink.href = `index.html?from=project&projectId=${id}`;
 // ENTRANCE & REVEALS
 // ============================================
 window.addEventListener('load', () => {
-    // Hero Entrance
     const hero = document.querySelector('.project-hero');
     const heroImg = document.querySelector('.project-hero-img');
     
@@ -107,7 +109,7 @@ window.addEventListener('load', () => {
         heroImg.style.transition = "transform 3s cubic-bezier(0.2, 1, 0.3, 1)";
     }
 
-    // Scroll Reveals
+    // Scroll Reveal Observer
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -119,15 +121,16 @@ window.addEventListener('load', () => {
     document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
 });
 
-// Parallax Effects
+// ============================================
+// PARALLAX (Throttled via scroll handler)
+// ============================================
+const heroImg = document.querySelector('.project-hero-img');
+const heroNum = document.querySelector('.project-num');
+
 function updateParallax() {
-    const heroImg = document.querySelector('.project-hero-img');
-    const heroNum = document.querySelector('.project-num');
     if (heroImg) heroImg.style.transform = `translate3d(0, ${scrollY * 0.3}px, 0)`;
     if (heroNum) heroNum.style.transform = `translate3d(0, ${-scrollY * 0.5}px, 0)`;
-    requestAnimationFrame(updateParallax);
 }
-requestAnimationFrame(updateParallax);
 
 // ============================================
 // CUSTOM CURSOR
@@ -135,6 +138,7 @@ requestAnimationFrame(updateParallax);
 if (!isTouchDevice) {
     const cursor = document.querySelector('.custom-cursor');
     let curX = 0, curY = 0;
+
     function moveCursor() {
         curX += (mouseX - curX) * 0.15;
         curY += (mouseY - curY) * 0.15;
