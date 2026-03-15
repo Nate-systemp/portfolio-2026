@@ -945,46 +945,53 @@ body.loading-active {
 #new-section {
     width: 100%;
     background: #F9F5F0;
-    padding: 100px 14% 80px;
+    padding: 80px 14% 80px;
     position: relative;
     z-index: 3;
     box-sizing: border-box;
 }
 
-.intern-header {
-    margin-bottom: 40px;
+/* ── Side-by-side layout ── */
+.intern-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 60px;
+    align-items: start;
+}
+
+.intern-left {
+    position: sticky;
+    top: 120px;
 }
 
 .intern-label {
     font-family: 'Poppins', sans-serif;
-    font-size: 12px;
+    font-size: 11px;
     letter-spacing: 4px;
     color: #999;
     font-weight: 400;
-    margin: 0 0 12px 0;
+    margin: 0 0 16px 0;
+    text-transform: uppercase;
 }
 
 .int-text {
     font-family: 'Tusker Grotesk', sans-serif;
     color: #202020;
     font-weight: 400;
-    font-size: 12vw;
-    line-height: 0.9;
-    margin: 0;
-}
-
-.intern-body {
-    max-width: 600px;
-    margin-bottom: 60px;
+    font-size: clamp(48px, 6vw, 110px);
+    line-height: 0.95;
+    margin: 0 0 28px 0;
+    hyphens: auto;
 }
 
 .intern-desc {
     font-family: 'Poppins', sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     color: #3a3a3a;
     font-weight: 300;
     line-height: 1.7;
-    margin: 0 0 16px 0;
+    margin: 0 0 20px 0;
+    max-width: 420px;
 }
 
 .intern-meta {
@@ -1006,17 +1013,17 @@ body.loading-active {
     font-size: 14px;
 }
 
-/* ── OJT Photo Grid ── */
+/* ── OJT Photo Grid — compact 2×2 ── */
 .ojt-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    gap: 12px;
 }
 
 .ojt-photo {
     width: 100%;
-    aspect-ratio: 4 / 3;
-    border-radius: 8px;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -1032,13 +1039,13 @@ body.loading-active {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 10px;
     transition: background 0.4s ease;
 }
 
 .ojt-photo:hover {
-    transform: translateY(-6px);
+    transform: translateY(-6px) scale(1.02);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
 }
 
@@ -1279,19 +1286,29 @@ body.loading-active {
     }
 
     #new-section {
-        padding: 80px 5% 60px;
+        padding: 60px 5% 60px;
+    }
+
+    .intern-layout {
+        grid-template-columns: 1fr 1.2fr;
+        gap: 40px;
+    }
+
+    .intern-left {
+        position: relative;
+        top: auto;
     }
 
     .int-text {
-        font-size: 14vw;
+        font-size: clamp(40px, 5vw, 72px);
     }
 
     .intern-desc {
-        font-size: 16px;
+        font-size: 15px;
     }
 
     .ojt-grid {
-        gap: 12px;
+        gap: 10px;
     }
 
     /* Faster tap on nav links */
