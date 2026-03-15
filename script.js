@@ -238,17 +238,17 @@ function updateScrollEffects() {
       const rect = title.getBoundingClientRect();
       if (rect.top < viewportHeight && rect.bottom > 0) {
         const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
-        const direction = i % 2 === 0 ? 1 : -1;
-        const move = (scrollProgress - 0.5) * 200 * direction;
+        // Slide from the right, and stop exactly at 0 (its native aligned position)
+        const move = Math.max(0, (scrollProgress - 0.5) * 300); 
         title.style.transform = `translate3d(${move}px, 0, 0)`;
       }
     });
   }
 
-  // Nav / icon color fill
-  // The white background spans from the top of #desc to the top of #contact
-  if (descSection) {
-    const descTop = descSection.getBoundingClientRect().top;
+  // The white background now starts at #about
+  const expSection = document.getElementById('about') || document.getElementById('experience') || descSection;
+  if (expSection) {
+    const whiteTop = expSection.getBoundingClientRect().top;
     const contactSection = document.getElementById('contact');
     const contactTop = contactSection ? contactSection.getBoundingClientRect().top : Infinity;
     
@@ -258,7 +258,7 @@ function updateScrollEffects() {
       const elCenterY = rect.top + (rect.height / 2);
       
       // Is this specific element over the white background area?
-      const isOverWhite = elCenterY >= descTop && elCenterY <= contactTop;
+      const isOverWhite = elCenterY >= whiteTop && elCenterY <= contactTop;
       
       if (isOverWhite) {
         el.classList.add('fill-active');
@@ -266,6 +266,48 @@ function updateScrollEffects() {
         el.classList.remove('fill-active');
       }
     });
+
+    // ── Experience Accordion Scroll Logic ──
+    const experienceContainer = document.getElementById('experience');
+    if (experienceContainer) {
+      const expRect = experienceContainer.getBoundingClientRect();
+      const viewportH = window.innerHeight;
+      
+      // Calculate how far we've scrolled cleanly *through* the experience container
+      // 0 = just hit the top, 1 = reached the bottom
+      const scrollableDist = expRect.height - viewportH;
+      const progress = Math.max(0, Math.min(1, -expRect.top / scrollableDist));
+      
+      // Only run this logic if we are actively scrolling within the container boundaries
+      if (expRect.top <= 0 && expRect.bottom >= viewportH) {
+        const roles = document.querySelectorAll('.role-item');
+        const expLeft = document.querySelector('.exp-left');
+        
+        if (roles.length > 0) {
+          const interval = 1 / roles.length;
+          const activeIndex = Math.min(roles.length - 1, Math.floor(progress / interval));
+          
+          let activeOffset = 0;
+          
+          roles.forEach((role, i) => {
+            if (i === activeIndex) {
+              role.classList.add('active');
+              activeOffset = role.offsetTop;
+            } else {
+              role.classList.remove('active');
+            }
+          });
+          
+          if (expLeft && window.innerWidth > 1024) {
+            expLeft.style.transform = `translateY(${activeOffset}px)`;
+          }
+        }
+      } else if (expRect.top > 0) {
+        document.querySelectorAll('.role-item').forEach(r => r.classList.remove('active'));
+        const expLeft = document.querySelector('.exp-left');
+        if (expLeft) expLeft.style.transform = `translateY(0px)`;
+      }
+    }
   }
 }
 
@@ -333,6 +375,12 @@ descTitles.forEach(title => {
 });
 
 // ============================================
+// EXPERIENCE ROLES ACCORDION (Now handled by scroll logic above)
+// ============================================
+const roleItems = document.querySelectorAll('.role-item');
+// Click logic removed in favor of scroll-driven sequential revealing on desktop/mobile
+
+// ============================================
 // WORKS GRID TOGGLE
 // ============================================
 const worksToggle = document.getElementById("worksToggle");
@@ -354,19 +402,43 @@ if (worksToggle && worksGrid) {
 // ============================================
 if (!isTouchDevice) {
   const cursor = document.querySelector('.custom-cursor');
+  const maskedHeading = document.querySelector('.about-heading-masked');
   let curX = 0, curY = 0;
+  let maskSize = 0;
+  let isAboutHovered = false;
+
+  const aboutWrap = document.querySelector('.about-heading-wrap');
+  if (aboutWrap) {
+    aboutWrap.addEventListener('mouseenter', () => isAboutHovered = true);
+    aboutWrap.addEventListener('mouseleave', () => isAboutHovered = false);
+  }
 
   function updateCursor() {
     curX += (mouseX - curX) * 0.15;
     curY += (mouseY - curY) * 0.15;
     if (cursor) {
-      cursor.style.transform = `translate3d(${curX - 15}px, ${curY - 15}px, 0)`;
+      cursor.style.transform = `translate3d(${curX}px, ${curY}px, 0) translate(-50%, -50%)`;
     }
+
+    // Mask logic for exactly syncing the reveal text size and position with the cursor
+    // 200 radius = 400px diameter to perfectly match the updated CSS cursor size
+    maskSize += ((isAboutHovered ? 200 : 0) - maskSize) * 0.15;
+    if (maskedHeading && maskSize > 0.5) {
+      const rect = maskedHeading.getBoundingClientRect();
+      const localX = curX - rect.left;
+      const localY = curY - rect.top;
+      maskedHeading.style.setProperty('--mask-x', `${localX}px`);
+      maskedHeading.style.setProperty('--mask-y', `${localY}px`);
+      maskedHeading.style.setProperty('--mask-size', `${maskSize}px`);
+    } else if (maskedHeading) {
+      maskedHeading.style.setProperty('--mask-size', `0px`);
+    }
+
     requestAnimationFrame(updateCursor);
   }
   updateCursor();
 
-  const hovers = document.querySelectorAll('a, button, .desc-title, .intro-container');
+  const hovers = document.querySelectorAll('a, button, .desc-title, .intro-container, .about-heading-wrap');
   hovers.forEach(h => {
     h.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     h.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
