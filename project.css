@@ -147,6 +147,7 @@
     height: 1px;
     background: #d0ccc7;
     margin: 50px 0;
+    will-change: transform;
 }
 
 /* Description */
@@ -156,6 +157,7 @@
     grid-template-columns: 200px 1fr;
     gap: 40px;
     align-items: start;
+    will-change: transform, opacity;
 }
 
 .project-desc-label,

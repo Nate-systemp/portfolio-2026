@@ -484,6 +484,7 @@ body.loading-active {
     background-clip: text;
     -webkit-text-fill-color: transparent;
     transition: background-position 0.6s ease;
+    will-change: transform;
 }
 
 .desc-title:hover {
@@ -632,6 +633,7 @@ body.loading-active {
     border-radius: 8px;
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
         box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform, opacity;
 }
 
 .work-card:hover {
@@ -934,6 +936,7 @@ body.loading-active {
     position: relative;
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
         box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform, opacity;
 }
 
 .ojt-photo::after {
@@ -1032,6 +1035,7 @@ body.loading-active {
     margin-top: 50px;
     opacity: 0;
     transform: translateY(100px);
+    will-change: transform, opacity;
 }
 
 .contact-body {

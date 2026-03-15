@@ -9,7 +9,21 @@ gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
 });
 
-gsap.ticker.lagSmoothing(0);
+// GSAP performance defaults
+gsap.ticker.lagSmoothing(500, 33);
+
+// ============================================
+// GLOBAL MOUSE TRACKING
+// ============================================
+let mouseX = 0, mouseY = 0;
+const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+if (!isTouchDevice) {
+    window.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    }, { passive: true });
+}
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -411,24 +425,16 @@ gsap.fromTo(".project-nav-link.next",
 // CUSTOM CURSOR
 // ============================================
 const cursor = document.querySelector('.custom-cursor');
-if (cursor) {
-    let mouseX = 0, mouseY = 0;
+if (cursor && !isTouchDevice) {
     let cursorX = 0, cursorY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    // Use IntersectionObserver to start/stop cursor animation for efficiency
     let isCursorActive = false;
     let cursorRAF = null;
 
     function animateCursor() {
         if (!isCursorActive) return;
-        cursorX += (mouseX - cursorX) * 0.05;
-        cursorY += (mouseY - cursorY) * 0.05;
-        cursor.style.transform = `translate(${cursorX - 15}px, ${cursorY - 15}px)`;
+        cursorX += (mouseX - cursorX) * 0.15;
+        cursorY += (mouseY - cursorY) * 0.15;
+        cursor.style.transform = `translate3d(${cursorX - 15}px, ${cursorY - 15}px, 0)`;
         cursorRAF = requestAnimationFrame(animateCursor);
     }
 
@@ -444,8 +450,6 @@ if (cursor) {
                 }
             });
         }, { threshold: 0 });
-        // Since the cursor is fixed to the body, we can observe the document body
-        // Or if we want to be more specific, we only run it while the tab is active
         observer.observe(document.body);
     } else {
         isCursorActive = true;
@@ -453,7 +457,7 @@ if (cursor) {
     }
 
     // Cursor grow on interactive elements
-    const hoverElements = document.querySelectorAll('a');
+    const hoverElements = document.querySelectorAll('a, .gallery-item');
     hoverElements.forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
