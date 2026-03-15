@@ -231,19 +231,18 @@ function updateScrollEffects() {
     introContainer.style.transform = `translate(-50%, -50%) scale(${1 - progress * 0.15})`;
   }
 
-  // Desc-title parallax (desktop only — on smaller screens the pan animation takes over)
-  if (window.innerWidth > 1024) {
-    const viewportHeight = window.innerHeight;
-    descTitles.forEach((title, i) => {
-      const rect = title.getBoundingClientRect();
-      if (rect.top < viewportHeight && rect.bottom > 0) {
-        const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
-        // Slide from the right, and stop exactly at 0 (its native aligned position)
-        const move = Math.max(0, (scrollProgress - 0.5) * 300); 
-        title.style.transform = `translate3d(${move}px, 0, 0)`;
-      }
-    });
-  }
+  // Desc-title scroll parallax: titles start offset and pan towards their original position
+  const viewportHeight = window.innerHeight;
+  descTitles.forEach((title, i) => {
+    const rect = title.getBoundingClientRect();
+    if (rect.top < viewportHeight && rect.bottom > 0) {
+      const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+      // Pan from right (maxOffset) to 0 (native position) as the element scrolls toward viewport center
+      const maxOffset = window.innerWidth > 1024 ? 300 : 150;
+      const move = Math.max(0, (0.5 - scrollProgress) * maxOffset * 2); 
+      title.style.transform = `translate3d(${move}px, 0, 0)`;
+    }
+  });
 
   // The white background now starts at #about
   const expSection = document.getElementById('about') || document.getElementById('experience') || descSection;
@@ -268,17 +267,17 @@ function updateScrollEffects() {
     });
 
     // ── Experience Accordion Scroll Logic ──
+    // ── Experience Accordion Scroll Logic ──
     const experienceContainer = document.getElementById('experience');
-    if (experienceContainer) {
+    // Only run the sticky-scroll sequence on Desktop. 
+    // On mobile, pinning (sticky) + long scrolling usually feels "buggy".
+    if (experienceContainer && window.innerWidth > 1024) {
       const expRect = experienceContainer.getBoundingClientRect();
       const viewportH = window.innerHeight;
       
-      // Calculate how far we've scrolled cleanly *through* the experience container
-      // 0 = just hit the top, 1 = reached the bottom
       const scrollableDist = expRect.height - viewportH;
       const progress = Math.max(0, Math.min(1, -expRect.top / scrollableDist));
       
-      // Only run this logic if we are actively scrolling within the container boundaries
       if (expRect.top <= 0 && expRect.bottom >= viewportH) {
         const roles = document.querySelectorAll('.role-item');
         const expLeft = document.querySelector('.exp-left');
@@ -288,7 +287,6 @@ function updateScrollEffects() {
           const activeIndex = Math.min(roles.length - 1, Math.floor(progress / interval));
           
           let activeOffset = 0;
-          
           roles.forEach((role, i) => {
             if (i === activeIndex) {
               role.classList.add('active');
@@ -298,7 +296,7 @@ function updateScrollEffects() {
             }
           });
           
-          if (expLeft && window.innerWidth > 1024) {
+          if (expLeft) {
             expLeft.style.transform = `translateY(${activeOffset}px)`;
           }
         }
@@ -346,39 +344,43 @@ document.querySelectorAll(".desc-skills").forEach((skill) => {
 });
 
 // ============================================
-// DESC-TITLE PAN ON TAP (tablet/phone)
-// ============================================
-// On screens ≤1024px, clicking a desc-title triggers a horizontal pan
-// animation so the user can read the full clipped text.
-descTitles.forEach(title => {
-  title.addEventListener('click', () => {
-    if (window.innerWidth > 1024) return;          // desktop: use hover instead
-    if (title.classList.contains('panning')) return; // already animating
-
-    // Calculate how much text overflows
-    const overflow = title.scrollWidth - title.clientWidth;
-    if (overflow <= 0) return; // nothing to pan
-
-    // Set custom properties for the keyframes
-    const panPx = -(overflow + 20);                         // 20px extra breathing room
-    const duration = Math.max(2, Math.min(overflow / 80, 5)); // 2s–5s adaptive
-    title.style.setProperty('--pan-offset', `${panPx}px`);
-    title.style.setProperty('--pan-duration', `${duration}s`);
-
-    title.classList.add('panning');
-
-    title.addEventListener('animationend', function handler() {
-      title.classList.remove('panning');
-      title.removeEventListener('animationend', handler);
-    });
-  });
-});
-
-// ============================================
-// EXPERIENCE ROLES ACCORDION (Now handled by scroll logic above)
+// EXPERIENCE ROLES ACCORDION
 // ============================================
 const roleItems = document.querySelectorAll('.role-item');
-// Click logic removed in favor of scroll-driven sequential revealing on desktop/mobile
+
+// Desktop: Scrolling handled in rAF loop (Sequential expansion)
+
+// Mobile: Reveal Sequential on scroll + Click to toggle
+if (window.innerWidth <= 1024) {
+  // 1. Reveal Sequential via Observer (as they scroll naturally)
+  const roleObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      // If the role is roughly in the middle 40% of the screen
+      if (entry.isIntersecting) {
+        // Clear others and make this one active
+        roleItems.forEach(r => r.classList.remove('active'));
+        entry.target.classList.add('active');
+      }
+    });
+  }, { 
+    threshold: 0, 
+    rootMargin: "-40% 0px -40% 0px" // Trigger when element is in the middle of screen
+  });
+
+  roleItems.forEach(item => {
+    roleObserver.observe(item);
+    
+    // 2. Also allow manual click/tap
+    const header = item.querySelector('.role-header');
+    if (header) {
+      header.addEventListener('click', () => {
+        const wasActive = item.classList.contains('active');
+        roleItems.forEach(r => r.classList.remove('active'));
+        if (!wasActive) item.classList.add('active');
+      });
+    }
+  });
+}
 
 // ============================================
 // WORKS GRID TOGGLE
@@ -409,8 +411,14 @@ if (!isTouchDevice) {
 
   const aboutWrap = document.querySelector('.about-heading-wrap');
   if (aboutWrap) {
-    aboutWrap.addEventListener('mouseenter', () => isAboutHovered = true);
-    aboutWrap.addEventListener('mouseleave', () => isAboutHovered = false);
+    aboutWrap.addEventListener('mouseenter', () => {
+      isAboutHovered = true;
+      if (cursor) cursor.classList.add('about-mode');
+    });
+    aboutWrap.addEventListener('mouseleave', () => {
+      isAboutHovered = false;
+      if (cursor) cursor.classList.remove('about-mode');
+    });
   }
 
   function updateCursor() {

@@ -337,8 +337,8 @@ body.loading-active {
     left: 0;
     width: 100%;
     height: 100%;
-    color: #FF1919;
-    background-color: #F9F5F0;
+    color: #F9F5F0;
+    background-color: #202020;
     pointer-events: none;
     clip-path: circle(var(--mask-size, 0px) at var(--mask-x, 50%) var(--mask-y, 50%));
     -webkit-clip-path: circle(var(--mask-size, 0px) at var(--mask-x, 50%) var(--mask-y, 50%));
@@ -1180,7 +1180,7 @@ body.loading-active {
     width: 30px;
     height: 30px;
     background: transparent;
-    border: 1.5px solid #FF1919;
+    border: 1.5px solid #202020;
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
@@ -1189,10 +1189,14 @@ body.loading-active {
 }
 
 .custom-cursor.hover {
-    width: 400px;
-    height: 400px;
-    background: rgba(255, 25, 25, 0.05); /* very light subtle red */
-    border-color: rgba(255, 25, 25, 0.2);
+    width: 30px;
+    height: 30px;
+    background: rgba(32, 32, 32, 0.1); 
+    border-color: #202020;
+}
+
+.custom-cursor.about-mode {
+    opacity: 0;
 }
 
 .custom-cursor.hide {
@@ -1581,9 +1585,13 @@ body.loading-active {
 
     /* ── EXPERIENCE SECTION ── */
     #experience {
-        height: 350vh;
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 80px;
     }
     .exp-sticky {
+        position: relative;
+        top: 0;
         padding: 80px 5%;
     }
 
@@ -1751,9 +1759,13 @@ body.loading-active {
 
     /* ── EXPERIENCE SECTION ── */
     #experience {
-        height: 350vh;
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 60px;
     }
     .exp-sticky {
+        position: relative;
+        top: 0;
         padding: 60px 6%;
     }
 
@@ -1862,10 +1874,6 @@ body.loading-active {
         margin: 0 6%;
         white-space: nowrap;
         overflow: hidden;
-    }
-
-    .desc-title.panning {
-        animation: panText var(--pan-duration, 2.5s) cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
     .desc-subtitle {
@@ -2186,13 +2194,5 @@ body.loading-active {
 }
 
 /* ============================================
-   DESC-TITLE PAN ANIMATION (tablet/mobile)
+   HIDE CURSOR ON TOUCH DEVICES
    ============================================ */
-@keyframes panText {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(var(--pan-offset, -200px));
-    }
-}
