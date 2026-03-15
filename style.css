@@ -707,10 +707,10 @@ body.loading-active {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 180px;
+    gap: 280px;
     max-width: 70%;
     padding: 7% 0%;
-    margin: 0 7%;
+    margin: 0 13.5%;
 }
 
 .desc-text {
@@ -720,7 +720,7 @@ body.loading-active {
     font-weight: 400;
     text-align: left;
     max-width: 1060px;
-    margin-left: 135px;
+   
     
 }
 
