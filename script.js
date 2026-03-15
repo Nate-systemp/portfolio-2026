@@ -1,26 +1,35 @@
+/**
+ * VANILLA HIGH-PERFORMANCE SCRIPTS
+ * Removed GSAP entirely for maximum efficiency and reduced bundle size.
+ */
+
+// ============================================
+// INITIALIZATION & GLOBAL STATE
+// ============================================
 const lenis = new Lenis();
-let canScrollPast = false;
+let scrollY = 0;
+let mouseX = 0, mouseY = 0;
 const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-lenis.on("scroll", ScrollTrigger.update);
+function updateGlobalState() {
+  scrollY = window.scrollY;
+  requestAnimationFrame(updateGlobalState);
+}
+requestAnimationFrame(updateGlobalState);
 
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
-});
-
-// GSAP performance defaults (restored to handle CPU spikes gracefully)
-gsap.ticker.lagSmoothing(500, 33);
-
-// ============================================
-// GLOBAL MOUSE TRACKING (Consolidated)
-// ============================================
-let mouseX = 0, mouseY = 0;
 if (!isTouchDevice) {
-  window.addEventListener("mousemove", (e) => {
+  window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
   }, { passive: true });
 }
+
+// Lenis render loop
+function raf(time) {
+  lenis.raf(time);
+  requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
 
 // ============================================
 // NAVIGATION LOGIC
@@ -31,115 +40,39 @@ const targets = ["#desc", ".workintro", "#contact"];
 navLinks.forEach((link, i) => {
   link.style.cursor = "pointer";
   link.addEventListener('click', () => {
-    // Quick, lightweight click feedback
-    gsap.to(link, {
-      scale: 0.92,
-      duration: 0.15,
-      yoyo: true,
-      repeat: 1,
-      ease: "power2.inOut"
-    });
-
-    // Fast, smooth scroll
     if (targets[i]) {
       lenis.scrollTo(targets[i], {
         offset: i === 1 ? -100 : 0,
         duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
       });
     }
   });
 });
 
-// 1. Magnetic Hover for Menu and Icons (desktop only)
+// Magnetic Hover (Vanilla)
 if (!isTouchDevice) {
   const magnets = document.querySelectorAll('.icon, .list li span');
-
-  magnets.forEach((magnet) => {
-    let bounding = null;
-
-    magnet.addEventListener("mouseenter", () => {
-      bounding = magnet.getBoundingClientRect();
+  magnets.forEach(magnet => {
+    let rect = null;
+    magnet.addEventListener('mouseenter', () => rect = magnet.getBoundingClientRect());
+    magnet.addEventListener('mousemove', (e) => {
+      if (!rect) rect = magnet.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      magnet.style.transform = `translate3d(${dx * 0.4}px, ${dy * 0.4}px, 0) scale(1.05)`;
     });
-
-    magnet.addEventListener("mousemove", (e) => {
-      if (!bounding) bounding = magnet.getBoundingClientRect();
-      const centerX = bounding.left + bounding.width / 2;
-      const centerY = bounding.top + bounding.height / 2;
-      const x = e.clientX - centerX;
-      const y = e.clientY - centerY;
-
-      gsap.to(magnet, {
-        x: x * 0.45,
-        y: y * 0.45,
-        scale: 1.05,
-        rotation: x * 0.03,
-        duration: 0.6,
-        ease: "power3.out"
-      });
-    });
-
-    magnet.addEventListener("mouseleave", () => {
-      bounding = null;
-      gsap.to(magnet, {
-        x: 0,
-        y: 0,
-        scale: 1,
-        rotation: 0,
-        duration: 1.5,
-        ease: "elastic.out(1, 0.3)"
-      });
+    magnet.addEventListener('mouseleave', () => {
+      magnet.style.transform = `translate3d(0, 0, 0) scale(1)`;
+      rect = null;
     });
   });
-
-  // 2. Hero Title (NATE) Parallax (desktop only)
-  const introTitle = document.querySelector(".intro-title");
-  const introContainer = document.querySelector(".intro-container");
-  if (introTitle && introContainer) {
-    let isHeroVisible = false;
-
-    function updateHeroParallax() {
-      if (!isHeroVisible) return;
-      const moveX = (mouseX - window.innerWidth / 2) * 0.015;
-      const moveY = (mouseY - window.innerHeight / 2) * 0.015;
-      gsap.to(introTitle, {
-        x: moveX,
-        y: moveY,
-        duration: 1.5,
-        ease: "power2.out"
-      });
-    }
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          isHeroVisible = entry.isIntersecting;
-          if (isHeroVisible) {
-            gsap.ticker.add(updateHeroParallax);
-          } else {
-            gsap.ticker.remove(updateHeroParallax);
-          }
-        });
-      }, { threshold: 0 });
-      observer.observe(introContainer);
-    } else {
-      isHeroVisible = true;
-      gsap.ticker.add(updateHeroParallax);
-    }
-  }
 }
 
-// Stop Lenis scroll until loading is dismissed
-lenis.stop();
-
-gsap.registerPlugin(ScrollTrigger, TextPlugin);
-
-window.addEventListener("load", () => {
-  ScrollTrigger.refresh();
-});
-
 // ============================================
-// LOADING SCREEN
+// LOADING SCREEN (Vanilla)
 // ============================================
 const loadingScreen = document.getElementById("loadingScreen");
 const loadingBar = document.getElementById("loadingBar");
@@ -148,255 +81,129 @@ const startBtn = document.getElementById("startBtn");
 const loadingLetters = document.querySelectorAll(".loading-logo-letter");
 
 const urlParams = new URLSearchParams(window.location.search);
-const comingFromProject = urlParams.get("from") === "project";
-const returnProjectId = urlParams.get("projectId");
+const isReturning = urlParams.get("from") === "project";
 
-if (comingFromProject) {
+function dismissLoading() {
+  loadingScreen.style.clipPath = "inset(0 0 100% 0)";
+  loadingScreen.style.transition = "clip-path 0.9s cubic-bezier(0.7, 0, 0.3, 1)";
+  
+  setTimeout(() => {
+    loadingScreen.classList.add("hidden");
+    document.body.classList.remove("loading-active");
+    startIntroAnimations();
+  }, 900);
+}
+
+if (isReturning) {
   loadingScreen.classList.add("hidden");
   document.body.classList.remove("loading-active");
-
-  gsap.set(".intro-title", { y: 0, opacity: 1 });
-  gsap.set(".intro-sub", { y: 0, opacity: 1 });
-  gsap.set(".scroll-indicator", { y: 0, opacity: 0.6 });
-
-  lenis.start();
-
-  window.history.replaceState({}, "", window.location.pathname);
-
-  if (returnProjectId) {
-    window.addEventListener("load", () => {
-      ScrollTrigger.refresh();
-      const targetCard = document.querySelector(
-        `.work-card[href="project.html?id=${returnProjectId}"]`
-      );
-      if (targetCard) {
-        setTimeout(() => {
-          lenis.scrollTo(targetCard, {
-            offset: -100,
-            duration: 0.01,
-            immediate: true
-          });
-        }, 100);
-      }
-    });
-  }
-
-} else {
-  const loadTl = gsap.timeline();
-
-  loadTl.to(loadingLetters, {
-    y: 0,
-    opacity: 1,
-    duration: 0.8,
-    stagger: 0.12,
-    ease: "power4.out",
-    delay: 0.3
+  // Immediate reveal for returning users
+  const introEls = document.querySelectorAll('.intro-title, .intro-sub, .scroll-indicator');
+  introEls.forEach(el => {
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
   });
-
+} else {
+  // Simulate loading
   let progress = 0;
-  const loadingInterval = setInterval(() => {
-    progress += Math.random() * 12 + 3;
+  const loadInterval = setInterval(() => {
+    progress += Math.random() * 15 + 2;
     if (progress >= 100) {
       progress = 100;
-      clearInterval(loadingInterval);
-      loadingPercent.textContent = "100%";
+      clearInterval(loadInterval);
       loadingBar.style.width = "100%";
-
-      gsap.to(startBtn, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        delay: 0.3
-      });
-
-      gsap.to(loadingLetters, {
-        color: "#FF1919",
-        duration: 1.2,
-        stagger: 0.08,
-        ease: "power2.inOut",
-        yoyo: true,
-        repeat: -1,
-        repeatDelay: 0.5
-      });
+      loadingPercent.textContent = "100%";
+      startBtn.style.opacity = "1";
+      startBtn.style.transform = "translateY(0)";
     } else {
-      loadingPercent.textContent = Math.floor(progress) + "%";
-      loadingBar.style.width = progress + "%";
+      loadingBar.style.width = `${progress}%`;
+      loadingPercent.textContent = `${Math.floor(progress)}%`;
     }
-  }, 180);
+  }, 150);
 
-  startBtn.addEventListener("click", () => {
-    gsap.killTweensOf(loadingLetters);
-
-    const exitTl = gsap.timeline({
-      onComplete: () => {
-        loadingScreen.classList.add("hidden");
-        document.body.classList.remove("loading-active");
-        lenis.start();
-        introTl.play();
-      }
-    });
-
-    exitTl
-      .to(loadingLetters, {
-        y: -60,
-        opacity: 0,
-        stagger: 0.05,
-        duration: 0.5,
-        ease: "power3.in"
-      })
-      .to([".loading-bar-container", ".loading-percent", startBtn, ".loading-footer-text"], {
-        opacity: 0,
-        y: -20,
-        duration: 0.4,
-        ease: "power2.in"
-      }, "-=0.3")
-      .to(loadingScreen, {
-        clipPath: "inset(0 0 100% 0)",
-        duration: 0.9,
-        ease: "power3.inOut"
-      }, "-=0.1");
-  });
+  startBtn.addEventListener('click', dismissLoading);
 }
 
 // ============================================
-// INTRO ANIMATIONS
+// INTRO ANIMATIONS (Vanilla)
 // ============================================
-const introTl = gsap.timeline({ paused: true });
+function startIntroAnimations() {
+  const title = document.querySelector('.intro-title');
+  const sub = document.querySelector('.intro-sub');
+  const scrollInd = document.querySelector('.scroll-indicator');
 
-introTl.to(".intro-title", {
-  y: 0,
-  opacity: 1,
-  duration: 1.5,
-  ease: "power4.out",
-  delay: 0.2
-})
-  .to(".intro-sub", {
-    y: 0,
-    opacity: 1,
-    duration: 1,
-    ease: "power3.out"
-  }, "-=1")
-  .to(".scroll-indicator", {
-    y: 0,
-    opacity: 0.6,
-    duration: 1,
-    ease: "power2.out"
-  }, "-=0.5");
+  const show = (el, delay) => {
+    setTimeout(() => {
+      el.style.transition = "opacity 1.5s ease, transform 1.5s cubic-bezier(0.2, 1, 0.3, 1)";
+      el.style.opacity = "1";
+      el.style.transform = "translateY(0)";
+    }, delay);
+  };
 
-gsap.to(".intro-container", {
-  scale: 0.85,
-  opacity: 0,
-  ease: "none",
-  scrollTrigger: {
-    trigger: "body",
-    start: "top top",
-    end: "50vh",
-    scrub: true
+  show(title, 100);
+  show(sub, 400);
+  show(scrollInd, 700);
+}
+
+// Intro Scroll Effect (Vanilla)
+const introContainer = document.querySelector('.intro-container');
+const descTitle = document.querySelector('.desc-title');
+
+function updateScrollEffects() {
+  if (introContainer) {
+    const progress = Math.min(scrollY / (window.innerHeight * 0.5), 1);
+    introContainer.style.opacity = 1 - progress;
+    introContainer.style.transform = `translate(-50%, -50%) scale(${1 - progress * 0.15})`;
   }
-});
 
-gsap.to(".list span[data-text]", {
-  backgroundPosition: "0% 100%",
-  ease: "none",
-  scrollTrigger: {
-    trigger: "#desc",
-    start: "top 80%",
-    end: "top 20%",
-    scrub: true
-  }
-});
-
-document.querySelectorAll(".desc-title").forEach((title) => {
-  gsap.fromTo(title,
-    { x: "100%" },
-    {
-      x: "0%",
-      ease: "none",
-      scrollTrigger: {
-        trigger: title,
-        start: "top bottom",
-        end: "top 70%",
-        scrub: true
-      }
+  if (descTitle) {
+    const rect = descTitle.getBoundingClientRect();
+    const viewportHeight = window.innerHeight;
+    if (rect.top < viewportHeight && rect.bottom > 0) {
+      const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+      const move = (scrollProgress - 0.5) * 200; // Move range
+      descTitle.style.transform = `translate3d(${move}px, 0, 0)`;
     }
-  );
-});
-
-gsap.to(".work-text", {
-  y: -100,
-  ease: "none",
-  scrollTrigger: {
-    trigger: ".work-text",
-    start: "top bottom",
-    end: "bottom top",
-    scrub: true
   }
-});
+}
+window.addEventListener('scroll', updateScrollEffects, { passive: true });
 
 // ============================================
-// INTERNSHIP SECTION — Lightweight Scroll Reveal
+// REVEAL ANIMATIONS (Intersection Observer)
 // ============================================
-gsap.from(".intern-header", {
-  y: 60,
-  opacity: 0,
-  duration: 1,
-  ease: "power3.out",
-  scrollTrigger: {
-    trigger: ".intern-header",
-    start: "top 85%",
-    toggleActions: "play none none reverse"
-  }
-});
-
-gsap.from(".intern-body", {
-  y: 40,
-  opacity: 0,
-  duration: 1,
-  ease: "power3.out",
-  scrollTrigger: {
-    trigger: ".intern-body",
-    start: "top 85%",
-    toggleActions: "play none none reverse"
-  }
-});
-
-gsap.utils.toArray(".ojt-photo").forEach((photo, i) => {
-  gsap.from(photo, {
-    y: 50,
-    opacity: 0,
-    duration: 0.8,
-    delay: i * 0.1,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: photo,
-      start: "top 90%",
-      toggleActions: "play none none reverse"
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('revealed');
     }
   });
-});
+}, { threshold: 0.1 });
 
-gsap.utils.toArray(".work-card").forEach((card, i) => {
-  gsap.fromTo(card,
-    { y: 80, opacity: 0, scale: 0.95 },
-    {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: card,
-        start: "top 95%",
-        end: "top 60%",
-        scrub: true
-      }
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+// Typewriter Effect (Vanilla)
+document.querySelectorAll(".desc-skills").forEach((skill) => {
+  const fullText = skill.textContent.trim();
+  const prefix = fullText.substring(0, 2);
+  const typingPart = fullText.substring(2);
+  skill.textContent = prefix;
+
+  const typeObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      let i = 0;
+      const interval = setInterval(() => {
+        skill.textContent = prefix + typingPart.substring(0, i);
+        i++;
+        if (i > typingPart.length) clearInterval(interval);
+      }, 50);
+      typeObserver.unobserve(skill);
     }
-  );
+  }, { threshold: 0.8 });
+  typeObserver.observe(skill);
 });
 
 // ============================================
-// WORKS GRID — Show More / Less Toggle
+// WORKS GRID TOGGLE
 // ============================================
 const worksToggle = document.getElementById("worksToggle");
 const worksGrid = document.querySelector(".works-grid");
@@ -405,245 +212,77 @@ const toggleText = worksToggle ? worksToggle.querySelector(".works-toggle-text")
 if (worksToggle && worksGrid) {
   worksToggle.addEventListener("click", () => {
     const isExpanded = worksGrid.classList.toggle("expanded");
-    worksToggle.classList.toggle("active", isExpanded);
-
-    if (toggleText) {
-      toggleText.textContent = isExpanded ? "LESS WORKS" : "MORE WORKS";
-    }
-
+    if (toggleText) toggleText.textContent = isExpanded ? "LESS WORKS" : "MORE WORKS";
     if (!isExpanded) {
-      lenis.scrollTo(worksToggle, {
-        offset: -window.innerHeight + 150,
-        duration: 1.5,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      });
+      lenis.scrollTo(worksToggle, { offset: -window.innerHeight + 150, duration: 1.5 });
     }
-
-    setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
   });
 }
 
-// Typing effect (Optimized with TextPlugin)
-document.querySelectorAll(".desc-skills").forEach((skill) => {
-  const text = skill.textContent.trim();
-  const prefix = text.substring(0, 2);
-  const typingText = text.substring(2);
-  skill.textContent = prefix;
-
-  ScrollTrigger.create({
-    trigger: skill,
-    start: "top 80%",
-    end: "bottom 20%",
-    onEnter: () => {
-      gsap.to(skill, {
-        duration: typingText.length * 0.05,
-        text: prefix + typingText,
-        ease: "none"
-      });
-    },
-    onLeaveBack: () => {
-      gsap.set(skill, { text: prefix });
-    }
-  });
-});
-
-// Circle follows cursor on intro hover (desktop only)
+// ============================================
+// CUSTOM CURSOR (Vanilla RAF)
+// ============================================
 if (!isTouchDevice) {
-  const introContainer = document.querySelector(".intro-container");
-  const introReveal = document.querySelector(".intro-reveal");
-
-  if (introContainer && introReveal) {
-    let isIntroVisible = false;
-    let introRect = null;
-
-    const updateIntroReveal = () => {
-      if (!isIntroVisible || !introRect) return;
-      const x = mouseX - introRect.left;
-      const y = mouseY - introRect.top;
-      introReveal.style.clipPath = `circle(300px at \${x}px \${y}px)`;
-      introReveal.style.setProperty('--mouse-x', x + 'px');
-      introReveal.style.setProperty('--mouse-y', y + 'px');
-    };
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          isIntroVisible = entry.isIntersecting;
-          if (isIntroVisible) {
-            introRect = introContainer.getBoundingClientRect();
-            gsap.ticker.add(updateIntroReveal);
-          } else {
-            gsap.ticker.remove(updateIntroReveal);
-          }
-        });
-      }, { threshold: 0 });
-      observer.observe(introContainer);
-    } else {
-      isIntroVisible = true;
-      introRect = introContainer.getBoundingClientRect();
-      gsap.ticker.add(updateIntroReveal);
-    }
-
-    introContainer.addEventListener("mouseleave", () => {
-      introReveal.style.clipPath = `circle(20px at 50% 50%)`;
-    });
-  }
-
-  // Custom cursor (Optimized with 3D transform and IntersectionObserver)
   const cursor = document.querySelector('.custom-cursor');
-  if (cursor) {
-    let cursorX = 0, cursorY = 0;
-    let isCursorActive = false;
-    let cursorRAF = null;
-
-    function animateCursor() {
-      if (!isCursorActive) return;
-      cursorX += (mouseX - cursorX) * 0.15; // Snappier response
-      cursorY += (mouseY - cursorY) * 0.15;
-      cursor.style.transform = `translate3d(\${cursorX - 15}px, \${cursorY - 15}px, 0)`;
-      cursorRAF = requestAnimationFrame(animateCursor);
+  let curX = 0, curY = 0;
+  
+  function updateCursor() {
+    curX += (mouseX - curX) * 0.15;
+    curY += (mouseY - curY) * 0.15;
+    if (cursor) {
+      cursor.style.transform = `translate3d(${curX - 15}px, ${curY - 15}px, 0)`;
     }
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            isCursorActive = true;
-            animateCursor();
-          } else {
-            isCursorActive = false;
-            if (cursorRAF) cancelAnimationFrame(cursorRAF);
-          }
-        });
-      }, { threshold: 0 });
-      observer.observe(document.body);
-    } else {
-      isCursorActive = true;
-      animateCursor();
-    }
-
-    const hoverElements = document.querySelectorAll('a:not(.work-card):not(.icon), button, .desc-title, .logo, .intro-container');
-    hoverElements.forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-
-    const hideCursorElements = document.querySelectorAll('.list span[data-text], .social-icons .icon');
-    hideCursorElements.forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hide'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hide'));
-    });
+    requestAnimationFrame(updateCursor);
   }
+  updateCursor();
+
+  // Cursor interactions
+  const hovers = document.querySelectorAll('a, button, .desc-title, .intro-container');
+  hovers.forEach(h => {
+    h.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    h.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
 }
 
-// Contact Section Animations
-const contactContentTl = gsap.timeline({
-  scrollTrigger: {
-    trigger: "#contact",
-    start: "top 80%",
-    end: "bottom bottom",
-    toggleActions: "play none none reverse"
-  }
-});
-
-contactContentTl.to(".contact-head", { y: 0, opacity: 1, duration: 1, ease: "power2.out" })
-  .to(".contact-body", { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "<0.2")
-  .to(".contact-footer", { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "<0.2");
-
-gsap.to([".intro-container", "#desc"], {
-  opacity: 0,
-  scrollTrigger: {
-    trigger: "#contact",
-    start: "top bottom",
-    end: "top 20%",
-    scrub: true
-  }
-});
-
-// CONTACT WAVE (Optimized)
-(function () {
+// ============================================
+// CONTACT WAVE (Vanilla Canvas)
+// ============================================
+(function() {
   const canvas = document.getElementById('contactWave');
   if (!canvas) return;
-
   const ctx = canvas.getContext('2d');
-  let scrollVel = 0;
-  let currentAmp = 0;
-  let waveRunning = false;
-  let waveRAF = null;
-
-  lenis.on('scroll', (e) => {
-    scrollVel = e.velocity;
-  });
-
+  
+  let time = 0;
   function resize() {
     canvas.width = canvas.offsetWidth;
     canvas.height = canvas.offsetHeight;
   }
+  window.addEventListener('resize', resize);
   resize();
-  window.addEventListener('resize', resize, { passive: true });
 
   const layers = [
-    { color: '#F9F5F0', alpha: 0.06, freq: 2.2, speed: 0.4, phase: 0, baseY: 0.45 },
-    { color: '#FF1919', alpha: 0.55, freq: 1.6, speed: 0.65, phase: 1.2, baseY: 0.58 },
-    { color: '#F9F5F0', alpha: 0.08, freq: 3.1, speed: 0.25, phase: 2.5, baseY: 0.40 },
-    { color: '#111111', alpha: 1.00, freq: 1.2, speed: 0.50, phase: 0.7, baseY: 0.78 },
+    { color: '#F9F5F0', alpha: 0.06, freq: 2.2, speed: 0.015, phase: 0, baseY: 0.45 },
+    { color: '#FF1919', alpha: 0.55, freq: 1.6, speed: 0.02, phase: 1.2, baseY: 0.58 },
+    { color: '#111111', alpha: 1.00, freq: 1.2, speed: 0.012, phase: 0.7, baseY: 0.78 },
   ];
 
-  let time = 0;
-
-  function drawWave(layer, amplitude) {
-    const { color, alpha, freq, speed, phase, baseY } = layer;
-    const w = canvas.width;
-    const h = canvas.height;
-    const y0 = h * baseY;
-
-    ctx.beginPath();
-    ctx.moveTo(0, h);
-    for (let x = 0; x <= w; x += 30) { // Increased step to 30 for even better perf
-      const t1 = Math.sin((x / w) * Math.PI * 2 * freq + time * speed + phase);
-      const t2 = Math.sin((x / w) * Math.PI * 2 * freq * 0.5 + time * speed * 1.3 + phase + 1);
-      const y = y0 + (t1 * 0.65 + t2 * 0.35) * amplitude;
-      ctx.lineTo(x, y);
-    }
-    ctx.lineTo(w, h);
-    ctx.closePath();
-    ctx.fillStyle = color;
-    ctx.globalAlpha = alpha;
-    ctx.fill();
-  }
-
-  function animate() {
-    if (!waveRunning) return;
-    const targetAmp = Math.min(Math.abs(scrollVel) * 6, 55) + 12;
-    currentAmp += (targetAmp - currentAmp) * 0.06;
-    scrollVel *= 0.92;
-    time += 0.012;
-
+  function animateWave() {
+    time += 0.5;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    layers.forEach(layer => drawWave(layer, currentAmp));
-    waveRAF = requestAnimationFrame(animate);
+    
+    layers.forEach(l => {
+      ctx.beginPath();
+      ctx.moveTo(0, canvas.height);
+      for (let x = 0; x <= canvas.width; x += 30) {
+        const y = canvas.height * l.baseY + Math.sin(x * 0.005 * l.freq + time * l.speed + l.phase) * 20;
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(canvas.width, canvas.height);
+      ctx.fillStyle = l.color;
+      ctx.globalAlpha = l.alpha;
+      ctx.fill();
+    });
+    requestAnimationFrame(animateWave);
   }
-
-  const contactSection = document.getElementById('contact');
-  if (contactSection && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          if (!waveRunning) {
-            waveRunning = true;
-            animate();
-          }
-        } else {
-          waveRunning = false;
-          if (waveRAF) cancelAnimationFrame(waveRAF);
-        }
-      });
-    }, { threshold: 0 });
-    observer.observe(contactSection);
-  } else {
-    waveRunning = true;
-    animate();
-  }
+  animateWave();
 })();

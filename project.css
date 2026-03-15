@@ -13,14 +13,45 @@
     display: none !important;
 }
 
-/* Initial hidden states for GSAP entrance */
+/* Initial hidden states for vanilla entrance */
 .project-hero {
+    clip-path: inset(10% 10% 10% 10%);
     will-change: clip-path;
 }
 
 .project-hero-img {
+    transform: scale(1.3);
     will-change: transform;
 }
+
+/* ── NATIVE REVEAL UTILITIES ── */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
+                opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: transform, opacity;
+}
+
+[data-reveal].revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-reveal="scale"] { transform: scale(0.95); }
+[data-reveal="scale"].revealed { transform: scale(1); }
+
+.project-divider[data-reveal] {
+    transform: scaleX(0);
+    transform-origin: left;
+    opacity: 1; /* Dividers use scaleX instead of fade */
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.project-divider[data-reveal].revealed {
+    transform: scaleX(1);
+}
+
 
 /* Back Link */
 .back-link {
