@@ -8,7 +8,19 @@ gsap.ticker.add((time) => {
   lenis.raf(time * 1000);
 });
 
-gsap.ticker.lagSmoothing(0);
+// GSAP performance defaults (restored to handle CPU spikes gracefully)
+gsap.ticker.lagSmoothing(500, 33);
+
+// ============================================
+// GLOBAL MOUSE TRACKING (Consolidated)
+// ============================================
+let mouseX = 0, mouseY = 0;
+if (!isTouchDevice) {
+  window.addEventListener("mousemove", (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  }, { passive: true });
+}
 
 // ============================================
 // NAVIGATION LOGIC
@@ -28,7 +40,7 @@ navLinks.forEach((link, i) => {
       ease: "power2.inOut"
     });
 
-    // Fast, smooth scroll — reduced from 2.5s to 1.2s for responsiveness
+    // Fast, smooth scroll
     if (targets[i]) {
       lenis.scrollTo(targets[i], {
         offset: i === 1 ? -100 : 0,
@@ -44,10 +56,18 @@ if (!isTouchDevice) {
   const magnets = document.querySelectorAll('.icon, .list li span');
 
   magnets.forEach((magnet) => {
+    let bounding = null;
+
+    magnet.addEventListener("mouseenter", () => {
+      bounding = magnet.getBoundingClientRect();
+    });
+
     magnet.addEventListener("mousemove", (e) => {
-      const bounding = magnet.getBoundingClientRect();
-      const x = e.clientX - bounding.left - bounding.width / 2;
-      const y = e.clientY - bounding.top - bounding.height / 2;
+      if (!bounding) bounding = magnet.getBoundingClientRect();
+      const centerX = bounding.left + bounding.width / 2;
+      const centerY = bounding.top + bounding.height / 2;
+      const x = e.clientX - centerX;
+      const y = e.clientY - centerY;
 
       gsap.to(magnet, {
         x: x * 0.45,
@@ -60,6 +80,7 @@ if (!isTouchDevice) {
     });
 
     magnet.addEventListener("mouseleave", () => {
+      bounding = null;
       gsap.to(magnet, {
         x: 0,
         y: 0,
@@ -77,33 +98,33 @@ if (!isTouchDevice) {
   if (introTitle && introContainer) {
     let isHeroVisible = false;
 
-    const heroMouseParallax = (e) => {
+    function updateHeroParallax() {
       if (!isHeroVisible) return;
-      const moveX = (e.clientX - window.innerWidth / 2) * 0.015;
-      const moveY = (e.clientY - window.innerHeight / 2) * 0.015;
+      const moveX = (mouseX - window.innerWidth / 2) * 0.015;
+      const moveY = (mouseY - window.innerHeight / 2) * 0.015;
       gsap.to(introTitle, {
         x: moveX,
         y: moveY,
         duration: 1.5,
         ease: "power2.out"
       });
-    };
+    }
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           isHeroVisible = entry.isIntersecting;
           if (isHeroVisible) {
-            window.addEventListener("mousemove", heroMouseParallax);
+            gsap.ticker.add(updateHeroParallax);
           } else {
-            window.removeEventListener("mousemove", heroMouseParallax);
+            gsap.ticker.remove(updateHeroParallax);
           }
         });
       }, { threshold: 0 });
       observer.observe(introContainer);
     } else {
       isHeroVisible = true;
-      window.addEventListener("mousemove", heroMouseParallax);
+      gsap.ticker.add(updateHeroParallax);
     }
   }
 }
@@ -111,7 +132,7 @@ if (!isTouchDevice) {
 // Stop Lenis scroll until loading is dismissed
 lenis.stop();
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, TextPlugin);
 
 window.addEventListener("load", () => {
   ScrollTrigger.refresh();
@@ -126,39 +147,29 @@ const loadingPercent = document.getElementById("loadingPercent");
 const startBtn = document.getElementById("startBtn");
 const loadingLetters = document.querySelectorAll(".loading-logo-letter");
 
-// Check if returning from a project page
 const urlParams = new URLSearchParams(window.location.search);
 const comingFromProject = urlParams.get("from") === "project";
 const returnProjectId = urlParams.get("projectId");
 
 if (comingFromProject) {
-  // ── SKIP LOADING — returning from project page ──
-
-  // Immediately hide loading screen
   loadingScreen.classList.add("hidden");
   document.body.classList.remove("loading-active");
 
-  // Set intro elements to their final visible state (no animation)
   gsap.set(".intro-title", { y: 0, opacity: 1 });
   gsap.set(".intro-sub", { y: 0, opacity: 1 });
   gsap.set(".scroll-indicator", { y: 0, opacity: 0.6 });
 
-  // Start smooth scroll
   lenis.start();
 
-  // Clean URL (remove query params)
   window.history.replaceState({}, "", window.location.pathname);
 
-  // Scroll to the work card they came from
   if (returnProjectId) {
     window.addEventListener("load", () => {
       ScrollTrigger.refresh();
-      // Find the matching work card by its href
       const targetCard = document.querySelector(
         `.work-card[href="project.html?id=${returnProjectId}"]`
       );
       if (targetCard) {
-        // Small delay to let layout settle, then scroll
         setTimeout(() => {
           lenis.scrollTo(targetCard, {
             offset: -100,
@@ -171,9 +182,6 @@ if (comingFromProject) {
   }
 
 } else {
-  // ── NORMAL LOADING FLOW ──
-
-  // 1) Animate letters in with stagger
   const loadTl = gsap.timeline();
 
   loadTl.to(loadingLetters, {
@@ -185,15 +193,12 @@ if (comingFromProject) {
     delay: 0.3
   });
 
-  // 2) Simulate loading progress
   let progress = 0;
   const loadingInterval = setInterval(() => {
     progress += Math.random() * 12 + 3;
     if (progress >= 100) {
       progress = 100;
       clearInterval(loadingInterval);
-
-      // Loading complete — show button
       loadingPercent.textContent = "100%";
       loadingBar.style.width = "100%";
 
@@ -205,7 +210,6 @@ if (comingFromProject) {
         delay: 0.3
       });
 
-      // Subtle pulse on letters once loaded
       gsap.to(loadingLetters, {
         color: "#FF1919",
         duration: 1.2,
@@ -221,19 +225,14 @@ if (comingFromProject) {
     }
   }, 180);
 
-  // 3) ENTER button click — dismiss loading screen
   startBtn.addEventListener("click", () => {
-    // Stop the letter pulse
     gsap.killTweensOf(loadingLetters);
 
-    // Exit animation
     const exitTl = gsap.timeline({
       onComplete: () => {
         loadingScreen.classList.add("hidden");
         document.body.classList.remove("loading-active");
         lenis.start();
-
-        // Start intro animations after loading screen is gone
         introTl.play();
       }
     });
@@ -261,7 +260,7 @@ if (comingFromProject) {
 }
 
 // ============================================
-// INTRO ANIMATIONS (paused — plays after loading)
+// INTRO ANIMATIONS
 // ============================================
 const introTl = gsap.timeline({ paused: true });
 
@@ -285,8 +284,6 @@ introTl.to(".intro-title", {
     ease: "power2.out"
   }, "-=0.5");
 
-// Scroll-out animation for Intro
-// NOTE: Using scale + opacity instead of filter:blur for much better scroll perf
 gsap.to(".intro-container", {
   scale: 0.85,
   opacity: 0,
@@ -299,10 +296,6 @@ gsap.to(".intro-container", {
   }
 });
 
-// Animate logo fill
-
-
-// Animate nav items fill
 gsap.to(".list span[data-text]", {
   backgroundPosition: "0% 100%",
   ease: "none",
@@ -314,13 +307,6 @@ gsap.to(".list span[data-text]", {
   }
 });
 
-// Animate social icons and overlay removed for performance
-
-// Dim the video as desc section covers it
-// NOTE: Removed filter:blur — animating CSS filters on scroll causes severe jank
-
-
-// Horizontal scroll carousel effect for desc-title elements
 document.querySelectorAll(".desc-title").forEach((title) => {
   gsap.fromTo(title,
     { x: "100%" },
@@ -337,7 +323,6 @@ document.querySelectorAll(".desc-title").forEach((title) => {
   );
 });
 
-// Parallax effect on work-text
 gsap.to(".work-text", {
   y: -100,
   ease: "none",
@@ -348,9 +333,6 @@ gsap.to(".work-text", {
     scrub: true
   }
 });
-
-// Parallax effect on close with fade
-
 
 // ============================================
 // INTERNSHIP SECTION — Lightweight Scroll Reveal
@@ -394,8 +376,6 @@ gsap.utils.toArray(".ojt-photo").forEach((photo, i) => {
   });
 });
 
-
-// Staggered reveal for work cards
 gsap.utils.toArray(".work-card").forEach((card, i) => {
   gsap.fromTo(card,
     { y: 80, opacity: 0, scale: 0.95 },
@@ -431,51 +411,40 @@ if (worksToggle && worksGrid) {
       toggleText.textContent = isExpanded ? "LESS WORKS" : "MORE WORKS";
     }
 
-    // NEW: If collapsing, scroll to the toggle to avoid jump and unintended reveal of footer
     if (!isExpanded) {
       lenis.scrollTo(worksToggle, {
-        offset: -window.innerHeight + 150, // Keep button visible near bottom
+        offset: -window.innerHeight + 150,
         duration: 1.5,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
     }
 
-    // Refresh ScrollTrigger after layout change
     setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 100); // Shorter timeout for snappier refresh
+    }, 100);
   });
 }
 
-
-// Typing effect on desc-skills elements
+// Typing effect (Optimized with TextPlugin)
 document.querySelectorAll(".desc-skills").forEach((skill) => {
   const text = skill.textContent.trim();
   const prefix = text.substring(0, 2);
   const typingText = text.substring(2);
   skill.textContent = prefix;
-  let typingInterval = null;
 
   ScrollTrigger.create({
     trigger: skill,
     start: "top 80%",
     end: "bottom 20%",
     onEnter: () => {
-      if (typingInterval) clearInterval(typingInterval);
-      skill.textContent = prefix;
-      let i = 0;
-      typingInterval = setInterval(() => {
-        if (i < typingText.length) {
-          skill.textContent = prefix + typingText.substring(0, i + 1);
-          i++;
-        } else {
-          clearInterval(typingInterval);
-        }
-      }, 50);
+      gsap.to(skill, {
+        duration: typingText.length * 0.05,
+        text: prefix + typingText,
+        ease: "none"
+      });
     },
     onLeaveBack: () => {
-      if (typingInterval) clearInterval(typingInterval);
-      skill.textContent = prefix;
+      gsap.set(skill, { text: prefix });
     }
   });
 });
@@ -487,13 +456,13 @@ if (!isTouchDevice) {
 
   if (introContainer && introReveal) {
     let isIntroVisible = false;
+    let introRect = null;
 
-    const introRevealHandler = (e) => {
-      if (!isIntroVisible) return;
-      const rect = introContainer.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      introReveal.style.clipPath = `circle(300px at ${x}px ${y}px)`;
+    const updateIntroReveal = () => {
+      if (!isIntroVisible || !introRect) return;
+      const x = mouseX - introRect.left;
+      const y = mouseY - introRect.top;
+      introReveal.style.clipPath = `circle(300px at \${x}px \${y}px)`;
       introReveal.style.setProperty('--mouse-x', x + 'px');
       introReveal.style.setProperty('--mouse-y', y + 'px');
     };
@@ -503,16 +472,18 @@ if (!isTouchDevice) {
         entries.forEach(entry => {
           isIntroVisible = entry.isIntersecting;
           if (isIntroVisible) {
-            introContainer.addEventListener("mousemove", introRevealHandler);
+            introRect = introContainer.getBoundingClientRect();
+            gsap.ticker.add(updateIntroReveal);
           } else {
-            introContainer.removeEventListener("mousemove", introRevealHandler);
+            gsap.ticker.remove(updateIntroReveal);
           }
         });
       }, { threshold: 0 });
       observer.observe(introContainer);
     } else {
       isIntroVisible = true;
-      introContainer.addEventListener("mousemove", introRevealHandler);
+      introRect = introContainer.getBoundingClientRect();
+      gsap.ticker.add(updateIntroReveal);
     }
 
     introContainer.addEventListener("mouseleave", () => {
@@ -520,29 +491,18 @@ if (!isTouchDevice) {
     });
   }
 
-
-  // Custom cursor — use transform instead of left/top to avoid layout thrashing
+  // Custom cursor (Optimized with 3D transform and IntersectionObserver)
   const cursor = document.querySelector('.custom-cursor');
   if (cursor) {
-    let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-    });
-
-    // Use IntersectionObserver to start/stop cursor animation for efficiency
     let isCursorActive = false;
     let cursorRAF = null;
 
     function animateCursor() {
       if (!isCursorActive) return;
-      cursorX += (mouseX - cursorX) * 0.05;
-      cursorY += (mouseY - cursorY) * 0.05;
-
-      cursor.style.transform = `translate(${cursorX - 15}px, ${cursorY - 15}px)`;
-
+      cursorX += (mouseX - cursorX) * 0.15; // Snappier response
+      cursorY += (mouseY - cursorY) * 0.15;
+      cursor.style.transform = `translate3d(\${cursorX - 15}px, \${cursorY - 15}px, 0)`;
       cursorRAF = requestAnimationFrame(animateCursor);
     }
 
@@ -564,14 +524,12 @@ if (!isTouchDevice) {
       animateCursor();
     }
 
-    // Hover detection for big cursor
     const hoverElements = document.querySelectorAll('a:not(.work-card):not(.icon), button, .desc-title, .logo, .intro-container');
     hoverElements.forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
 
-    // Hover detection for hiding cursor (nav items and icons)
     const hideCursorElements = document.querySelectorAll('.list span[data-text], .social-icons .icon');
     hideCursorElements.forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hide'));
@@ -580,41 +538,20 @@ if (!isTouchDevice) {
   }
 }
 
-// Contact Section Animations - Standard Scroll Reveal
-const contactSection = document.querySelector("#contact");
-
-// 1. (Removed fixed reveal) - Contact section now scrolls naturally
-
-// 2. Parallax/Fade-in for content inside contact section
+// Contact Section Animations
 const contactContentTl = gsap.timeline({
   scrollTrigger: {
     trigger: "#contact",
-    start: "top 80%", // start animating content when section is visible
+    start: "top 80%",
     end: "bottom bottom",
     toggleActions: "play none none reverse"
   }
 });
 
-contactContentTl.to(".contact-head", {
-  y: 0,
-  opacity: 1,
-  duration: 1,
-  ease: "power2.out"
-})
-  .to(".contact-body", {
-    y: 0,
-    opacity: 1,
-    duration: 1,
-    ease: "power2.out"
-  }, "<0.2") // Start slightly after head
-  .to(".contact-footer", {
-    y: 0,
-    opacity: 1,
-    duration: 1,
-    ease: "power2.out"
-  }, "<0.2");
+contactContentTl.to(".contact-head", { y: 0, opacity: 1, duration: 1, ease: "power2.out" })
+  .to(".contact-body", { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "<0.2")
+  .to(".contact-footer", { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "<0.2");
 
-// Simple fade out for previous sections as we reach contact
 gsap.to([".intro-container", "#desc"], {
   opacity: 0,
   scrollTrigger: {
@@ -624,20 +561,16 @@ gsap.to([".intro-container", "#desc"], {
     scrub: true
   }
 });
-// ============================================
-// CONTACT WAVE — Scroll-Reactive Canvas
-// Only animate when the contact section is visible (IntersectionObserver)
-// ============================================
+
+// CONTACT WAVE (Optimized)
 (function () {
   const canvas = document.getElementById('contactWave');
   if (!canvas) return;
 
   const ctx = canvas.getContext('2d');
-
   let scrollVel = 0;
-  let targetAmp = 0;
   let currentAmp = 0;
-  let waveRunning = false; // Only animate when in viewport
+  let waveRunning = false;
   let waveRAF = null;
 
   lenis.on('scroll', (e) => {
@@ -649,7 +582,7 @@ gsap.to([".intro-container", "#desc"], {
     canvas.height = canvas.offsetHeight;
   }
   resize();
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', resize, { passive: true });
 
   const layers = [
     { color: '#F9F5F0', alpha: 0.06, freq: 2.2, speed: 0.4, phase: 0, baseY: 0.45 },
@@ -668,38 +601,31 @@ gsap.to([".intro-container", "#desc"], {
 
     ctx.beginPath();
     ctx.moveTo(0, h);
-
-    // Step by 15px instead of 2px for MASSIVE performance savings on low-end devices
-    for (let x = 0; x <= w; x += 15) {
+    for (let x = 0; x <= w; x += 30) { // Increased step to 30 for even better perf
       const t1 = Math.sin((x / w) * Math.PI * 2 * freq + time * speed + phase);
       const t2 = Math.sin((x / w) * Math.PI * 2 * freq * 0.5 + time * speed * 1.3 + phase + 1);
       const y = y0 + (t1 * 0.65 + t2 * 0.35) * amplitude;
       ctx.lineTo(x, y);
     }
-
     ctx.lineTo(w, h);
     ctx.closePath();
     ctx.fillStyle = color;
     ctx.globalAlpha = alpha;
     ctx.fill();
-    ctx.globalAlpha = 1;
   }
 
   function animate() {
-    if (!waveRunning) return; // Stop loop when out of view
-
-    targetAmp = Math.min(Math.abs(scrollVel) * 6, 55) + 12;
+    if (!waveRunning) return;
+    const targetAmp = Math.min(Math.abs(scrollVel) * 6, 55) + 12;
     currentAmp += (targetAmp - currentAmp) * 0.06;
     scrollVel *= 0.92;
     time += 0.012;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     layers.forEach(layer => drawWave(layer, currentAmp));
-
     waveRAF = requestAnimationFrame(animate);
   }
 
-  // Only run the wave animation when the contact section is visible
   const contactSection = document.getElementById('contact');
   if (contactSection && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver((entries) => {
@@ -717,7 +643,6 @@ gsap.to([".intro-container", "#desc"], {
     }, { threshold: 0 });
     observer.observe(contactSection);
   } else {
-    // Fallback: always run if no IntersectionObserver
     waveRunning = true;
     animate();
   }
