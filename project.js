@@ -87,7 +87,7 @@ const projects = [
     {
         id: 1,
         num: "01",
-        title: "FRACERA",
+        title: "FRACT ERA",
         category: "GAME DESIGN",
         year: "2025",
         description: "A math game puzzle for the elementary school students designed for a thesis project for the Math Majors.",
@@ -113,13 +113,75 @@ const projects = [
         description: "A TTRPG Game Design for the Game Design and Development Class.",
         story: "Outfall is a post-apocalyptic TTRPG where players take on the role of survivors in a world ravaged by a mysterious plague.",
         gallery: ["assets/OF1.webp", "assets/OF2.webp", "assets/OF3.webp"],
+    },
+    {
+        id: 4,
+        num: "04",
+        title: "PROJECT FOUR",
+        category: "APP DEVELOPMENT",
+        year: "2024",
+        description: "A detailed description of Project Four.",
+        story: "The story behind Project Four.",
+        gallery: [],
+    },
+    {
+        id: 5,
+        num: "05",
+        title: "PROJECT FIVE",
+        category: "DIGITAL POSTER",
+        year: "2024",
+        description: "A detailed description of Project Five.",
+        story: "The story behind Project Five.",
+        gallery: [],
+    },
+    {
+        id: 6,
+        num: "06",
+        title: "PROJECT SIX",
+        category: "UI/UX DESIGN",
+        year: "2025",
+        description: "A detailed description of Project Six.",
+        story: "The story behind Project Six.",
+        gallery: [],
+    },
+    {
+        id: 7,
+        num: "07",
+        title: "PROJECT SEVEN",
+        category: "WEB DEVELOPMENT",
+        year: "2024",
+        description: "A detailed description of Project Seven.",
+        story: "The story behind Project Seven.",
+        gallery: [],
+    },
+    {
+        id: 8,
+        num: "08",
+        title: "PROJECT EIGHT",
+        category: "APP DEVELOPMENT",
+        year: "2024",
+        description: "A detailed description of Project Eight.",
+        story: "The story behind Project Eight.",
+        gallery: [],
+    },
+    {
+        id: 9,
+        num: "09",
+        title: "PROJECT NINE",
+        category: "GAME DESIGN",
+        year: "2025",
+        description: "A detailed description of Project Nine.",
+        story: "The story behind Project Nine.",
+        gallery: [],
     }
 ];
 
 const params = new URLSearchParams(window.location.search);
 const id = parseInt(params.get("id")) || 1;
-const project = projects.find(p => p.id === id) || projects[0];
+const currentIndex = projects.findIndex(p => p.id === id);
+const project = currentIndex !== -1 ? projects[currentIndex] : projects[0];
 
+// Populate Content
 document.getElementById("projectNum").textContent = project.num;
 document.getElementById("projectTitle").textContent = project.title;
 document.getElementById("projectCat").textContent = project.category;
@@ -128,7 +190,7 @@ document.getElementById("projectDesc").textContent = project.description;
 document.getElementById("projectStory").textContent = project.story;
 
 const galleryGrid = document.getElementById("projectGallery");
-if (galleryGrid && project.gallery) {
+if (galleryGrid && project.gallery && project.gallery.length > 0) {
     galleryGrid.innerHTML = "";
     project.gallery.forEach((src, i) => {
         const item = document.createElement("div");
@@ -138,6 +200,25 @@ if (galleryGrid && project.gallery) {
         item.style.transitionDelay = `${i * 0.1}s`;
         galleryGrid.appendChild(item);
     });
+} else if (galleryGrid) {
+    // Hide gallery label if no gallery items
+    const label = document.querySelector(".project-gallery-label");
+    if (label) label.style.display = "none";
+}
+
+// Populate Footer Navigation
+if (currentIndex !== -1) {
+    const prevIdx = (currentIndex - 1 + projects.length) % projects.length;
+    const nextIdx = (currentIndex + 1) % projects.length;
+
+    const prevProj = projects[prevIdx];
+    const nextProj = projects[nextIdx];
+
+    document.getElementById("prevTitle").textContent = prevProj.title;
+    document.getElementById("prevProject").href = `project.html?id=${prevProj.id}`;
+
+    document.getElementById("nextTitle").textContent = nextProj.title;
+    document.getElementById("nextProject").href = `project.html?id=${nextProj.id}`;
 }
 
 const backLink = document.querySelector(".back-link");

@@ -202,7 +202,7 @@ body.loading-active {
 .loading-bar {
     width: 0%;
     height: 100%;
-    background: linear-gradient(90deg, #FF1919, #F9F5F0);
+    background: linear-gradient(90deg, #CD00B8, #F9F5F0);
     border-radius: 2px;
     transition: width 0.3s ease;
 }
@@ -236,10 +236,10 @@ body.loading-active {
 }
 
 .loading-start-btn:hover {
-    border-color: #FF1919;
-    background: rgba(255, 25, 25, 0.08);
+    border-color: #CD00B8;
+    background: rgba(191, 255, 0, 0.08);
     gap: 22px;
-    box-shadow: 0 0 40px rgba(255, 25, 25, 0.15);
+    box-shadow: 0 0 40px rgba(191, 255, 0, 0.15);
 }
 
 .start-arrow {
@@ -357,7 +357,8 @@ body.loading-active {
 #experience {
     margin-top: 0;
     width: 100%;
-    height: 350vh; /* The distance to trigger the sequential scroll */
+    height: 350vh;
+    /* The distance to trigger the sequential scroll */
     background-color: #111111;
     position: relative;
     z-index: 2;
@@ -437,7 +438,7 @@ body.loading-active {
 }
 
 .role-header:hover {
-    color: #FF1919;
+    color: #CD00B8;
 }
 
 .role-year {
@@ -457,7 +458,7 @@ body.loading-active {
 }
 
 .role-header:hover .role-name {
-    color: #FF1919;
+    color: #CD00B8;
 }
 
 .role-org {
@@ -489,14 +490,14 @@ body.loading-active {
     background: transparent;
     border: none;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
-    color: #FF1919;
+    color: #CD00B8;
     text-align: left;
     transition: background-color 0.3s ease;
 }
 
 .role-item.active .role-toggle {
     transform: rotate(45deg);
-    color: #FF1919;
+    color: #CD00B8;
 }
 
 /* ── Expandable Content ── */
@@ -603,7 +604,7 @@ body.loading-active {
     width: 70px;
     border-radius: 100%;
     /* Vertical fill: start fully light, then slide red up */
-    background-image: linear-gradient(#F9F5F0 0%, #F9F5F0 50%, #FF1919 50%, #FF1919 100%);
+    background-image: linear-gradient(#F9F5F0 0%, #F9F5F0 50%, #CD00B8 50%, #CD00B8 100%);
     background-size: 100% 200%;
     background-position: 0% 0%;
     margin: 2%;
@@ -633,7 +634,7 @@ body.loading-active {
     display: inline-block;
     color: transparent;
     /* Vertical fill for text */
-    background-image: linear-gradient(#F9F5F0 0%, #F9F5F0 50%, #FF1919 50%, #FF1919 100%);
+    background-image: linear-gradient(#F9F5F0 0%, #F9F5F0 50%, #CD00B8 50%, #CD00B8 100%);
     background-size: 100% 200%;
     background-position: 0% 0%;
     -webkit-background-clip: text;
@@ -656,7 +657,7 @@ body.loading-active {
     display: block;
     width: 30px;
     height: 30px;
-    background-image: linear-gradient(#F9F5F0 0%, #F9F5F0 50%, #FF1919 50%, #FF1919 100%);
+    background-image: linear-gradient(#F9F5F0 0%, #F9F5F0 50%, #CD00B8 50%, #CD00B8 100%);
     background-size: 100% 200%;
     background-position: 0% 0%;
     -webkit-mask-repeat: no-repeat;
@@ -695,7 +696,7 @@ body.loading-active {
 .list span[data-text].fill-active {
     /* slide gradient up so the red half fills the text */
     background-position: 0% 100%;
-    --after-color: #FF1919;
+    --after-color: #CD00B8;
 }
 
 .social-icons .icon.fill-active {
@@ -721,8 +722,8 @@ body.loading-active {
     font-weight: 400;
     text-align: left;
     max-width: 1060px;
-   
-    
+
+
 }
 
 .btn-resume {
@@ -808,7 +809,7 @@ body.loading-active {
     overflow: hidden;
     position: relative;
     cursor: pointer;
-    background: linear-gradient(to right, #FF1919 0%, #FF1919 50%, #202020 50%, #202020 100%);
+    background: linear-gradient(to right, #CD00B8 0%, #CD00B8 50%, #202020 50%, #202020 100%);
     background-size: 200% 100%;
     background-position: 100% 0;
     -webkit-background-clip: text;
@@ -829,7 +830,7 @@ body.loading-active {
     margin-left: 30px;
     opacity: 0;
     transition: opacity 0.3s ease 0.3s;
-    background: #FF1919;
+    background: #CD00B8;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -974,7 +975,7 @@ body.loading-active {
 
 .work-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 25, 25, 0.08);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(191, 255, 0, 0.08);
     border-left-color: #202020;
 }
 
@@ -1013,7 +1014,7 @@ body.loading-active {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255, 25, 25, 0.0) 0%, rgba(255, 25, 25, 0.08) 100%);
+    background: linear-gradient(135deg, rgba(191, 255, 0, 0.0) 0%, rgba(191, 255, 0, 0.08) 100%);
     opacity: 0;
     transition: opacity 0.4s ease;
 }
@@ -1046,7 +1047,7 @@ body.loading-active {
 }
 
 .work-card:hover .work-card-num {
-    color: rgba(255, 25, 25, 0.35);
+    color: rgba(191, 255, 0, 0.35);
 }
 
 .work-card-title {
@@ -1060,7 +1061,7 @@ body.loading-active {
 }
 
 .work-card:hover .work-card-title {
-    color: #FF1919;
+    color: #CD00B8;
 }
 
 .work-card-meta {
@@ -1082,7 +1083,7 @@ body.loading-active {
 .work-card-year {
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
-    color: #FF1919;
+    color: #CD00B8;
     font-weight: 500;
     letter-spacing: 1px;
     opacity: 0.7;
@@ -1198,7 +1199,7 @@ body.loading-active {
 .custom-cursor.hover {
     width: 30px;
     height: 30px;
-    background: rgba(32, 32, 32, 0.1); 
+    background: rgba(32, 32, 32, 0.1);
     border-color: #202020;
 }
 
@@ -1344,7 +1345,7 @@ body.loading-active {
     font-family: 'Poppins', sans-serif;
     font-size: 16px;
     font-weight: 300;
-    color: #FF1919;
+    color: #CD00B8;
     text-align: center;
     margin: 50px auto 0;
     max-width: 600px;
@@ -1427,7 +1428,7 @@ body.loading-active {
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #FF1919;
+    background-color: #CD00B8;
     transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1475,7 +1476,7 @@ body.loading-active {
 }
 
 .f-link:hover {
-    color: #FF1919;
+    color: #CD00B8;
 }
 
 .footer-copy {
@@ -1582,7 +1583,8 @@ body.loading-active {
     }
 
     /* ── ABOUT ME SECTION ── */
-    #about, .about-reveal-layer {
+    #about,
+    .about-reveal-layer {
         padding: 80px 5% 100px;
     }
 
@@ -1596,6 +1598,7 @@ body.loading-active {
         min-height: 100vh;
         padding-bottom: 80px;
     }
+
     .exp-sticky {
         position: relative;
         top: 0;
@@ -1756,7 +1759,8 @@ body.loading-active {
     }
 
     /* ── ABOUT ME SECTION ── */
-    #about, .about-reveal-layer {
+    #about,
+    .about-reveal-layer {
         padding: 60px 6% 80px;
     }
 
@@ -1770,6 +1774,7 @@ body.loading-active {
         min-height: 100vh;
         padding-bottom: 60px;
     }
+
     .exp-sticky {
         position: relative;
         top: 0;

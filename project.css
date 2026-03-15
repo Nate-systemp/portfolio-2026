@@ -28,8 +28,8 @@
 [data-reveal] {
     opacity: 0;
     transform: translateY(30px);
-    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1), 
-                opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1),
+        opacity 1.2s cubic-bezier(0.25, 1, 0.5, 1);
     will-change: transform, opacity;
 }
 
@@ -38,13 +38,19 @@
     transform: translateY(0);
 }
 
-[data-reveal="scale"] { transform: scale(0.95); }
-[data-reveal="scale"].revealed { transform: scale(1); }
+[data-reveal="scale"] {
+    transform: scale(0.95);
+}
+
+[data-reveal="scale"].revealed {
+    transform: scale(1);
+}
 
 .project-divider[data-reveal] {
     transform: scaleX(0);
     transform-origin: left;
-    opacity: 1; /* Dividers use scaleX instead of fade */
+    opacity: 1;
+    /* Dividers use scaleX instead of fade */
     transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -68,7 +74,8 @@
     font-size: 14px;
     font-weight: 300;
     letter-spacing: 2px;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Legibility without blend-mode lag */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    /* Legibility without blend-mode lag */
     transition: gap 0.3s ease;
 }
 
@@ -161,7 +168,7 @@
     font-family: 'Poppins', sans-serif;
     font-size: 12px;
     letter-spacing: 3px;
-    color: #FF1919;
+    color: #CD00B8;
     font-weight: 400;
 }
 
@@ -239,7 +246,7 @@
     cursor: pointer;
     transform-origin: center center;
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-                box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     will-change: transform;
 }
 
@@ -297,7 +304,7 @@
 }
 
 .project-nav-link:hover .nav-title {
-    color: #FF1919;
+    color: #CD00B8;
 }
 
 /* ============================================

@@ -239,7 +239,7 @@ function updateScrollEffects() {
       const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
       // Pan from right (maxOffset) to 0 (native position) as the element scrolls toward viewport center
       const maxOffset = window.innerWidth > 1024 ? 300 : 150;
-      const move = Math.max(0, (0.5 - scrollProgress) * maxOffset * 2); 
+      const move = Math.max(0, (0.5 - scrollProgress) * maxOffset * 2);
       title.style.transform = `translate3d(${move}px, 0, 0)`;
     }
   });
@@ -250,15 +250,15 @@ function updateScrollEffects() {
     const whiteTop = expSection.getBoundingClientRect().top;
     const contactSection = document.getElementById('contact');
     const contactTop = contactSection ? contactSection.getBoundingClientRect().top : Infinity;
-    
+
     fillTargets.forEach(el => {
       // Find the vertical center of the element
       const rect = el.getBoundingClientRect();
       const elCenterY = rect.top + (rect.height / 2);
-      
+
       // Is this specific element over the white background area?
       const isOverWhite = elCenterY >= whiteTop && elCenterY <= contactTop;
-      
+
       if (isOverWhite) {
         el.classList.add('fill-active');
       } else {
@@ -274,18 +274,18 @@ function updateScrollEffects() {
     if (experienceContainer && window.innerWidth > 1024) {
       const expRect = experienceContainer.getBoundingClientRect();
       const viewportH = window.innerHeight;
-      
+
       const scrollableDist = expRect.height - viewportH;
       const progress = Math.max(0, Math.min(1, -expRect.top / scrollableDist));
-      
+
       if (expRect.top <= 0 && expRect.bottom >= viewportH) {
         const roles = document.querySelectorAll('.role-item');
         const expLeft = document.querySelector('.exp-left');
-        
+
         if (roles.length > 0) {
           const interval = 1 / roles.length;
           const activeIndex = Math.min(roles.length - 1, Math.floor(progress / interval));
-          
+
           let activeOffset = 0;
           roles.forEach((role, i) => {
             if (i === activeIndex) {
@@ -295,7 +295,7 @@ function updateScrollEffects() {
               role.classList.remove('active');
             }
           });
-          
+
           if (expLeft) {
             expLeft.style.transform = `translateY(${activeOffset}px)`;
           }
@@ -362,14 +362,14 @@ if (window.innerWidth <= 1024) {
         entry.target.classList.add('active');
       }
     });
-  }, { 
-    threshold: 0, 
+  }, {
+    threshold: 0,
     rootMargin: "-40% 0px -40% 0px" // Trigger when element is in the middle of screen
   });
 
   roleItems.forEach(item => {
     roleObserver.observe(item);
-    
+
     // 2. Also allow manual click/tap
     const header = item.querySelector('.role-header');
     if (header) {
@@ -455,7 +455,7 @@ if (!isTouchDevice) {
 // ============================================
 // CONTACT WAVE (Vanilla Canvas)
 // ============================================
-(function() {
+(function () {
   const canvas = document.getElementById('contactWave');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
@@ -470,7 +470,7 @@ if (!isTouchDevice) {
 
   const layers = [
     { color: '#F9F5F0', alpha: 0.06, freq: 2.2, speed: 0.015, phase: 0, baseY: 0.45 },
-    { color: '#FF1919', alpha: 0.55, freq: 1.6, speed: 0.02, phase: 1.2, baseY: 0.58 },
+    { color: '#CD00B8', alpha: 0.55, freq: 1.6, speed: 0.02, phase: 1.2, baseY: 0.58 },
     { color: '#111111', alpha: 1.00, freq: 1.2, speed: 0.012, phase: 0.7, baseY: 0.78 },
   ];
 
