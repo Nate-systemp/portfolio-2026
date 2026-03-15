@@ -694,25 +694,44 @@ body.loading-active {
     text-decoration: none;
     color: #202020;
     overflow: hidden;
-    border-radius: 8px;
+    border-radius: 10px;
+    /* Resting depth — cards should pop off the page even idle */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(32, 32, 32, 0.06);
+    border-left: 3px solid rgba(255, 25, 25, 0.3);
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1),
-        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        box-shadow 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+        border-color 0.4s ease;
     will-change: transform, opacity;
 }
 
 .work-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 25, 25, 0.08);
+    border-left-color: #FF1919;
 }
 
 .work-card-img {
     width: 100%;
     aspect-ratio: 4 / 3;
-    background-color: #1a1a1a;
-    border-radius: 8px 8px 0 0;
+    background-color: #161616;
+    border-radius: 10px 10px 0 0;
     position: relative;
     overflow: hidden;
     transition: background-color 0.4s ease;
+}
+
+/* Subtle bottom gradient on image for depth */
+.work-card-img::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.25) 0%, transparent 100%);
+    z-index: 1;
+    pointer-events: none;
 }
 
 .work-card:hover .work-card-img {
@@ -741,23 +760,26 @@ body.loading-active {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    background: #F9F5F0;
+    background: #F5F0EA;
+    border-top: 1px solid rgba(32, 32, 32, 0.06);
 }
 
 .work-card-num {
     font-family: 'Tusker Grotesk', sans-serif;
     font-size: 64px;
     line-height: 1;
-    color: rgba(32, 32, 32, 0.08);
+    color: rgba(249, 245, 240, 0.15);
     position: absolute;
     top: 16px;
     right: 20px;
     transition: color 0.4s ease;
     pointer-events: none;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 2;
 }
 
 .work-card:hover .work-card-num {
-    color: rgba(255, 25, 25, 0.15);
+    color: rgba(255, 25, 25, 0.35);
 }
 
 .work-card-title {
@@ -785,15 +807,18 @@ body.loading-active {
     font-family: 'Poppins', sans-serif;
     font-size: 11px;
     letter-spacing: 2px;
-    color: #999;
-    font-weight: 300;
+    color: #888;
+    font-weight: 400;
+    text-transform: uppercase;
 }
 
 .work-card-year {
     font-family: 'Poppins', sans-serif;
-    font-size: 13px;
-    color: #999;
-    font-weight: 300;
+    font-size: 12px;
+    color: #FF1919;
+    font-weight: 500;
+    letter-spacing: 1px;
+    opacity: 0.7;
 }
 
 
@@ -1465,12 +1490,12 @@ body.loading-active {
     }
 
     .work-card {
-        border-radius: 6px;
+        border-radius: 8px;
     }
 
     .work-card-img {
         aspect-ratio: 16 / 10;
-        border-radius: 6px 6px 0 0;
+        border-radius: 8px 8px 0 0;
     }
 
     .work-card-info {
