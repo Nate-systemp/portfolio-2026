@@ -122,7 +122,7 @@ const projects = [
         year: "2024",
         description: "A detailed description of Project Four.",
         story: "The story behind Project Four.",
-        gallery: [],
+          gallery: ["assets/M01.png", "assets/M02.png", "assets/M03.png"],
     },
     {
         id: 5,
