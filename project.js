@@ -117,11 +117,11 @@ const projects = [
     {
         id: 4,
         num: "04",
-        title: "PROJECT FOUR",
-        category: "APP DEVELOPMENT",
-        year: "2024",
-        description: "A detailed description of Project Four.",
-        story: "The story behind Project Four.",
+        title: "MERGE",
+        category: "WEB DESIGN / DEVELOPMENTT",
+        year: "2026",
+        description: "Merge is an e-commerce platform for a Street Wear Clothes",
+        story: "Merge is a web application that allows users to purchase clothing from various brands. It is a platform that allows users to purchase clothing from various brands.",
           gallery: ["assets/M01.png", "assets/M02.png", "assets/M03.png"],
     },
     {
@@ -280,3 +280,114 @@ if (!isTouchDevice) {
         el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
 }
+
+// ============================================
+// LIGHTBOX
+// ============================================
+(function () {
+    const overlay = document.getElementById('lightboxOverlay');
+    const image = document.getElementById('lightboxImage');
+    const closeBtn = document.getElementById('lightboxClose');
+    const prevBtn = document.getElementById('lightboxPrev');
+    const nextBtn = document.getElementById('lightboxNext');
+    const currentEl = document.getElementById('lightboxCurrent');
+    const totalEl = document.getElementById('lightboxTotal');
+
+    if (!overlay || !image || !project.gallery || project.gallery.length === 0) return;
+
+    let currentIdx = 0;
+    let isTransitioning = false;
+    const gallery = project.gallery;
+
+    totalEl.textContent = gallery.length;
+
+    function openLightbox(index) {
+        currentIdx = index;
+        image.src = gallery[currentIdx];
+        currentEl.textContent = currentIdx + 1;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function goTo(index) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        // Fade out current image
+        image.classList.add('transitioning');
+
+        setTimeout(() => {
+            currentIdx = (index + gallery.length) % gallery.length;
+            image.src = gallery[currentIdx];
+            currentEl.textContent = currentIdx + 1;
+
+            // Wait for the new image to load then fade in
+            image.onload = () => {
+                image.classList.remove('transitioning');
+                isTransitioning = false;
+            };
+
+            // Fallback in case onload doesn't fire (cached image)
+            setTimeout(() => {
+                image.classList.remove('transitioning');
+                isTransitioning = false;
+            }, 300);
+        }, 200);
+    }
+
+    // Click on gallery items
+    document.querySelectorAll('.gallery-item').forEach((item, i) => {
+        item.addEventListener('click', () => openLightbox(i));
+    });
+
+    // Controls
+    closeBtn.addEventListener('click', closeLightbox);
+    prevBtn.addEventListener('click', () => goTo(currentIdx - 1));
+    nextBtn.addEventListener('click', () => goTo(currentIdx + 1));
+
+    // Click backdrop to close
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.classList.contains('lightbox-backdrop')) {
+            closeLightbox();
+        }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!overlay.classList.contains('active')) return;
+
+        switch (e.key) {
+            case 'Escape':
+                closeLightbox();
+                break;
+            case 'ArrowLeft':
+                goTo(currentIdx - 1);
+                break;
+            case 'ArrowRight':
+                goTo(currentIdx + 1);
+                break;
+        }
+    });
+
+    // Touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    overlay.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    overlay.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) goTo(currentIdx + 1);  // Swipe left → next
+            else goTo(currentIdx - 1);            // Swipe right → prev
+        }
+    }, { passive: true });
+})();

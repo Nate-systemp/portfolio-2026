@@ -82,6 +82,35 @@
         </a>
     </section>
 
+    <!-- Lightbox Modal -->
+    <div class="lightbox-overlay" id="lightboxOverlay">
+        <div class="lightbox-backdrop"></div>
+        <button class="lightbox-close" id="lightboxClose" aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <line x1="4" y1="4" x2="20" y2="20"/>
+                <line x1="20" y1="4" x2="4" y2="20"/>
+            </svg>
+        </button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+        </button>
+        <div class="lightbox-image-wrapper">
+            <img class="lightbox-image" id="lightboxImage" src="" alt="Gallery image" />
+        </div>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <polyline points="9 18 15 12 9 6"/>
+            </svg>
+        </button>
+        <div class="lightbox-counter" id="lightboxCounter">
+            <span class="lightbox-current" id="lightboxCurrent">1</span>
+            <span class="lightbox-separator">/</span>
+            <span class="lightbox-total" id="lightboxTotal">3</span>
+        </div>
+    </div>
+
     <script src="project.js"></script>
 </body>
 
