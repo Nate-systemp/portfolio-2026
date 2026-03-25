@@ -1,10 +1,10 @@
 /**
- * PROJECT PAGE — VANILLA SCRIPTS
- * Custom lightweight smooth scroll. No Lenis. No GSAP.
+ * PROJECT PAGE — Editorial Portfolio
+ * Clean vanilla scripts.
  */
 
 // ============================================
-// LIGHTWEIGHT SMOOTH SCROLL ENGINE
+// SMOOTH SCROLL ENGINE
 // ============================================
 class SmoothScroll {
   constructor(opts = {}) {
@@ -58,27 +58,19 @@ const smoothScroll = new SmoothScroll({ ease: 0.08, wheelMultiplier: 1 });
 // GLOBAL STATE
 // ============================================
 let scrollY = 0;
-let mouseX = 0, mouseY = 0;
 const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
 let ticking = false;
 window.addEventListener('scroll', () => {
-    if (!ticking) {
-        requestAnimationFrame(() => {
-            scrollY = window.scrollY;
-            updateParallax();
-            ticking = false;
-        });
-        ticking = true;
-    }
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      scrollY = window.scrollY;
+      updateParallax();
+      ticking = false;
+    });
+    ticking = true;
+  }
 }, { passive: true });
-
-if (!isTouchDevice) {
-    window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    }, { passive: true });
-}
 
 // ============================================
 // DATA & POPULATION
@@ -118,11 +110,11 @@ const projects = [
         id: 4,
         num: "04",
         title: "MERGE",
-        category: "WEB DESIGN / DEVELOPMENTT",
+        category: "WEB DESIGN / DEVELOPMENT",
         year: "2026",
         description: "Merge is an e-commerce platform for a Street Wear Clothes",
         story: "Merge is a web application that allows users to purchase clothing from various brands. It is a platform that allows users to purchase clothing from various brands.",
-          gallery: ["assets/M01.png", "assets/M02.png", "assets/M03.png"],
+        gallery: ["assets/M01.png", "assets/M02.png", "assets/M03.png"],
     },
     {
         id: 5,
@@ -189,6 +181,9 @@ document.getElementById("projectYear").textContent = project.year;
 document.getElementById("projectDesc").textContent = project.description;
 document.getElementById("projectStory").textContent = project.story;
 
+// Update page title
+document.title = `${project.title} — Nate`;
+
 const galleryGrid = document.getElementById("projectGallery");
 if (galleryGrid && project.gallery && project.gallery.length > 0) {
     galleryGrid.innerHTML = "";
@@ -201,7 +196,6 @@ if (galleryGrid && project.gallery && project.gallery.length > 0) {
         galleryGrid.appendChild(item);
     });
 } else if (galleryGrid) {
-    // Hide gallery label if no gallery items
     const label = document.querySelector(".project-gallery-label");
     if (label) label.style.display = "none";
 }
@@ -221,7 +215,7 @@ if (currentIndex !== -1) {
     document.getElementById("nextProject").href = `project.html?id=${nextProj.id}`;
 }
 
-const backLink = document.querySelector(".back-link");
+const backLink = document.getElementById("backLink");
 if (backLink) backLink.href = `index.html?from=project&projectId=${id}`;
 
 // ============================================
@@ -233,9 +227,9 @@ window.addEventListener('load', () => {
 
     if (hero && heroImg) {
         hero.style.clipPath = "inset(0% 0% 0% 0%)";
-        hero.style.transition = "clip-path 1.6s cubic-bezier(0.7, 0, 0.3, 1)";
+        hero.style.transition = "clip-path 1.4s cubic-bezier(0.7, 0, 0.3, 1)";
         heroImg.style.transform = "scale(1)";
-        heroImg.style.transition = "transform 3s cubic-bezier(0.2, 1, 0.3, 1)";
+        heroImg.style.transition = "transform 2.5s cubic-bezier(0.2, 1, 0.3, 1)";
     }
 
     const observer = new IntersectionObserver((entries) => {
@@ -256,29 +250,8 @@ const heroImg = document.querySelector('.project-hero-img');
 const heroNum = document.querySelector('.project-num');
 
 function updateParallax() {
-    if (heroImg) heroImg.style.transform = `translate3d(0, ${scrollY * 0.3}px, 0)`;
-    if (heroNum) heroNum.style.transform = `translate3d(0, ${-scrollY * 0.5}px, 0)`;
-}
-
-// ============================================
-// CUSTOM CURSOR
-// ============================================
-if (!isTouchDevice) {
-    const cursor = document.querySelector('.custom-cursor');
-    let curX = 0, curY = 0;
-
-    function moveCursor() {
-        curX += (mouseX - curX) * 0.15;
-        curY += (mouseY - curY) * 0.15;
-        if (cursor) cursor.style.transform = `translate3d(${curX - 15}px, ${curY - 15}px, 0)`;
-        requestAnimationFrame(moveCursor);
-    }
-    moveCursor();
-
-    document.querySelectorAll('a, .gallery-item').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
+    if (heroImg) heroImg.style.transform = `translate3d(0, ${scrollY * 0.25}px, 0)`;
+    if (heroNum) heroNum.style.transform = `translate3d(0, ${-scrollY * 0.4}px, 0)`;
 }
 
 // ============================================
@@ -318,7 +291,6 @@ if (!isTouchDevice) {
         if (isTransitioning) return;
         isTransitioning = true;
 
-        // Fade out current image
         image.classList.add('transitioning');
 
         setTimeout(() => {
@@ -326,13 +298,11 @@ if (!isTouchDevice) {
             image.src = gallery[currentIdx];
             currentEl.textContent = currentIdx + 1;
 
-            // Wait for the new image to load then fade in
             image.onload = () => {
                 image.classList.remove('transitioning');
                 isTransitioning = false;
             };
 
-            // Fallback in case onload doesn't fire (cached image)
             setTimeout(() => {
                 image.classList.remove('transitioning');
                 isTransitioning = false;
@@ -386,8 +356,8 @@ if (!isTouchDevice) {
         touchEndX = e.changedTouches[0].screenX;
         const diff = touchStartX - touchEndX;
         if (Math.abs(diff) > 50) {
-            if (diff > 0) goTo(currentIdx + 1);  // Swipe left → next
-            else goTo(currentIdx - 1);            // Swipe right → prev
+            if (diff > 0) goTo(currentIdx + 1);
+            else goTo(currentIdx - 1);
         }
     }, { passive: true });
 })();

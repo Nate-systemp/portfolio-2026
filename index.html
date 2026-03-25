@@ -4,367 +4,411 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nate — UI/UX Designer & Frontend Developer portfolio showcasing creative projects and design work.">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <title>Nate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Nate — Portfolio 2026</title>
 </head>
 
 <body class="loading-active">
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
-        <div class="loading-content">
-            <div class="loading-logo">
-                <span class="loading-logo-letter" data-index="0">N</span>
-                <span class="loading-logo-letter" data-index="1">A</span>
-                <span class="loading-logo-letter" data-index="2">T</span>
-                <span class="loading-logo-letter" data-index="3">E</span>
-            </div>
-            <div class="loading-bar-container">
-                <div class="loading-bar" id="loadingBar"></div>
-            </div>
-            <div class="loading-percent" id="loadingPercent">0%</div>
-            <button class="loading-start-btn" id="startBtn">
-                <span class="start-text">ENTER</span>
-                <span class="start-arrow">→</span>
-            </button>
-        </div>
-        <div class="loading-footer-text">PORTFOLIO — 2026</div>
-    </div>
-
-    <div class="custom-cursor"></div>
-
-    <ul class="list">
-        <li>
-            <span data-text="ABOUT">ABOUT</span>
-        </li>
-        <li>
-            <span data-text="WORK">WORK</span>
-        </li>
-        <li>
-            <span data-text="CONTACT">CONTACT</span>
-        </li>
-    </ul>
-
-    <div class="intro-container">
-        <div class="intro-wrapper">
-            <h1 class="intro-title" style="opacity:0">NATE</h1>
-            <div class="intro-sub" style="opacity:0">
-                <span>UI/UX DESIGNER</span>
-                <span class="separator">✦</span>
-                <span>FRONTEND DEV</span>
-            </div>
-            <div class="scroll-indicator" style="opacity:0">
-                <span>SCROLL TO EXPLORE</span>
-            </div>
+    <!-- ═══ LOADING CURTAIN ═══ -->
+    <div class="loading-curtain" id="loadingCurtain">
+        <div class="curtain-content">
+            <div class="curtain-line"></div>
+            <span class="curtain-text">PORTFOLIO</span>
+            <div class="curtain-line"></div>
         </div>
     </div>
-    <div class="social-icons">
-        <a href="https://github.com/Nate-systemp" target="_blank" rel="noopener" class="icon icon-github"
-            aria-label="GitHub"></a>
-        <a href="https://www.linkedin.com/in/nathanielpangilinan" target="_blank" rel="noopener"
-            class="icon icon-linkedin" aria-label="LinkedIn"></a>
-        <a href="https://www.instagram.com/nahtanyel" target="_blank" rel="noopener" class="icon icon-insta"
-            aria-label="Instagram"></a>
-    </div>
 
-    <!-- ═══ ABOUT ME SECTION ═══ -->
-    <section id="about">
-        <!-- Base Layer (Light) -->
-        <div class="about-layout" data-reveal>
-            <p class="about-label">ABOUT ME</p>
-            <div class="about-heading-wrap">
-                <h2 class="about-heading about-heading-base">
-                    ASPIRING TO BECOME A FRONT-END <br>
-                    EXPERIENCED IN BUILDING RESPONSIVE WEB APPS AND USER INTERFACE
+    <!-- ═══ NAVIGATION ═══ -->
+    <header class="site-header" id="siteHeader">
+        <a href="#" class="header-logo">N.</a>
+        <nav class="header-nav">
+            <a href="#about-section" class="nav-item" data-nav="about"><span class="nav-num">01</span>About</a>
+            <a href="#work-section" class="nav-item" data-nav="work"><span class="nav-num">02</span>Work</a>
+            <a href="#experience-section" class="nav-item" data-nav="exp"><span class="nav-num">03</span>Experience</a>
+            <a href="#contact-section" class="nav-item" data-nav="contact"><span class="nav-num">04</span>Contact</a>
+        </nav>
+        <div class="header-status">
+            <span class="status-dot"></span>
+            <span class="status-text">AVAILABLE FOR WORK</span>
+        </div>
+    </header>
+
+    <!-- ═══ HERO SECTION ═══ -->
+    <section class="hero" id="hero">
+        <div class="hero-grid">
+            <div class="hero-left">
+                <div class="hero-eyebrow" data-reveal>
+                    <span class="eyebrow-line"></span>
+                    <span class="eyebrow-text">UI/UX DESIGNER</span>
+                </div>
+                <h1 class="hero-name" data-reveal>
+                    <span class="hero-name-line">NATH</span>
+                    <span class="hero-name-line hero-name-indent">ANIEL</span>
+                </h1>
+                <div class="hero-tagline" data-reveal>
+                    <p>Designing thoughtful digital<br>experiences with clean code<br>& creative precision.</p>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-vertical-text">FRONTEND DEVELOPER</div>
+                <div class="hero-year">©2026</div>
+            </div>
+        </div>
+        <div class="hero-scroll-cue" data-reveal>
+            <div class="scroll-line"></div>
+            <span>SCROLL</span>
+        </div>
+    </section>
+
+    <!-- ═══ ABOUT SECTION ═══ -->
+    <section class="about" id="about-section">
+        <div class="section-marker">
+            <span class="marker-num">01</span>
+            <span class="marker-line"></span>
+        </div>
+        <div class="about-grid">
+            <div class="about-left" data-reveal>
+                <span class="section-label">ABOUT</span>
+                <h2 class="about-heading">
+                    I craft <em>interfaces</em> that balance<br>
+                    aesthetics with function — building<br>
+                    responsive web apps & experiences.
                 </h2>
             </div>
-        </div>
-
-        <!-- Reveal Layer (Dark spotlight) -->
-        <div class="about-reveal-layer" aria-hidden="true">
-            <div class="about-layout" data-reveal>
-                <p class="about-label">ABOUT ME</p>
-                <div class="about-heading-wrap">
-                    <h2 class="about-heading about-heading-masked">
-                        PASSIONATE ABOUT CRAFTING WEB  <br>
-                        BRINGING IDEAS TO LIFE WITH MODERN TECHNOLOGIES AND CLEAN CODE
-                    </h2>
+            <div class="about-right" data-reveal>
+                <div class="about-detail">
+                    <span class="detail-label">FOCUS</span>
+                    <p class="detail-text">UI/UX Design, Frontend Development, Game Design, Digital Posters, App Development</p>
                 </div>
+                <div class="about-detail">
+                    <span class="detail-label">TOOLS</span>
+                    <p class="detail-text">Figma, HTML/CSS/JS, React, Unity, Godot, Adobe Creative Suite</p>
+                </div>
+                <a href="assets/resume.pdf" class="resume-link" download>
+                    <span>DOWNLOAD RESUME</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 5v14M5 12l7 7 7-7"/>
+                    </svg>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- ═══ EXPERIENCE / ROLES SECTION ═══ -->
-    <section id="experience">
-        <div class="exp-sticky">
-            <div class="exp-layout">
-            <div class="exp-left" data-reveal>
-                <p class="exp-label">EXPERIENCE</p>
-                <h1 class="exp-heading">ROLES</h1>
+    <!-- ═══ SKILLS MARQUEE ═══ -->
+    <div class="marquee-strip">
+        <div class="marquee-track">
+            <span class="marquee-item">UI & UX DESIGN</span>
+            <span class="marquee-dot">◆</span>
+            <span class="marquee-item">WEB DEVELOPMENT</span>
+            <span class="marquee-dot">◆</span>
+            <span class="marquee-item">GAME DESIGN</span>
+            <span class="marquee-dot">◆</span>
+            <span class="marquee-item">DIGITAL POSTERS</span>
+            <span class="marquee-dot">◆</span>
+            <span class="marquee-item">APP DEVELOPMENT</span>
+            <span class="marquee-dot">◆</span>
+            <!-- Duplicate for seamless loop -->
+            <span class="marquee-item">UI & UX DESIGN</span>
+            <span class="marquee-dot">◆</span>
+            <span class="marquee-item">WEB DEVELOPMENT</span>
+            <span class="marquee-dot">◆</span>
+            <span class="marquee-item">GAME DESIGN</span>
+            <span class="marquee-dot">◆</span>
+            <span class="marquee-item">DIGITAL POSTERS</span>
+            <span class="marquee-dot">◆</span>
+            <span class="marquee-item">APP DEVELOPMENT</span>
+            <span class="marquee-dot">◆</span>
+        </div>
+    </div>
+
+    <!-- ═══ SELECTED WORK ═══ -->
+    <section class="work" id="work-section">
+        <div class="section-marker">
+            <span class="marker-num">02</span>
+            <span class="marker-line"></span>
+        </div>
+        <div class="work-header" data-reveal>
+            <span class="section-label">SELECTED WORK</span>
+            <p class="work-intro-text">Projects crafted during my time as an IT Student<br>at Pamantasan ng Lungsod ng Valenzuela.</p>
+        </div>
+
+        <div class="work-list" id="workList">
+            <!-- Work Item 1 -->
+            <a href="project.html?id=1" class="work-item" data-reveal>
+                <div class="work-item-num">01</div>
+                <div class="work-item-img" style="background-image: url('assets/FRACERA3.webp')"></div>
+                <div class="work-item-info">
+                    <h3 class="work-item-title">FRACT ERA</h3>
+                    <span class="work-item-cat">GAME DESIGN</span>
+                </div>
+                <div class="work-item-year">2026</div>
+                <div class="work-item-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </div>
+            </a>
+            <!-- Work Item 2 -->
+            <a href="project.html?id=2" class="work-item" data-reveal>
+                <div class="work-item-num">02</div>
+                <div class="work-item-img" style="background-image: url('assets/SQ1.webp')"></div>
+                <div class="work-item-info">
+                    <h3 class="work-item-title">SWIVEL QUIVER</h3>
+                    <span class="work-item-cat">GAME DEVELOPMENT</span>
+                </div>
+                <div class="work-item-year">2025</div>
+                <div class="work-item-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </div>
+            </a>
+            <!-- Work Item 3 -->
+            <a href="project.html?id=3" class="work-item" data-reveal>
+                <div class="work-item-num">03</div>
+                <div class="work-item-img" style="background-image: url('assets/OF1.webp')"></div>
+                <div class="work-item-info">
+                    <h3 class="work-item-title">OUTFALL</h3>
+                    <span class="work-item-cat">GAME DESIGN</span>
+                </div>
+                <div class="work-item-year">2025</div>
+                <div class="work-item-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </div>
+            </a>
+            <!-- Work Item 4 -->
+            <a href="project.html?id=4" class="work-item" data-reveal>
+                <div class="work-item-num">04</div>
+                <div class="work-item-img" style="background-image: url('assets/M01.png')"></div>
+                <div class="work-item-info">
+                    <h3 class="work-item-title">MERGE</h3>
+                    <span class="work-item-cat">WEB DESIGN / DEV</span>
+                </div>
+                <div class="work-item-year">2026</div>
+                <div class="work-item-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+        <!-- Hidden extra works -->
+        <div class="work-list work-list-extra" id="workListExtra">
+            <a href="project.html?id=5" class="work-item" data-reveal>
+                <div class="work-item-num">05</div>
+                <div class="work-item-img"></div>
+                <div class="work-item-info">
+                    <h3 class="work-item-title">PROJECT FIVE</h3>
+                    <span class="work-item-cat">DIGITAL POSTER</span>
+                </div>
+                <div class="work-item-year">2024</div>
+                <div class="work-item-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </div>
+            </a>
+            <a href="project.html?id=6" class="work-item" data-reveal>
+                <div class="work-item-num">06</div>
+                <div class="work-item-img"></div>
+                <div class="work-item-info">
+                    <h3 class="work-item-title">PROJECT SIX</h3>
+                    <span class="work-item-cat">UI/UX DESIGN</span>
+                </div>
+                <div class="work-item-year">2025</div>
+                <div class="work-item-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </div>
+            </a>
+            <a href="project.html?id=7" class="work-item" data-reveal>
+                <div class="work-item-num">07</div>
+                <div class="work-item-img"></div>
+                <div class="work-item-info">
+                    <h3 class="work-item-title">PROJECT SEVEN</h3>
+                    <span class="work-item-cat">WEB DEVELOPMENT</span>
+                </div>
+                <div class="work-item-year">2024</div>
+                <div class="work-item-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </div>
+            </a>
+            <a href="project.html?id=8" class="work-item" data-reveal>
+                <div class="work-item-num">08</div>
+                <div class="work-item-img"></div>
+                <div class="work-item-info">
+                    <h3 class="work-item-title">PROJECT EIGHT</h3>
+                    <span class="work-item-cat">APP DEVELOPMENT</span>
+                </div>
+                <div class="work-item-year">2024</div>
+                <div class="work-item-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </div>
+            </a>
+            <a href="project.html?id=9" class="work-item" data-reveal>
+                <div class="work-item-num">09</div>
+                <div class="work-item-img"></div>
+                <div class="work-item-info">
+                    <h3 class="work-item-title">PROJECT NINE</h3>
+                    <span class="work-item-cat">GAME DESIGN</span>
+                </div>
+                <div class="work-item-year">2025</div>
+                <div class="work-item-arrow">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+        <button class="work-toggle" id="workToggle">
+            <span class="work-toggle-text">SHOW MORE</span>
+            <span class="work-toggle-line"></span>
+        </button>
+    </section>
+
+    <!-- ═══ EXPERIENCE SECTION ═══ -->
+    <section class="experience" id="experience-section">
+        <div class="section-marker section-marker-light">
+            <span class="marker-num">03</span>
+            <span class="marker-line"></span>
+        </div>
+        <div class="experience-grid">
+            <div class="experience-left" data-reveal>
+                <span class="section-label section-label-light">EXPERIENCE</span>
+                <h2 class="experience-heading">Roles &<br><em>Journey</em></h2>
             </div>
-            <div class="exp-right">
+            <div class="experience-right">
                 <!-- Role 1 -->
-                <div class="role-item" data-reveal>
-                    <button class="role-header" aria-expanded="false">
-                        <span class="role-year">2026</span>
-                        <span class="role-name">Lead Frontend Developer</span>
-                        <span class="role-org">Capstone Project</span>
-                        <span class="role-toggle">+</span>
+                <div class="exp-item" data-reveal>
+                    <button class="exp-header" aria-expanded="false">
+                        <span class="exp-year">2026</span>
+                        <span class="exp-role">Lead Frontend Developer</span>
+                        <span class="exp-org">Capstone Project</span>
+                        <span class="exp-toggle">+</span>
                     </button>
-                    <div class="role-content">
-                        <p class="role-desc">Led the frontend development of a capstone web application, building responsive interfaces and coordinating with the backend team to integrate APIs.</p>
+                    <div class="exp-body">
+                        <p>Led the frontend development of a capstone web application, building responsive interfaces and coordinating with the backend team to integrate APIs.</p>
                     </div>
                 </div>
                 <!-- Role 2 -->
-                <div class="role-item" data-reveal>
-                    <button class="role-header" aria-expanded="false">
-                        <span class="role-year">2025</span>
-                        <span class="role-name">UI/UX Designer</span>
-                        <span class="role-org">Student Organization</span>
-                        <span class="role-toggle">+</span>
+                <div class="exp-item" data-reveal>
+                    <button class="exp-header" aria-expanded="false">
+                        <span class="exp-year">2025</span>
+                        <span class="exp-role">UI/UX Designer</span>
+                        <span class="exp-org">Student Organization</span>
+                        <span class="exp-toggle">+</span>
                     </button>
-                    <div class="role-content">
-                        <p class="role-desc">Designed event posters, social media graphics, and the organization's website mockups using Figma and Adobe tools.</p>
+                    <div class="exp-body">
+                        <p>Designed event posters, social media graphics, and the organization's website mockups using Figma and Adobe tools.</p>
                     </div>
                 </div>
                 <!-- Role 3 -->
-                <div class="role-item" data-reveal>
-                    <button class="role-header" aria-expanded="false">
-                        <span class="role-year">2025</span>
-                        <span class="role-name">IT Intern</span>
-                        <span class="role-org">Sparks Place, Cubao</span>
-                        <span class="role-toggle">+</span>
+                <div class="exp-item" data-reveal>
+                    <button class="exp-header" aria-expanded="false">
+                        <span class="exp-year">2025</span>
+                        <span class="exp-role">IT Intern</span>
+                        <span class="exp-org">Sparks Place, Cubao</span>
+                        <span class="exp-toggle">+</span>
                     </button>
-                    <div class="role-content">
-                        <p class="role-desc">Provided technical support, maintained systems, managed data, and assisted staff with troubleshooting hardware and software issues.</p>
+                    <div class="exp-body">
+                        <p>Provided technical support, maintained systems, managed data, and assisted staff with troubleshooting hardware and software issues.</p>
                     </div>
                 </div>
                 <!-- Role 4 -->
-                <div class="role-item" data-reveal>
-                    <button class="role-header" aria-expanded="false">
-                        <span class="role-year">2024</span>
-                        <span class="role-name">Game Developer</span>
-                        <span class="role-org">Academic Project</span>
-                        <span class="role-toggle">+</span>
+                <div class="exp-item" data-reveal>
+                    <button class="exp-header" aria-expanded="false">
+                        <span class="exp-year">2024</span>
+                        <span class="exp-role">Game Developer</span>
+                        <span class="exp-org">Academic Project</span>
+                        <span class="exp-toggle">+</span>
                     </button>
-                    <div class="role-content">
-                        <p class="role-desc">Developed 2D and 3D game prototypes using Unity and Godot, handling game mechanics, level design, and asset creation.</p>
+                    <div class="exp-body">
+                        <p>Developed 2D and 3D game prototypes using Unity and Godot, handling game mechanics, level design, and asset creation.</p>
                     </div>
                 </div>
                 <!-- Role 5 -->
-                <div class="role-item" data-reveal>
-                    <button class="role-header" aria-expanded="false">
-                        <span class="role-year">2023</span>
-                        <span class="role-name">Web Developer</span>
-                        <span class="role-org">Freelance</span>
-                        <span class="role-toggle">+</span>
+                <div class="exp-item" data-reveal>
+                    <button class="exp-header" aria-expanded="false">
+                        <span class="exp-year">2023</span>
+                        <span class="exp-role">Web Developer</span>
+                        <span class="exp-org">Freelance</span>
+                        <span class="exp-toggle">+</span>
                     </button>
-                    <div class="role-content">
-                        <p class="role-desc">Built responsive portfolio and business websites for clients using HTML, CSS, and JavaScript with a focus on clean, modern design.</p>
+                    <div class="exp-body">
+                        <p>Built responsive portfolio and business websites for clients using HTML, CSS, and JavaScript with a focus on clean, modern design.</p>
                     </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </section>
-
-    <section id="desc">
-        <div class="desc-content">
-            <div class="desc-text">
-                I design clean, usable interfaces for web and mobile,
-                crafting intuitive experiences
-                that balance aesthetics with functionality.
-            </div>
-            <a href="assets/resume.pdf" class="btn-resume" download>
-                DOWNLOAD RESUME
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 15L8.5 11.5L9.91 10.09L11 11.17V4H13V11.17L14.09 10.09L15.5 11.5L12 15ZM4 20V17H6V18H18V17H20V20H4Z" fill="currentColor"/>
-                </svg>
-            </a>
-        </div>
-        <p class="desc-skills">CERTAIN SKILLS I DO</p>
-        <div class="descontainer">
-            <hr class="divider">
-            <h1 class="desc-title">UI&UX DESIGN</h1>
-            <hr class="divider">
-            <h1 class="desc-title">WEB DEVELOPMENT</h1>
-            <hr class="divider">
-            <h1 class="desc-title">GAME DESIGN</h1>
-            <hr class="divider">
-            <h1 class="desc-title">DIGITAL POSTER</h1>
-            <hr class="divider">
-            <h1 class="desc-title">APP DEVELOPMENT</h1>
-            <hr class="divider">
-        </div>
-        <div class="workintro">
-            <div class="work-text">Here's some of my works that I worked on during my <br> college as an
-                IT Student at the Pamantasan ng Lungsod ng<br>Valenzuela.</div>
-        </div>
-        <p class="desc-skills">SELECTED WORKS</p>
-
-        <div class="works-grid">
-            <a href="project.html?id=1" class="work-card" data-reveal="scale">
-                <div class="work-card-img"
-                    style="background-image: url('assets/FRACERA3.webp'); background-size: cover; background-position: top;">
-                </div>
-                <div class="work-card-info">
-                    <span class="work-card-num">01</span>
-                    <h3 class="work-card-title">FRACT ERA</h3>
-                    <div class="work-card-meta">
-                        <span class="work-card-cat">GAME DESIGN</span>
-                        <span class="work-card-year">2026</span>
-                    </div>
-                </div>
-            </a>
-            <a href="project.html?id=2" class="work-card" data-reveal="scale">
-                <div class="work-card-img"
-                    style="background-image: url('assets/SQ1.webp'); background-size: cover; background-position: top;">
-                </div>
-                <div class="work-card-info">
-                    <span class="work-card-num">02</span>
-                    <h3 class="work-card-title">SWIVEL QUIVER</h3>
-                    <div class="work-card-meta">
-                        <span class="work-card-cat">GAME DEVELOPMENT/DESIGN</span>
-                        <span class="work-card-year">2025</span>
-                    </div>
-                </div>
-            </a>
-            <a href="project.html?id=3" class="work-card" data-reveal="scale">
-                <div class="work-card-img"
-                    style="background-image: url('assets/OF1.webp'); background-size: cover; background-position: top;">
-                </div>
-                <div class="work-card-info">
-                    <span class="work-card-num">03</span>
-                    <h3 class="work-card-title">OUTFALL</h3>
-                    <div class="work-card-meta">
-                        <span class="work-card-cat">GAME DESIGN</span>
-                        <span class="work-card-year">2025</span>
-                    </div>
-                </div>
-            </a>
-            <a href="project.html?id=4" class="work-card" data-reveal="scale">
-                <div class="work-card-img" style="background-image: url('assets/M01.png'); background-size: cover; background-position: top;"></div>
-                <div class="work-card-info">
-                    <span class="work-card-num">04</span>
-                    <h3 class="work-card-title">MERGE</h3>
-                    <div class="work-card-meta">
-                        <span class="work-card-cat">WEB DESIGN / DEVELOPMENT</span>
-                        <span class="work-card-year">2026</span>
-                    </div>
-                </div>
-            </a>
-            <a href="project.html?id=5" class="work-card" data-reveal="scale">
-                <div class="work-card-img"></div>
-                <div class="work-card-info">
-                    <span class="work-card-num">05</span>
-                    <h3 class="work-card-title">PROJECT FIVE</h3>
-                    <div class="work-card-meta">
-                        <span class="work-card-cat">DIGITAL POSTER</span>
-                        <span class="work-card-year">2024</span>
-                    </div>
-                </div>
-            </a>
-            <a href="project.html?id=6" class="work-card" data-reveal="scale">
-                <div class="work-card-img"></div>
-                <div class="work-card-info">
-                    <span class="work-card-num">06</span>
-                    <h3 class="work-card-title">PROJECT SIX</h3>
-                    <div class="work-card-meta">
-                        <span class="work-card-cat">UI/UX DESIGN</span>
-                        <span class="work-card-year">2025</span>
-                    </div>
-                </div>
-            </a>
-            <a href="project.html?id=7" class="work-card" data-reveal="scale">
-                <div class="work-card-img"></div>
-                <div class="work-card-info">
-                    <span class="work-card-num">07</span>
-                    <h3 class="work-card-title">PROJECT SEVEN</h3>
-                    <div class="work-card-meta">
-                        <span class="work-card-cat">WEB DEVELOPMENT</span>
-                        <span class="work-card-year">2024</span>
-                    </div>
-                </div>
-            </a>
-            <a href="project.html?id=8" class="work-card" data-reveal="scale">
-                <div class="work-card-img"></div>
-                <div class="work-card-info">
-                    <span class="work-card-num">08</span>
-                    <h3 class="work-card-title">PROJECT EIGHT</h3>
-                    <div class="work-card-meta">
-                        <span class="work-card-cat">APP DEVELOPMENT</span>
-                        <span class="work-card-year">2024</span>
-                    </div>
-                </div>
-            </a>
-            <a href="project.html?id=9" class="work-card" data-reveal="scale">
-                <div class="work-card-img"></div>
-                <div class="work-card-info">
-                    <span class="work-card-num">09</span>
-                    <h3 class="work-card-title">PROJECT NINE</h3>
-                    <div class="work-card-meta">
-                        <span class="work-card-cat">GAME DESIGN</span>
-                        <span class="work-card-year">2025</span>
-                    </div>
-                </div>
-            </a>
-        </div>
-
-        <button class="works-toggle" id="worksToggle">
-            <span class="works-toggle-text">MORE WORKS</span>
-            <span class="works-toggle-icon">&#8964;</span>
-        </button>
-
-    </section>
-
-    <section id="new-section">
-        <div class="intern-layout">
-            <div class="intern-left" data-reveal>
-                <p class="intern-label">EXPERIENCE</p>
-                <h1 class="int-text">INTERN&shy;SHIP</h1>
-                <p class="intern-desc">Interned at Cubao Sparks Place IT Department, providing technical support,
-                    maintaining systems, managing data, and assisting staff with technical issues.</p>
-                <div class="intern-meta">
-                    <span class="intern-meta-item">IT DEPARTMENT</span>
-                    <span class="intern-meta-divider">—</span>
-                    <span class="intern-meta-item">SPARKS PLACE, CUBAO</span>
-                </div>
-            </div>
-            <div class="intern-right">
-                <div class="ojt-grid">
-                    <div class="ojt-photo ojt-1" data-reveal="scale"></div>
-                    <div class="ojt-photo ojt-2" data-reveal="scale"></div>
-                    <div class="ojt-photo ojt-3" data-reveal="scale"></div>
-                    <div class="ojt-photo ojt-4" data-reveal="scale"></div>
                 </div>
             </div>
         </div>
     </section>
-    <section id="contact">
-        <canvas class="contact-wave" id="contactWave"></canvas>
-        <div class="contact-wrapper">
-            <h1 class="contact-head" data-reveal>LET'S WORK <br> TOGETHER</h1>
-            <div class="contact-body" data-reveal>
-                <a href="mailto:natederek99@gmail.com" class="contact-mail">natederek99@gmail.com</a>
-                <p class="contact-sub">Available for freelance work and collaborations.</p>
-            </div>
 
-            <div class="contact-footer" data-reveal>
-                <div class="footer-links">
-                    <a href="https://github.com/Nate-systemp" target="_blank" rel="noopener" class="f-link">GITHUB</a>
-                    <a href="https://www.linkedin.com/in/nathanielpangilinan" target="_blank" rel="noopener"
-                        class="f-link">LINKEDIN</a>
-                    <a href="https://www.instagram.com/nahtanyel" target="_blank" rel="noopener"
-                        class="f-link">INSTAGRAM</a>
+    <!-- ═══ INTERNSHIP SECTION ═══ -->
+    <section class="internship" id="internship-section">
+        <div class="intern-grid">
+            <div class="intern-text-col" data-reveal>
+                <span class="section-label">INTERNSHIP</span>
+                <h2 class="intern-heading">Sparks<br>Place</h2>
+                <p class="intern-description">Interned at Cubao Sparks Place IT Department — providing technical support, maintaining systems, managing data, and assisting staff with technical issues.</p>
+                <div class="intern-tags">
+                    <span>IT DEPARTMENT</span>
+                    <span class="intern-tag-sep">—</span>
+                    <span>CUBAO, QC</span>
                 </div>
-                <div class="footer-copy">
-                    <span>&copy; 2026 NATE</span>
-                    <span>DESIGNED & DEVELOPED</span>
+            </div>
+            <div class="intern-photo-col">
+                <div class="intern-photo-grid">
+                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-one.webp')"></div>
+                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-two.webp')"></div>
+                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-three.webp')"></div>
+                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-four.webp')"></div>
                 </div>
             </div>
         </div>
     </section>
-    
+
+    <!-- ═══ CONTACT SECTION ═══ -->
+    <section class="contact" id="contact-section">
+        <div class="section-marker section-marker-light">
+            <span class="marker-num">04</span>
+            <span class="marker-line"></span>
+        </div>
+        <div class="contact-inner">
+            <div class="contact-top" data-reveal>
+                <span class="section-label section-label-light">GET IN TOUCH</span>
+                <h2 class="contact-heading">Let's build<br>something <em>great</em></h2>
+            </div>
+            <div class="contact-links" data-reveal>
+                <a href="mailto:natederek99@gmail.com" class="contact-email">natederek99@gmail.com</a>
+                <p class="contact-note">Available for freelance work and collaborations.</p>
+            </div>
+        </div>
+        <footer class="site-footer" data-reveal>
+            <div class="footer-socials">
+                <a href="https://github.com/Nate-systemp" target="_blank" rel="noopener" class="footer-social-link">GITHUB</a>
+                <a href="https://www.linkedin.com/in/nathanielpangilinan" target="_blank" rel="noopener" class="footer-social-link">LINKEDIN</a>
+                <a href="https://www.instagram.com/nahtanyel" target="_blank" rel="noopener" class="footer-social-link">INSTAGRAM</a>
+            </div>
+            <div class="footer-meta">
+                <span>&copy; 2026 NATHANIEL</span>
+                <span>DESIGNED & DEVELOPED</span>
+            </div>
+        </footer>
+    </section>
+
     <script src="script.js"></script>
 </body>
 

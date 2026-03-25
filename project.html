@@ -4,18 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Project detail — Nate's portfolio">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="project.css">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <title>Project — Nate</title>
 </head>
 
 <body class="project-body">
-    <div class="custom-cursor"></div>
 
     <!-- Back Navigation -->
-    <a href="index.html" class="back-link">
-        <span class="back-arrow">←</span>
+    <a href="index.html" class="back-link" id="backLink">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
         <span class="back-text">BACK</span>
     </a>
 
@@ -30,7 +35,9 @@
     <!-- Project Info -->
     <section class="project-info">
         <div class="project-info-header" data-reveal>
-            <h1 class="project-title" id="projectTitle">FRAC ERA</h1>
+            <div class="project-info-left">
+                <h1 class="project-title" id="projectTitle">FRACT ERA</h1>
+            </div>
             <div class="project-tags">
                 <span class="project-category" id="projectCat">GAME DESIGN</span>
                 <span class="project-year" id="projectYear">2025</span>
