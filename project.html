@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Project detail — Nate's portfolio">
+    <meta name="description" content="Project — Nate's portfolio">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="project.css">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
@@ -19,141 +19,133 @@
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="cursor-ring" id="cursorRing"></div>
 
-    <!-- Back Navigation -->
-    <a href="index.html" class="back-link" id="backLink">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-        </svg>
-        <span class="back-text">BACK</span>
-    </a>
-
-    <!-- Hero Section -->
-    <section class="project-hero">
-        <div class="project-hero-img" id="heroImg"></div>
-        <div class="project-hero-overlay">
-            <span class="project-num" id="projectNum">01</span>
-        </div>
-    </section>
-
-    <!-- Project Header — Full-width title bar -->
-    <section class="project-header">
-        <div class="project-header-inner" data-reveal>
-            <div class="project-header-left">
-                <h1 class="project-title" id="projectTitle">FRACT ERA</h1>
-            </div>
-            <div class="project-header-meta">
-                <div class="project-meta-item">
-                    <span class="meta-label">CATEGORY</span>
-                    <span class="meta-value" id="projectCat">GAME DESIGN</span>
-                </div>
-                <div class="project-meta-item">
-                    <span class="meta-label">YEAR</span>
-                    <span class="meta-value" id="projectYear">2025</span>
-                </div>
-                <div class="project-meta-item">
-                    <span class="meta-label">IMAGES</span>
-                    <span class="meta-value" id="projectImgCount">3</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Project Content — Two column layout -->
-    <section class="project-content">
-        <div class="project-content-grid">
-            <!-- Left sidebar with labels -->
-            <div class="project-sidebar">
-                <div class="sidebar-block" data-reveal>
-                    <span class="sidebar-label">OVERVIEW</span>
-                    <div class="sidebar-accent-line"></div>
-                </div>
-            </div>
-            <!-- Right content -->
-            <div class="project-main">
-                <p class="project-desc-text" id="projectDesc" data-reveal>
-                    A brief description of the project, what it aimed to achieve,
-                    and the technologies or tools used in its creation.
-                </p>
-            </div>
-        </div>
-
-        <div class="project-content-divider" data-reveal></div>
-
-        <div class="project-content-grid">
-            <div class="project-sidebar">
-                <div class="sidebar-block" data-reveal>
-                    <span class="sidebar-label">THE STORY</span>
-                    <div class="sidebar-accent-line"></div>
-                </div>
-            </div>
-            <div class="project-main">
-                <p class="project-story-text" id="projectStory" data-reveal>
-                    The creative journey behind this project — from initial concept
-                    to final execution, including challenges faced and solutions found.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery — Bento grid -->
-    <section class="project-gallery-section">
-        <div class="gallery-header" data-reveal>
-            <span class="gallery-label">GALLERY</span>
-            <span class="gallery-count" id="galleryCount">3 IMAGES</span>
-        </div>
-        <div class="project-gallery-bento" id="projectGallery">
-            <!-- JS will populate -->
-        </div>
-    </section>
-
-    <!-- Footer Navigation -->
-    <section class="project-footer-nav">
-        <a href="#" class="project-nav-link prev" id="prevProject">
-            <span class="nav-direction">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M19 12H5M12 19l-7-7 7-7"/>
-                </svg>
-                <span class="nav-label">PREVIOUS</span>
-            </span>
-            <span class="nav-title" id="prevTitle">—</span>
+    <!-- ═══ HEADER / NAV ═══ -->
+    <header class="project-nav">
+        <a href="index.html" class="project-back-link">
+            <span class="back-arrow">←</span>
+            <span class="back-text">BACK TO ALL WORK</span>
         </a>
-        <a href="#" class="project-nav-link next" id="nextProject">
-            <span class="nav-direction">
-                <span class="nav-label">NEXT</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-            </span>
-            <span class="nav-title" id="nextTitle">—</span>
+        <div class="project-nav-logo">N.</div>
+    </header>
+
+    <!-- ═══ PROJECT HERO ═══ -->
+    <section class="p-hero" id="hero-section">
+        <div class="p-hero-inner">
+            <div class="p-hero-text">
+                <div class="p-hero-top" data-reveal>
+                    <span class="p-num" id="projectNum">01</span>
+                    <span class="p-cat" id="projectCat">GAME DESIGN</span>
+                </div>
+                <h1 class="p-title" id="projectTitle" data-reveal>FRACT ERA</h1>
+                <div class="p-hero-meta" data-reveal>
+                    <div class="p-meta-box">
+                        <span class="p-meta-label">ROLE</span>
+                        <span class="p-meta-val" id="projectRole">Lead Design</span>
+                    </div>
+                    <div class="p-meta-box">
+                        <span class="p-meta-label">YEAR</span>
+                        <span class="p-meta-val" id="projectYear">2026</span>
+                    </div>
+                    <div class="p-meta-box">
+                        <span class="p-meta-label">TECH</span>
+                        <span class="p-meta-val" id="projectTech">Figma, GameMaker</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-hero-visual" data-reveal>
+                <div class="p-hero-img-wrap">
+                    <div class="p-hero-img" id="heroImg"></div>
+                </div>
+                <div class="p-hero-scroll">
+                    <span class="p-scroll-text">SCROLL TO EXPLORE</span>
+                    <span class="p-scroll-line"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ PROJECT OVERVIEW ═══ -->
+    <section class="p-overview">
+        <div class="p-container">
+            <div class="p-overview-grid">
+                <div class="p-overview-left" data-reveal>
+                    <span class="p-section-label">THE CHALLENGE</span>
+                </div>
+                <div class="p-overview-right" data-reveal>
+                    <p class="p-overview-text" id="projectDesc">
+                        This project was a deep dive into the fusion of narrative storytelling and procedural generation. 
+                        The primary goal was to create a cohesive visual language that felt both ancient and futuristic.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ PROCESS SECTION ═══ -->
+    <section class="p-process">
+        <div class="p-container">
+             <div class="p-process-grid">
+                <div class="p-process-left" data-reveal>
+                    <span class="p-section-label">THE PROCESS</span>
+                    <h2 class="p-process-heading">Building a <br><em>New Era</em></h2>
+                </div>
+                <div class="p-process-right" data-reveal>
+                    <p class="p-process-text" id="projectStory">
+                        Inspired by the brutalist architecture and the vibrant colors of 80s sci-fi, we iterated through 
+                        dozens of prototypes to find the perfect balance between chaos and structure. 
+                        The result is a workflow that prioritizes player agency and atmospheric immersion.
+                    </p>
+                </div>
+             </div>
+        </div>
+    </section>
+
+    <!-- ═══ GALLERY ═══ -->
+    <section class="p-gallery">
+        <div class="p-gallery-item p-full-width" data-reveal>
+            <div class="p-gallery-img" id="galleryImg1" style="background-image: url('assets/FRACERA3.webp')"></div>
+        </div>
+        <div class="p-container">
+            <div class="p-gallery-grid">
+                <div class="p-gallery-item" data-reveal>
+                    <div class="p-gallery-img" id="galleryImg2"></div>
+                </div>
+                <div class="p-gallery-item" data-reveal>
+                    <div class="p-gallery-img" id="galleryImg3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ NEXT PROJECT CTA ═══ -->
+    <section class="p-next">
+        <a href="#" class="next-project-link" id="nextProject">
+            <div class="next-bg" id="nextImg"></div>
+            <div class="next-content" data-reveal>
+                <div class="next-circle-badge">
+                    <span class="next-badge-text">VIEW NEXT</span>
+                </div>
+                <h2 class="next-title" id="nextTitle">SWIVEL QUIVER</h2>
+            </div>
         </a>
     </section>
 
-    <!-- Lightbox Modal -->
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="p-footer">
+        <div class="p-container">
+            <div class="p-footer-inner">
+                <span class="p-footer-copy">© 2026 Nate Portfolio</span>
+                <a href="index.html" class="p-footer-back">BACK TO HOME</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox Modal (Hidden) -->
     <div class="lightbox-overlay" id="lightboxOverlay">
         <div class="lightbox-backdrop"></div>
-        <button class="lightbox-close" id="lightboxClose" aria-label="Close">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <line x1="4" y1="4" x2="20" y2="20"/>
-                <line x1="20" y1="4" x2="4" y2="20"/>
-            </svg>
-        </button>
-        <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous image">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <polyline points="15 18 9 12 15 6"/>
-            </svg>
-        </button>
+        <button class="lightbox-close" id="lightboxClose">×</button>
         <div class="lightbox-image-wrapper">
             <img class="lightbox-image" id="lightboxImage" src="" alt="Gallery image" />
-        </div>
-        <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next image">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <polyline points="9 18 15 12 9 6"/>
-            </svg>
-        </button>
-        <div class="lightbox-counter" id="lightboxCounter">
-            <span class="lightbox-current" id="lightboxCurrent">1</span>
-            <span class="lightbox-separator">/</span>
-            <span class="lightbox-total" id="lightboxTotal">3</span>
         </div>
     </div>
 

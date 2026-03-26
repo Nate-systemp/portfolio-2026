@@ -1,8 +1,7 @@
 /**
- * PROJECT PAGE — Editorial Portfolio
- * Clean vanilla scripts.
+ * PROJECT PAGE — Editorial Script
+ * Updated for the 'Classy' Redesign
  */
-
 // ============================================
 // SMOOTH SCROLL ENGINE
 // ============================================
@@ -52,28 +51,10 @@ class SmoothScroll {
   }
 }
 
-const smoothScroll = new SmoothScroll({ ease: 0.08, wheelMultiplier: 1 });
+const smoothScroll = new SmoothScroll({ ease: 0.05, wheelMultiplier: 0.8 });
 
 // ============================================
-// GLOBAL STATE
-// ============================================
-let scrollY = 0;
-const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-
-let ticking = false;
-window.addEventListener('scroll', () => {
-  if (!ticking) {
-    requestAnimationFrame(() => {
-      scrollY = window.scrollY;
-      updateParallax();
-      ticking = false;
-    });
-    ticking = true;
-  }
-}, { passive: true });
-
-// ============================================
-// DATA & POPULATION
+// GLOBAL STATE & DATA
 // ============================================
 const projects = [
     {
@@ -81,10 +62,12 @@ const projects = [
         num: "01",
         title: "FRACT ERA",
         category: "GAME DESIGN",
-        year: "2025",
-        description: "A math game puzzle for the elementary school students designed for a thesis project for the Math Majors.",
-        story: "The game is a 2D puzzle game where the player has to solve math problems to progress through the game. The game is designed to be fun and educational, and it is suitable for children aged 6-12.",
-        gallery: ["assets/FRACERA1.webp", "assets/FRACERA2.webp", "assets/FRACERA3.webp"],
+        year: "2026",
+        role: "Lead Game Design",
+        tech: "GameMaker, Figma",
+        description: "An ancient-futuristic math puzzle adventure that explores procedural narrative and brutalist aesthetics.",
+        story: "Inspired by the architectural geometry of the 80s sci-fi, Fract Era was a challenge in balancing education with atmosphere. We developed a custom shader system to give every level a unique, shifting mood.",
+        gallery: ["assets/FRACERA3.webp", "assets/FRACERA1.webp", "assets/FRACERA2.webp"],
     },
     {
         id: 2,
@@ -92,59 +75,71 @@ const projects = [
         title: "SWIVEL QUIVER",
         category: "GAME DESIGN",
         year: "2024",
-        description: "A 2D one-button archery game where the player has to shoot arrows at targets to progress through the game.",
-        story: "Built from scratch using aspire, this project required handling complex database relationships and real-time updates.",
+        role: "Developer",
+        tech: "ASENPRITE, LUA",
+        description: "A fast-paced, high-precision one-button archery game built for immediate accessibility.",
+        story: "The challenge was simplicity. How do we make one button feel like a dozen different actions? Through variable timing and momentum-based physics, we created a game that's easy to learn but hard to master.",
         gallery: ["assets/SQ1.webp", "assets/SQ2.webp", "assets/SQ3.webp"],
     },
     {
         id: 3,
         num: "03",
         title: "OUTFALL",
-        category: "GAME DESIGN",
+        category: "TTRPG DESIGN",
         year: "2025",
-        description: "A TTRPG Game Design for the Game Design and Development Class.",
-        story: "Outfall is a post-apocalyptic TTRPG where players take on the role of survivors in a world ravaged by a mysterious plague.",
+        role: "Rulebook Author",
+        tech: "Adobe InDesign",
+        description: "A post-apocalyptic tabletop RPG system focused on resource management and moral ambiguity.",
+        story: "Design wasn't just about graphics; it was about systems. We spent months testing the 'Strain' mechanic to ensure that every choice a player makes carries heavy narrative weight.",
         gallery: ["assets/OF1.webp", "assets/OF2.webp", "assets/OF3.webp"],
     },
     {
         id: 4,
         num: "04",
         title: "MERGE",
-        category: "WEB DESIGN / DEVELOPMENT",
+        category: "WEB DESIGN / DEV",
         year: "2026",
-        description: "Merge is an e-commerce platform for a Street Wear Clothes",
-        story: "Merge is a web application that allows users to purchase clothing from various brands. It is a platform that allows users to purchase clothing from various brands.",
+        role: "Frontend Dev",
+        tech: "HTML, CSS, JS",
+        description: "A premium streetwear e-commerce platform focusing on minimalist UI and high-impact product photography.",
+        story: "For Merge, the goal was to create a digital shopping experience that reflected the brand's aesthetic. We focused on micro-interactions and smooth transitions to keep the customer engaged throughout the journey.",
         gallery: ["assets/M01.png", "assets/M02.png", "assets/M03.png"],
     },
     {
         id: 5,
         num: "05",
         title: "PROJECT FIVE",
-        category: "DIGITAL POSTER",
+        category: "UI/UX DESIGN",
         year: "2024",
-        description: "A detailed description of Project Five.",
-        story: "The story behind Project Five.",
-        gallery: [],
+        role: "Designer",
+        tech: "Figma, Adobe XD",
+        description: "A conceptual redesign of a modern communication platform, focusing on seamless user flow and accessibility.",
+        story: "This project explored the balance between density and clarity. By simplifying the interface, we created a tool that feels both powerful and easy to use.",
+        gallery: ["assets/ojt-one.webp", "assets/M01.png", "assets/SQ1.webp"],
     },
     {
         id: 6,
         num: "06",
         title: "PROJECT SIX",
-        category: "UI/UX DESIGN",
+        category: "WEB DEVELOPMENT",
         year: "2025",
-        description: "A detailed description of Project Six.",
-        story: "The story behind Project Six.",
-        gallery: [],
+        role: "Developer",
+        tech: "React, Node.js",
+        description: "A real-time data visualization dashboard designed for monitoring internal network metrics.",
+        story: "Performance was the core challenge here. We optimized every component to ensure real-time updates were rendered smoothly without affecting the user experience.",
+        gallery: ["assets/FRACERA3.webp", "assets/SQ1.webp", "assets/OF1.webp"],
     },
     {
         id: 7,
         num: "07",
         title: "PROJECT SEVEN",
-        category: "WEB DEVELOPMENT",
+        category: "GAME DESIGN",
         year: "2024",
-        description: "A detailed description of Project Seven.",
-        story: "The story behind Project Seven.",
-        gallery: [],
+        role: "Designer",
+        tech: "Unity, C#",
+        description: "A dark-themed platformer that tells a story through environmental cues and ambient soundsets.",
+        story: "Narrative through mechanics. Every jump and interaction in Project Seven is a piece of the puzzle that players solve as they explore the desolate world.",
+        gallery: ["assets/OF1.webp", "assets/SQ1.webp", "assets/FRACERA3.webp"],
     },
     {
         id: 8,
@@ -152,318 +147,202 @@ const projects = [
         title: "PROJECT EIGHT",
         category: "APP DEVELOPMENT",
         year: "2024",
-        description: "A detailed description of Project Eight.",
-        story: "The story behind Project Eight.",
-        gallery: [],
+        role: "Mobile Dev",
+        tech: "Flutter, Dart",
+        description: "A mobile-first health tracking application that gamifies daily habits for students.",
+        story: "Engagement was key. By using gamification elements and rewarding small accomplishments, we created an app that users actually enjoy using every day.",
+        gallery: ["assets/ojt-two.webp", "assets/M01.png", "assets/FRACERA3.webp"],
     },
     {
         id: 9,
         num: "09",
         title: "PROJECT NINE",
-        category: "GAME DESIGN",
+        category: "UI DESIGN",
         year: "2025",
-        description: "A detailed description of Project Nine.",
-        story: "The story behind Project Nine.",
-        gallery: [],
+        role: "UI Designer",
+        tech: "Figma, Photoshop",
+        description: "A series of high-impact digital posters for a local music and arts festival.",
+        story: "The goal was to create a visual identity that was as vibrant and diverse as the festival itself. We used bold typography and experimental layouts to capture the energy of the event.",
+        gallery: ["assets/SQ1.webp", "assets/OF1.webp", "assets/ojt-three.webp"],
     }
 ];
 
+// Fallback for missing projects
 const params = new URLSearchParams(window.location.search);
 const id = parseInt(params.get("id")) || 1;
-const currentIndex = projects.findIndex(p => p.id === id);
-const project = currentIndex !== -1 ? projects[currentIndex] : projects[0];
-
-// Populate Content
-document.getElementById("projectNum").textContent = project.num;
-
-// Set hero image from first gallery image
-const heroImgEl = document.getElementById("heroImg");
-if (heroImgEl && project.gallery && project.gallery.length > 0) {
-    heroImgEl.style.backgroundImage = `url('${project.gallery[0]}')`;
-}
-
-document.getElementById("projectTitle").textContent = project.title;
-document.getElementById("projectCat").textContent = project.category;
-document.getElementById("projectYear").textContent = project.year;
-document.getElementById("projectDesc").textContent = project.description;
-document.getElementById("projectStory").textContent = project.story;
-
-// Update page title
-document.title = `${project.title} — Nate`;
-
-// Populate image count metadata
-const imgCount = project.gallery ? project.gallery.length : 0;
-const imgCountEl = document.getElementById("projectImgCount");
-if (imgCountEl) imgCountEl.textContent = imgCount;
-
-const galleryCountEl = document.getElementById("galleryCount");
-if (galleryCountEl) galleryCountEl.textContent = `${imgCount} IMAGE${imgCount !== 1 ? 'S' : ''}`;
-
-// Build bento gallery
-const galleryGrid = document.getElementById("projectGallery");
-const gallerySection = document.querySelector(".project-gallery-section");
-
-if (galleryGrid && project.gallery && project.gallery.length > 0) {
-    galleryGrid.innerHTML = "";
-    // Add bento layout class based on image count
-    const bentoClass = `bento-${Math.min(project.gallery.length, 4)}`;
-    galleryGrid.classList.add(bentoClass);
-
-    project.gallery.forEach((src, i) => {
-        const item = document.createElement("div");
-        item.className = "gallery-item";
-        item.setAttribute("data-reveal", "scale");
-        item.style.backgroundImage = `url('${src}')`;
-        item.style.transitionDelay = `${i * 0.12}s`;
-
-        // Add numbered overlay
-        const numOverlay = document.createElement("span");
-        numOverlay.className = "gallery-item-num";
-        numOverlay.textContent = String(i + 1).padStart(2, '0');
-        item.appendChild(numOverlay);
-
-        galleryGrid.appendChild(item);
-    });
-} else if (gallerySection) {
-    gallerySection.style.display = "none";
-}
-
-// Populate Footer Navigation
-if (currentIndex !== -1) {
-    const prevIdx = (currentIndex - 1 + projects.length) % projects.length;
-    const nextIdx = (currentIndex + 1) % projects.length;
-
-    const prevProj = projects[prevIdx];
-    const nextProj = projects[nextIdx];
-
-    document.getElementById("prevTitle").textContent = prevProj.title;
-    document.getElementById("prevProject").href = `project.html?id=${prevProj.id}`;
-
-    document.getElementById("nextTitle").textContent = nextProj.title;
-    document.getElementById("nextProject").href = `project.html?id=${nextProj.id}`;
-}
-
-const backLink = document.getElementById("backLink");
-if (backLink) backLink.href = `index.html?from=project&projectId=${id}`;
+const project = projects.find(p => p.id === id) || projects[0];
 
 // ============================================
-// ENTRANCE & REVEALS
+// DATA INJECTION (with robustness)
 // ============================================
-window.addEventListener('load', () => {
-    const hero = document.querySelector('.project-hero');
-    const heroImg = document.querySelector('.project-hero-img');
+(function populate() {
+    try {
+        console.log("Populating project:", project);
+        // Basic Info - using a helper to avoid script halt
+        const setVal = (id, val) => {
+            const el = document.getElementById(id);
+            if(el) el.textContent = val;
+        };
 
-    if (hero && heroImg) {
-        hero.style.clipPath = "inset(0% 0% 0% 0%)";
-        hero.style.transition = "clip-path 1.4s cubic-bezier(0.7, 0, 0.3, 1)";
-        heroImg.style.transform = "scale(1)";
-        heroImg.style.transition = "transform 2.5s cubic-bezier(0.2, 1, 0.3, 1)";
-    }
+        document.title = `${project.title} — Nathan Portfolio`;
+        setVal("projectNum", project.num);
+        setVal("projectTitle", project.title);
+        setVal("projectCat", project.category);
+        setVal("projectYear", project.year);
+        setVal("projectRole", project.role || "Designer");
+        setVal("projectTech", project.tech || "Figma");
+        setVal("projectDesc", project.description);
+        setVal("projectStory", project.story);
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('revealed');
+        // Hero Image
+        const heroImg = document.getElementById("heroImg");
+        if (heroImg && project.gallery && project.gallery[0]) {
+            heroImg.style.backgroundImage = `url('${project.gallery[0]}')`;
+        }
+
+        // Gallery Images
+        if (project.gallery) {
+            project.gallery.forEach((src, i) => {
+                const imgEl = document.getElementById(`galleryImg${i+1}`);
+                if (imgEl) imgEl.style.backgroundImage = `url('${src}')`;
+            });
+        }
+
+        // Next Project
+        const nextIdx = (projects.findIndex(p => p.id === project.id) + 1) % projects.length;
+        const nextProj = projects[nextIdx];
+        const nextLink = document.getElementById("nextProject");
+        const nextTitle = document.getElementById("nextTitle");
+        const nextImg = document.getElementById("nextImg");
+
+        if (nextLink && nextProj) {
+            nextLink.href = `project.html?id=${nextProj.id}`;
+            nextTitle.textContent = nextProj.title;
+            if (nextProj.gallery && nextProj.gallery[0]) {
+                nextImg.style.backgroundImage = `url('${nextProj.gallery[0]}')`;
             }
-        });
+        }
+    } catch (e) {
+        console.error("Population error:", e);
+    }
+})();
+
+// ============================================
+// REVEAL ON SCROLL ENGINE
+// ============================================
+(function() {
+    const revealElements = document.querySelectorAll('[data-reveal]');
+    
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          revealObserver.unobserve(entry.target);
+        }
+      });
     }, { threshold: 0.1 });
-
-    document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
-});
-
-// ============================================
-// PARALLAX (Throttled)
-// ============================================
-const heroImg = document.querySelector('.project-hero-img');
-const heroNum = document.querySelector('.project-num');
-
-function updateParallax() {
-    if (heroImg) heroImg.style.transform = `translate3d(0, ${scrollY * 0.25}px, 0)`;
-    if (heroNum) heroNum.style.transform = `translate3d(0, ${-scrollY * 0.4}px, 0)`;
-}
-
-// ============================================
-// LIGHTBOX
-// ============================================
-(function () {
-    const overlay = document.getElementById('lightboxOverlay');
-    const image = document.getElementById('lightboxImage');
-    const closeBtn = document.getElementById('lightboxClose');
-    const prevBtn = document.getElementById('lightboxPrev');
-    const nextBtn = document.getElementById('lightboxNext');
-    const currentEl = document.getElementById('lightboxCurrent');
-    const totalEl = document.getElementById('lightboxTotal');
-
-    if (!overlay || !image || !project.gallery || project.gallery.length === 0) return;
-
-    let currentIdx = 0;
-    let isTransitioning = false;
-    const gallery = project.gallery;
-
-    totalEl.textContent = gallery.length;
-
-    function openLightbox(index) {
-        currentIdx = index;
-        image.src = gallery[currentIdx];
-        currentEl.textContent = currentIdx + 1;
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeLightbox() {
-        overlay.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    function goTo(index) {
-        if (isTransitioning) return;
-        isTransitioning = true;
-
-        image.classList.add('transitioning');
-
-        setTimeout(() => {
-            currentIdx = (index + gallery.length) % gallery.length;
-            image.src = gallery[currentIdx];
-            currentEl.textContent = currentIdx + 1;
-
-            image.onload = () => {
-                image.classList.remove('transitioning');
-                isTransitioning = false;
-            };
-
-            setTimeout(() => {
-                image.classList.remove('transitioning');
-                isTransitioning = false;
-            }, 300);
-        }, 200);
-    }
-
-    // Click on gallery items
-    document.querySelectorAll('.gallery-item').forEach((item, i) => {
-        item.addEventListener('click', () => openLightbox(i));
-    });
-
-    // Controls
-    closeBtn.addEventListener('click', closeLightbox);
-    prevBtn.addEventListener('click', () => goTo(currentIdx - 1));
-    nextBtn.addEventListener('click', () => goTo(currentIdx + 1));
-
-    // Click backdrop to close
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay || e.target.classList.contains('lightbox-backdrop')) {
-            closeLightbox();
-        }
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (!overlay.classList.contains('active')) return;
-
-        switch (e.key) {
-            case 'Escape':
-                closeLightbox();
-                break;
-            case 'ArrowLeft':
-                goTo(currentIdx - 1);
-                break;
-            case 'ArrowRight':
-                goTo(currentIdx + 1);
-                break;
-        }
-    });
-
-    // Touch swipe support
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    overlay.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    overlay.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        const diff = touchStartX - touchEndX;
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) goTo(currentIdx + 1);
-            else goTo(currentIdx - 1);
-        }
-    }, { passive: true });
+  
+    revealElements.forEach(el => revealObserver.observe(el));
+  
+    // Reveal everything quickly
+    setTimeout(() => {
+        revealElements.forEach(el => el.classList.add('revealed'));
+        const hero = document.getElementById('hero-section');
+        if (hero) hero.classList.add('revealed');
+    }, 400);
 })();
 
 // ============================================
 // CUSTOM CURSOR
 // ============================================
-(function () {
-  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-  if (isTouchDevice) return;
+(function() {
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    if (!dot || !ring) return;
 
-  const dot = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-  if (!dot || !ring) return;
+    // Ensure cursor doesn't block interactions
+    dot.style.pointerEvents = 'none';
+    ring.style.pointerEvents = 'none';
 
-  let mouseX = 0, mouseY = 0;
-  let ringX = 0, ringY = 0;
-  const ringEase = 0.15;
-  let isRunning = false;
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+    const ringEase = 0.15;
 
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.left = mouseX + 'px';
-    dot.style.top = mouseY + 'px';
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
+    });
 
-    if (!isRunning) {
-      isRunning = true;
-      animateRing();
+    function animateRing() {
+        const dx = mouseX - ringX;
+        const dy = mouseY - ringY;
+        ringX += dx * ringEase;
+        ringY += dy * ringEase;
+        ring.style.left = ringX + 'px';
+        ring.style.top = ringY + 'px';
+        requestAnimationFrame(animateRing);
     }
-  });
+    animateRing();
 
-  function animateRing() {
-    const dx = mouseX - ringX;
-    const dy = mouseY - ringY;
+    // Hover states
+    const hoverables = document.querySelectorAll('a, button, .p-gallery-item');
+    hoverables.forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+})();
 
-    if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
-      ringX = mouseX;
-      ringY = mouseY;
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-      isRunning = false;
-      return;
-    }
+// ============================================
+// MAGNETIC EFFECTS
+// ============================================
+(function() {
+    const magnets = document.querySelectorAll('.project-back-link, .next-circle-badge');
+    
+    magnets.forEach(m => {
+        m.addEventListener('mousemove', (e) => {
+            const { left, top, width, height } = m.getBoundingClientRect();
+            const centerX = left + width / 2;
+            const centerY = top + height / 2;
+            const dx = e.clientX - centerX;
+            const dy = e.clientY - centerY;
+            m.style.transform = `translate(${dx * 0.2}px, ${dy * 0.2}px)`;
+        });
+        m.addEventListener('mouseleave', () => {
+            m.style.transform = 'translate(0, 0)';
+        });
+    });
+})();
 
-    ringX += dx * ringEase;
-    ringY += dy * ringEase;
-    ring.style.left = ringX + 'px';
-    ring.style.top = ringY + 'px';
+// ============================================
+// LIGHTBOX
+// ============================================
+(function() {
+    const overlay = document.getElementById('lightboxOverlay');
+    const img = document.getElementById('lightboxImage');
+    const close = document.getElementById('lightboxClose');
 
-    requestAnimationFrame(animateRing);
-  }
+    if (!overlay || !img || !close) return;
 
-  const hoverTargets = document.querySelectorAll(
-    'a, button, .gallery-item, .project-nav-link, .lightbox-nav, .lightbox-close'
-  );
+    document.querySelectorAll('.p-gallery-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const bg = item.querySelector('.p-gallery-img').style.backgroundImage;
+            const url = bg.replace('url("', '').replace('")', '');
+            img.src = url;
+            overlay.classList.add('active');
+        });
+    });
 
-  const textTargets = document.querySelectorAll(
-    '.project-title, .nav-title'
-  );
+    close.addEventListener('click', () => overlay.classList.remove('active'));
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay || e.target.classList.contains('lightbox-backdrop')) {
+            overlay.classList.remove('active');
+        }
+    });
 
-  hoverTargets.forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-  });
-
-  textTargets.forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-text'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-text'));
-  });
-
-  document.addEventListener('mouseleave', () => {
-    dot.style.opacity = '0';
-    ring.style.opacity = '0';
-  });
-
-  document.addEventListener('mouseenter', () => {
-    dot.style.opacity = '1';
-    ring.style.opacity = '1';
-  });
+    // ESC to close
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') overlay.classList.remove('active');
+    });
 })();

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All Work — Nate's portfolio">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>All Work — Nate</title>
+    <style>
+        .archive-body { background: var(--paper); color: var(--ink); margin: 0; padding: 0; cursor: none; }
+        .archive-hero { padding: 160px 60px 80px; text-align: center; }
+        .archive-title { font-family: var(--font-display); font-size: clamp(60px, 12vw, 150px); line-height: 0.85; letter-spacing: -6px; margin: 0; text-transform: uppercase; }
+        .archive-grid { max-width: 1400px; margin: 0 auto; padding: 0 60px 120px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .archive-item { text-decoration: none; color: var(--ink); cursor: none; }
+        .archive-img-wrap { aspect-ratio: 4/5; overflow: hidden; background: #eee; margin-bottom: 20px; }
+        .archive-img { width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform 0.8s var(--ease-smooth); filter: grayscale(0.5); }
+        .archive-item:hover .archive-img { transform: scale(1.05) grayscale(0); }
+        .archive-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
+        .archive-item-title { font-family: var(--font-body); font-size: 16px; margin: 10px 0 0; }
+
+        .archive-item.is-placeholder { cursor: default; pointer-events: none; }
+        .gray-placeholder { background: rgba(0,0,0,0.03); position: relative; border: 1px dashed rgba(0,0,0,0.1); }
+        .is-placeholder .archive-img { display: none; }
+
+        /* Project Nav Style shim */
+        .project-nav { position: fixed; top: 0; left: 0; width: 100%; height: 100px; padding: 0 60px; display: flex; justify-content: space-between; align-items: center; z-index: 1000; pointer-events: none; }
+        .project-nav * { pointer-events: auto; }
+        .project-back-link { display: flex; align-items: center; gap: 16px; text-decoration: none; color: var(--ink); font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; }
+        .back-arrow { font-size: 18px; color: var(--terra); }
+
+        @media (max-width: 1024px) {
+            .archive-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .archive-hero { padding: 120px 24px 60px; }
+            .archive-grid { grid-template-columns: 1fr; padding: 0 24px 80px; }
+        }
+    </style>
+</head>
+
+<body class="archive-body">
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <header class="project-nav">
+        <a href="index.html" class="project-back-link">
+            <span class="back-arrow">←</span>
+            <span class="back-text">EXIT TO HOME</span>
+        </a>
+    </header>
+
+    <section class="archive-hero">
+        <h1 class="archive-title" data-reveal>SELECT ARCHIVE</h1>
+    </section>
+    <section class="archive-grid" id="archiveGrid">
+        <!-- Will be populated by project.js -->
+    </section>
+
+    <!-- Essential Scripts -->
+    <script src="project.js"></script>
+    <script>
+        (function renderArchive() {
+            const grid = document.getElementById('archiveGrid');
+            if(!grid || !projects) return;
+
+            grid.innerHTML = '';
+            const totalSlots = 9;
+
+            // Render existing projects
+            projects.forEach(p => {
+                const item = document.createElement('a');
+                item.href = `project.html?id=${p.id}`;
+                item.className = 'archive-item';
+                item.setAttribute('data-reveal', '');
+                
+                const thumb = (p.gallery && p.gallery[0]) ? p.gallery[0] : 'assets/M01.png';
+
+                item.innerHTML = `
+                    <div class="archive-img-wrap">
+                        <div class="archive-img" style="background-image: url('${thumb}')"></div>
+                    </div>
+                    <div class="archive-meta"><span>${p.num}</span><span>${p.category}</span></div>
+                    <h3 class="archive-item-title">${p.title}</h3>
+                `;
+                grid.appendChild(item);
+            });
+
+            // Fill remaining slots with gray placeholders
+            for (let i = projects.length + 1; i <= totalSlots; i++) {
+                const empty = document.createElement('div');
+                empty.className = 'archive-item is-placeholder';
+                empty.setAttribute('data-reveal', '');
+                
+                empty.innerHTML = `
+                    <div class="archive-img-wrap gray-placeholder">
+                        <div class="archive-img"></div>
+                    </div>
+                    <div class="archive-meta"><span>0${i}</span><span>TBD</span></div>
+                    <h3 class="archive-item-title" style="opacity: 0.2">PROJECT COMING SOON</h3>
+                `;
+                grid.appendChild(empty);
+            }
+
+            // Reveal engine trigger
+            setTimeout(() => {
+                const revealElements = document.querySelectorAll('[data-reveal]');
+                revealElements.forEach(el => el.classList.add('revealed'));
+            }, 100);
+        })();
+    </script>
+</body>
+
+</html>

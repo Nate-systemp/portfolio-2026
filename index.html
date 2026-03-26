@@ -4,13 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Nate — UI/UX Designer & Frontend Developer portfolio showcasing creative projects and design work.">
+    <!-- ═══ SEO & SOCIAL METADATA ═══ -->
+    <meta name="description" content="Nathaniel — Freelance Designer & Developer specializing in high-end, interactive digital experiences. View my selected work and creative process.">
+    <meta name="keywords" content="UI/UX Designer, Frontend Developer, Web Development, Portfolio, PH Designer, Interactive Design">
+    <meta name="author" content="Nathaniel">
+    
+    <!-- Open Graph (FaceBook / LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nathaniel.portfolio/">
+    <meta property="og:title" content="Nathaniel — Portfolio 2026">
+    <meta property="og:description" content="Crafting digital experiences with precision & passion. Freelance Designer & Developer.">
+    <meta property="og:image" content="assets/og-preview.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Nathaniel — Portfolio 2026">
+    <meta property="twitter:description" content="Crafting digital experiences with precision & passion. Freelance Designer & Developer.">
+
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <title>Nate — Portfolio 2026</title>
+    <title>Nathaniel — Designer & Developer</title>
 </head>
 
 <body class="loading-active">
@@ -30,7 +46,7 @@
 
     <!-- ═══ NAVIGATION ═══ -->
     <header class="site-header" id="siteHeader">
-        <a href="#" class="header-logo">N.</a>
+        <a href="#" class="header-logo" id="headerLogo">N.</a>
         <nav class="header-nav">
             <a href="#about-section" class="nav-item" data-nav="about"><span class="nav-num">01</span>About</a>
             <a href="#work-section" class="nav-item" data-nav="work"><span class="nav-num">02</span>Work</a>
@@ -45,28 +61,29 @@
 
     <!-- ═══ HERO SECTION ═══ -->
     <section class="hero" id="hero">
-        <div class="hero-grid">
-            <div class="hero-left">
-                <div class="hero-eyebrow">
-                    <span class="eyebrow-line"></span>
-                    <span class="eyebrow-text">UI/UX DESIGNER</span>
-                </div>
-                <h1 class="hero-name">
-                    <span class="hero-name-line">NATH</span>
-                    <span class="hero-name-line hero-name-indent">ANIEL</span>
-                </h1>
-                <div class="hero-tagline">
-                    <p>Designing thoughtful digital<br>experiences with clean code<br>& creative precision.</p>
-                </div>
-            </div>
-            <div class="hero-right">
-                <div class="hero-vertical-text">FRONTEND DEVELOPER</div>
-                <div class="hero-year">©2026</div>
+        <div class="hero-marquee">
+            <div class="hero-marquee-inner">
+                <h1 class="hero-name">NATHANIEL — NATHANIEL — NATHANIEL — NATHANIEL —</h1>
+                <h1 class="hero-name">NATHANIEL — NATHANIEL — NATHANIEL — NATHANIEL —</h1>
             </div>
         </div>
-        <div class="hero-scroll-cue">
-            <div class="scroll-line"></div>
-            <span>SCROLL</span>
+        
+        <div class="hero-bottom">
+            <div class="hero-bottom-left">
+                <p class="hero-description">Freelance <br><em>Designer</em> &amp; Developer</p>
+                <span class="hero-location">Located in the Philippines</span>
+            </div>
+            <div class="hero-bottom-right">
+                <div class="hero-scroll-cue">
+                    <span class="scroll-label">SCROLL TO EXPLORE</span>
+                    <div class="scroll-line"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Float the toggle button more discretely -->
+        <div class="hero-corner-toggle" id="nightToggle" title="Toggle theme">
+            <span>©2026</span>
         </div>
     </section>
 
@@ -138,151 +155,86 @@
             <span class="marker-line"></span>
         </div>
         <div class="work-header" data-reveal>
-            <span class="section-label">SELECTED WORK</span>
-            <p class="work-intro-text">Projects crafted during my time as an IT Student<br>at Pamantasan ng Lungsod ng Valenzuela.</p>
+            <div class="work-header-left">
+                <span class="section-label">SELECTED WORK</span>
+                <h2 class="work-heading">Creative <br><em>Selected Works</em></h2>
+            </div>
+            <p class="work-intro-text">A curated selection of projects focusing on <br>interactive design and digital experiences.</p>
         </div>
 
-        <div class="work-list" id="workList">
-            <!-- Work Item 1 -->
-            <a href="project.html?id=1" class="work-item" data-reveal>
-                <div class="work-item-num">01</div>
-                <div class="work-item-img" style="background-image: url('assets/FRACERA3.webp')"></div>
-                <div class="work-item-info">
-                    <h3 class="work-item-title">FRACT ERA</h3>
-                    <span class="work-item-cat">GAME DESIGN</span>
-                </div>
-                <div class="work-item-year">2026</div>
-                <div class="work-item-arrow">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                    </svg>
-                </div>
-            </a>
-            <!-- Work Item 2 -->
-            <a href="project.html?id=2" class="work-item" data-reveal>
-                <div class="work-item-num">02</div>
-                <div class="work-item-img" style="background-image: url('assets/SQ1.webp')"></div>
-                <div class="work-item-info">
-                    <h3 class="work-item-title">SWIVEL QUIVER</h3>
-                    <span class="work-item-cat">GAME DEVELOPMENT</span>
-                </div>
-                <div class="work-item-year">2025</div>
-                <div class="work-item-arrow">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                    </svg>
-                </div>
-            </a>
-            <!-- Work Item 3 -->
-            <a href="project.html?id=3" class="work-item" data-reveal>
-                <div class="work-item-num">03</div>
-                <div class="work-item-img" style="background-image: url('assets/OF1.webp')"></div>
-                <div class="work-item-info">
-                    <h3 class="work-item-title">OUTFALL</h3>
-                    <span class="work-item-cat">GAME DESIGN</span>
-                </div>
-                <div class="work-item-year">2025</div>
-                <div class="work-item-arrow">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                    </svg>
-                </div>
-            </a>
-            <!-- Work Item 4 -->
-            <a href="project.html?id=4" class="work-item" data-reveal>
-                <div class="work-item-num">04</div>
-                <div class="work-item-img" style="background-image: url('assets/M01.png')"></div>
-                <div class="work-item-info">
-                    <h3 class="work-item-title">MERGE</h3>
-                    <span class="work-item-cat">WEB DESIGN / DEV</span>
-                </div>
-                <div class="work-item-year">2026</div>
-                <div class="work-item-arrow">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                    </svg>
-                </div>
-            </a>
+        <div class="work-grid" id="workGrid">
+            <!-- Work Card 1 (Large) -->
+            <div class="work-card card-large" data-reveal>
+                <a href="project.html?id=1" class="work-card-link">
+                    <div class="work-card-img-wrap">
+                        <div class="work-card-img" style="background-image: url('assets/FRACERA3.webp')"></div>
+                    </div>
+                    <div class="work-card-info">
+                        <div class="work-card-top">
+                            <span class="work-card-num">01</span>
+                            <span class="work-card-cat">UI DESIGN / DEV</span>
+                        </div>
+                        <h3 class="work-card-title">FRACT ERA</h3>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Work Card 2 (Medium) -->
+            <div class="work-card card-medium" data-reveal>
+                <a href="project.html?id=2" class="work-card-link">
+                    <div class="work-card-img-wrap">
+                        <div class="work-card-img" style="background-image: url('assets/SQ1.webp')"></div>
+                    </div>
+                    <div class="work-card-info">
+                        <div class="work-card-top">
+                            <span class="work-card-num">02</span>
+                            <span class="work-card-cat">GAME DESIGN</span>
+                        </div>
+                        <h3 class="work-card-title">SWIVEL QUIVER</h3>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Work Card 3 (Medium) -->
+            <div class="work-card card-medium" data-reveal>
+                <a href="project.html?id=3" class="work-card-link">
+                    <div class="work-card-img-wrap">
+                        <div class="work-card-img" style="background-image: url('assets/OF1.webp')"></div>
+                    </div>
+                    <div class="work-card-info">
+                        <div class="work-card-top">
+                            <span class="work-card-num">03</span>
+                            <span class="work-card-cat">TTRPG DESIGN</span>
+                        </div>
+                        <h3 class="work-card-title">OUTFALL</h3>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Work Card 4 (Large) -->
+            <div class="work-card card-large" data-reveal>
+                <a href="project.html?id=4" class="work-card-link">
+                    <div class="work-card-img-wrap">
+                        <div class="work-card-img" style="background-image: url('assets/M01.png')"></div>
+                    </div>
+                    <div class="work-card-info">
+                        <div class="work-card-top">
+                            <span class="work-card-num">04</span>
+                            <span class="work-card-cat">WEB DESIGN / DEV</span>
+                        </div>
+                        <h3 class="work-card-title">MERGE</h3>
+                    </div>
+                </a>
+            </div>
         </div>
 
-        <!-- Hidden extra works -->
-        <div class="work-list work-list-extra" id="workListExtra">
-            <a href="project.html?id=5" class="work-item" data-reveal>
-                <div class="work-item-num">05</div>
-                <div class="work-item-img"></div>
-                <div class="work-item-info">
-                    <h3 class="work-item-title">PROJECT FIVE</h3>
-                    <span class="work-item-cat">DIGITAL POSTER</span>
-                </div>
-                <div class="work-item-year">2024</div>
-                <div class="work-item-arrow">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                    </svg>
-                </div>
-            </a>
-            <a href="project.html?id=6" class="work-item" data-reveal>
-                <div class="work-item-num">06</div>
-                <div class="work-item-img"></div>
-                <div class="work-item-info">
-                    <h3 class="work-item-title">PROJECT SIX</h3>
-                    <span class="work-item-cat">UI/UX DESIGN</span>
-                </div>
-                <div class="work-item-year">2025</div>
-                <div class="work-item-arrow">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                    </svg>
-                </div>
-            </a>
-            <a href="project.html?id=7" class="work-item" data-reveal>
-                <div class="work-item-num">07</div>
-                <div class="work-item-img"></div>
-                <div class="work-item-info">
-                    <h3 class="work-item-title">PROJECT SEVEN</h3>
-                    <span class="work-item-cat">WEB DEVELOPMENT</span>
-                </div>
-                <div class="work-item-year">2024</div>
-                <div class="work-item-arrow">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                    </svg>
-                </div>
-            </a>
-            <a href="project.html?id=8" class="work-item" data-reveal>
-                <div class="work-item-num">08</div>
-                <div class="work-item-img"></div>
-                <div class="work-item-info">
-                    <h3 class="work-item-title">PROJECT EIGHT</h3>
-                    <span class="work-item-cat">APP DEVELOPMENT</span>
-                </div>
-                <div class="work-item-year">2024</div>
-                <div class="work-item-arrow">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                    </svg>
-                </div>
-            </a>
-            <a href="project.html?id=9" class="work-item" data-reveal>
-                <div class="work-item-num">09</div>
-                <div class="work-item-img"></div>
-                <div class="work-item-info">
-                    <h3 class="work-item-title">PROJECT NINE</h3>
-                    <span class="work-item-cat">GAME DESIGN</span>
-                </div>
-                <div class="work-item-year">2025</div>
-                <div class="work-item-arrow">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
-                    </svg>
+        <div class="work-footer" data-reveal>
+            <a href="work.html" class="view-all-link">
+                <div class="view-all-circle">
+                    <span class="view-all-text">SEE FULL<br>PORTFOLIO</span>
                 </div>
             </a>
         </div>
-
-        <button class="work-toggle" id="workToggle">
-            <span class="work-toggle-text">SHOW MORE</span>
-            <span class="work-toggle-line"></span>
-        </button>
     </section>
 
     <!-- ═══ EXPERIENCE SECTION ═══ -->
@@ -387,32 +339,80 @@
 
     <!-- ═══ CONTACT SECTION ═══ -->
     <section class="contact" id="contact-section">
-        <div class="section-marker section-marker-light">
-            <span class="marker-num">04</span>
-            <span class="marker-line"></span>
-        </div>
         <div class="contact-inner">
-            <div class="contact-top" data-reveal>
-                <span class="section-label section-label-light">GET IN TOUCH</span>
-                <h2 class="contact-heading">Let's build<br>something <em>great</em></h2>
+            <div class="contact-header" data-reveal>
+                <span class="section-label section-label-light">READY TO START?</span>
+                <h2 class="contact-heading">LET'S WORK <br><em>TOGETHER</em></h2>
             </div>
-            <div class="contact-links" data-reveal>
-                <a href="mailto:natederek99@gmail.com" class="contact-email">natederek99@gmail.com</a>
-                <p class="contact-note">Available for freelance work and collaborations.</p>
+            
+            <div class="contact-cta" data-reveal>
+                <a href="mailto:natederek99@gmail.com" class="big-contact-button">
+                    <span>GET IN TOUCH</span>
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                        <path d="M7 17L17 7M17 7H7M17 7v10"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="contact-details" data-reveal>
+                <div class="contact-detail-item">
+                    <span class="detail-label">EMAIL</span>
+                    <a href="mailto:natederek99@gmail.com" class="detail-link">natederek99@gmail.com</a>
+                </div>
+                <div class="contact-detail-item">
+                    <span class="detail-label">LOCATION</span>
+                    <span class="detail-link">Philippines, Manila</span>
+                </div>
             </div>
         </div>
+
         <footer class="site-footer" data-reveal>
-            <div class="footer-socials">
-                <a href="https://github.com/Nate-systemp" target="_blank" rel="noopener" class="footer-social-link">GITHUB</a>
-                <a href="https://www.linkedin.com/in/nathanielpangilinan" target="_blank" rel="noopener" class="footer-social-link">LINKEDIN</a>
-                <a href="https://www.instagram.com/nahtanyel" target="_blank" rel="noopener" class="footer-social-link">INSTAGRAM</a>
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <span class="footer-logo">N.</span>
+                    <p class="footer-tagline">Crafting digital experiences<br>with precision & passion.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <span class="footer-col-label">SOCIALS</span>
+                        <a href="https://github.com/Nate-systemp" target="_blank" class="footer-social-link">GITHUB</a>
+                        <a href="https://www.linkedin.com/in/nathanielpangilinan" target="_blank" class="footer-social-link">LINKEDIN</a>
+                        <a href="https://www.instagram.com/nahtanyel" target="_blank" class="footer-social-link">INSTAGRAM</a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-meta">
-                <span>&copy; 2026 NATHANIEL</span>
-                <span>DESIGNED & DEVELOPED</span>
+            <div class="footer-bottom">
+                <div class="footer-meta">
+                    <span>&copy; 2026 NATHANIEL — ALL RIGHTS RESERVED</span>
+                    <span class="footer-time">LOCAL TIME: <span id="localTime">--:-- --</span></span>
+                </div>
+                <div class="footer-credits">
+                    <span>DESIGNED & DEVELOPED BY NATHANIEL</span>
+                </div>
             </div>
         </footer>
     </section>
+    <!-- ═══ TERMINAL EASTER EGG ═══ -->
+    <div class="terminal-overlay" id="terminalOverlay">
+        <div class="terminal-backdrop"></div>
+        <div class="terminal-window" id="terminalWindow">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <span class="terminal-dot-close" id="terminalClose"></span>
+                    <span class="terminal-dot-min"></span>
+                    <span class="terminal-dot-max"></span>
+                </div>
+                <span class="terminal-title">nate@portfolio ~ </span>
+            </div>
+            <div class="terminal-body" id="terminalBody">
+                <div class="terminal-output" id="terminalOutput"></div>
+                <div class="terminal-input-line">
+                    <span class="terminal-prompt">visitor@nate ~ $</span>
+                    <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
