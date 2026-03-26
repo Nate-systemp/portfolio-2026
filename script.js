@@ -546,6 +546,16 @@ window.addEventListener('scroll', () => {
           setTimeout(function () { document.body.style.transition = ''; }, 1000);
         }, 2500);
         return '\n  <span class="term-gold">Wheee!</span>\n';
+      },
+      snake: function () {
+        addOutput('\n  <span class="term-success">Initializing Snake Terminal Edition...</span>\n  <span class="term-muted">Use ARROW KEYS or WASD to move.</span>\n');
+        startSnake();
+        return null;
+      },
+      gravity: function () {
+        addOutput('\n  <span class="term-error">WARNING: CRITICAL SYSTEM STABILITY FAILURE</span>\n  <span class="term-gold">Enabling experimental gravity physics...</span>\n');
+        toggleGravity();
+        return null;
       }
     };
 
@@ -874,3 +884,186 @@ window.addEventListener('scroll', () => {
     });
   }
 })();
+
+// ============================================
+// UNIQUE: MAGNETIC LABELS & CARD PERSPECTIVE
+// ============================================
+(function() {
+  const label = document.getElementById('magneticLabel');
+  const projectCards = document.querySelectorAll('.work-card, .archive-item');
+
+  if (!label) return;
+
+  document.addEventListener('mousemove', (e) => {
+    // Label follows cursor smoothly
+    const x = e.clientX;
+    const y = e.clientY;
+    label.style.left = `${x}px`;
+    label.style.top = `${y}px`;
+  });
+
+  projectCards.forEach(card => {
+    card.addEventListener('mouseenter', (e) => {
+      label.classList.add('active');
+      // Set custom label if needed
+      const customTag = card.getAttribute('data-tag');
+      label.textContent = customTag || 'VIEW';
+    });
+
+    card.addEventListener('mousemove', (e) => {
+      // Perspective tilt logic
+      const { left, top, width, height } = card.getBoundingClientRect();
+      const centerX = left + width / 2;
+      const centerY = top + height / 2;
+      
+      const mouseX = e.clientX - centerX;
+      const mouseY = e.clientY - centerY;
+
+      // Sensitivity factor
+      const rotateX = (mouseY / (height / 2)) * -5; // Up to 5 degrees
+      const rotateY = (mouseX / (width / 2)) * 5;   // Up to 5 degrees
+
+      const img = card.querySelector('.work-card-img, .archive-img');
+      if (img) {
+        img.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      label.classList.remove('active');
+      const img = card.querySelector('.work-card-img, .archive-img');
+      if (img) {
+        img.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+      }
+    });
+  });
+})();
+
+// ============================================
+// EASTER EGG: TERMINAL SNAKE ENGINE
+// ============================================
+function startSnake() {
+  const body = document.getElementById('terminalBody');
+  if (!body) return;
+
+  // Clear body for game
+  body.innerHTML = '<div id="snake-container" style="position:relative;width:100%;height:300px;background:#141414;border:1px solid #333;overflow:hidden;"></div>';
+  const container = document.getElementById('snake-container');
+  const canvas = document.createElement('canvas');
+  canvas.width = container.offsetWidth;
+  canvas.height = 300;
+  container.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  const gridSize = 15;
+  let snake = [{x: 5, y: 5}];
+  let food = {x: 10, y: 10};
+  let dx = 1;
+  let dy = 0;
+  let score = 0;
+  let gameRunning = true;
+
+  function draw() {
+    if (!gameRunning) return;
+    
+    // Background
+    ctx.fillStyle = '#141414';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Snake
+    ctx.fillStyle = '#C45D3E'; // var(--terra)
+    snake.forEach(part => {
+      ctx.fillRect(part.x * gridSize, part.y * gridSize, gridSize - 2, gridSize - 2);
+    });
+
+    // Food
+    ctx.fillStyle = '#D4A853'; // var(--gold)
+    ctx.fillRect(food.x * gridSize, food.y * gridSize, gridSize - 2, gridSize - 2);
+
+    // Move
+    const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+    
+    // Wall collision
+    if (head.x < 0 || head.x * gridSize >= canvas.width || head.y < 0 || head.y * gridSize >= canvas.height) {
+      gameOver();
+      return;
+    }
+
+    // Self collision
+    if (snake.some(part => part.x === head.x && part.y === head.y)) {
+      gameOver();
+      return;
+    }
+
+    snake.unshift(head);
+
+    // Food consumption
+    if (head.x === food.x && head.y === food.y) {
+      score += 10;
+      food = {
+        x: Math.floor(Math.random() * (canvas.width / gridSize)),
+        y: Math.floor(Math.random() * (canvas.height / gridSize))
+      };
+    } else {
+      snake.pop();
+    }
+
+    setTimeout(() => requestAnimationFrame(draw), 100);
+  }
+
+  const originalContent = body.innerHTML;
+
+  function gameOver() {
+    gameRunning = false;
+    ctx.fillStyle = 'rgba(0,0,0,0.85)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#F2EDE8';
+    ctx.font = 'bold 20px Space Mono';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER - SCORE: ' + score, canvas.width / 2, canvas.height / 2);
+    ctx.font = '12px Space Mono';
+    ctx.fillText('PRESS SPACE TO RESTART | ESC TO EXIT', canvas.width / 2, canvas.height / 2 + 40);
+  }
+
+  function exitGame() {
+    gameRunning = false;
+    body.innerHTML = originalContent;
+    // Highlight input for focus
+    const input = document.querySelector('.terminal-input');
+    if (input) input.focus();
+  }
+
+  window.addEventListener('keydown', e => {
+    if (!gameRunning) {
+      if (e.key === ' ' || e.key === 'r' || e.key === 'R') startSnake();
+      if (e.key === 'Escape') exitGame();
+      return;
+    }
+    if (e.key === 'ArrowUp' && dy === 0) { dx = 0; dy = -1; e.preventDefault(); }
+    if (e.key === 'ArrowDown' && dy === 0) { dx = 0; dy = 1; e.preventDefault(); }
+    if (e.key === 'ArrowLeft' && dx === 0) { dx = -1; dy = 0; e.preventDefault(); }
+    if (e.key === 'ArrowRight' && dx === 0) { dx = 1; dy = 0; e.preventDefault(); }
+    if (e.key === 'Escape') exitGame();
+  });
+
+  requestAnimationFrame(draw);
+}
+
+// ============================================
+// EASTER EGG: GRAVITY TOGGLE
+// ============================================
+function toggleGravity() {
+  const sections = document.querySelectorAll('section, footer');
+  document.body.classList.toggle('gravity-active');
+
+  sections.forEach((sec, i) => {
+    if (document.body.classList.contains('gravity-active')) {
+      const rot = (Math.random() - 0.5) * 15;
+      const transY = 50 + (Math.random() * 50);
+      sec.style.transition = 'transform 1s cubic-bezier(0.25, 1, 0.5, 1)';
+      sec.style.transform = `translateY(${transY}px) rotate(${rot}deg)`;
+    } else {
+      sec.style.transform = 'translateY(0) rotate(0)';
+    }
+  });
+}

@@ -79,10 +79,6 @@ body.night-mode .hero-name {
     color: #E8E3DE;
 }
 
-body.night-mode .hero-name {
-    color: #E8E3DE;
-}
-
 body.night-mode .hero-description,
 body.night-mode .hero-location,
 body.night-mode .hero-corner-toggle {
@@ -96,6 +92,56 @@ body.night-mode .marker-num {
 
 body.night-mode .marker-line {
     background: rgba(242, 237, 232, 0.06);
+}
+
+/* ── Custom Selection & Scrollbar ── */
+::selection {
+    background: var(--terra);
+    color: var(--paper);
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--paper);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(26, 26, 26, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--terra);
+}
+
+
+
+/* ── Magnetic Label ── */
+.magnetic-label {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 8px 16px;
+    background: var(--terra);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    border-radius: 40px;
+    pointer-events: none;
+    z-index: 100000;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+    transition: opacity 0.3s ease, transform 0.3s var(--ease-smooth);
+    white-space: nowrap;
+}
+
+.magnetic-label.active {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
 }
 
 /* About */
@@ -1584,8 +1630,15 @@ body.night-mode .view-all-text {
     }
     
     .view-all-text {
-        font-size: 8px;
+        font-size: 9px;
     }
+}
+
+/* ── Gravity Easter Egg ── */
+body.gravity-active section, 
+body.gravity-active footer,
+body.gravity-active header {
+    transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1) !important;
 }
 
 /* ── Reveal engine styles ── */
