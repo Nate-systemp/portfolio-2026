@@ -6,6 +6,12 @@
     background: var(--paper);
     padding: 0;
     overflow-x: hidden;
+    cursor: none;
+}
+
+.project-body a,
+.project-body button {
+    cursor: none;
 }
 
 /* ── REVEAL OVERRIDES ── */

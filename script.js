@@ -4,24 +4,91 @@
  */
 
 // ============================================
-// LOADING CURTAIN
+// LOADING CURTAIN + HERO ENTRANCE ANIMATION
 // ============================================
 const curtain = document.getElementById('loadingCurtain');
 const urlParams = new URLSearchParams(window.location.search);
 const isReturning = urlParams.get('from') === 'project';
 
+// Prepare hero entrance (hide elements before animation)
+document.body.classList.add('hero-entrance-ready');
+
+/**
+ * Triggers staggered entrance animations on all hero elements.
+ * Each element gets an incremental delay for a cinematic cascade.
+ */
+function triggerHeroEntrance(baseDelay = 0) {
+  // Stagger config: [selector, delay in ms]
+  const entranceElements = [
+    ['.site-header', 0],
+    ['.hero-eyebrow', 150],
+    ['.hero-name-line:first-child', 300],
+    ['.hero-name-line.hero-name-indent', 500],
+    ['.hero-tagline', 750],
+    ['.hero-vertical-text', 600],
+    ['.hero-year', 850],
+    ['.hero-scroll-cue', 1000],
+  ];
+
+  // Apply per-element delay as CSS custom property
+  entranceElements.forEach(([selector, delay]) => {
+    const el = document.querySelector(selector);
+    if (el) {
+      el.style.setProperty('--hero-delay', `${baseDelay + delay}ms`);
+    }
+  });
+
+  // Switch from "ready" (hidden) to "animating" (playing)
+  document.body.classList.remove('hero-entrance-ready');
+  document.body.classList.add('hero-animating');
+
+  // Clean up classes after animations finish
+  const totalDuration = baseDelay + 1000 + 1200; // last delay + longest animation
+  setTimeout(() => {
+    document.body.classList.remove('hero-animating');
+    // Remove inline delay properties
+    entranceElements.forEach(([selector]) => {
+      const el = document.querySelector(selector);
+      if (el) el.style.removeProperty('--hero-delay');
+    });
+  }, totalDuration);
+}
+
 if (isReturning) {
   curtain.classList.add('dismissed');
   document.body.classList.remove('loading-active');
-  setTimeout(() => curtain.style.display = 'none', 1200);
+  setTimeout(() => curtain.style.display = 'none', 1400);
+  // Faster entrance when returning from project
+  triggerHeroEntrance(200);
 } else {
-  // Auto-dismiss after content has loaded
+  // Mark curtain as interactive while loading
+  curtain.classList.add('active-curtain');
+
   window.addEventListener('load', () => {
+    // Phase 1: Let the curtain text sit visible for a moment
     setTimeout(() => {
-      curtain.classList.add('dismissed');
-      document.body.classList.remove('loading-active');
-      setTimeout(() => curtain.style.display = 'none', 1200);
-    }, 1400);
+      // Phase 2: Exit the text — scale, blur, dissolve
+      const curtainContent = curtain.querySelector('.curtain-content');
+      if (curtainContent) curtainContent.classList.add('curtain-exiting');
+
+      // Phase 3: Flash the splitting seam line
+      setTimeout(() => {
+        curtain.classList.add('curtain-splitting');
+      }, 400);
+
+      // Phase 4: Split the curtain open — top up, bottom down
+      setTimeout(() => {
+        curtain.classList.add('dismissed');
+        curtain.classList.remove('active-curtain');
+        document.body.classList.remove('loading-active');
+
+        // Trigger hero entrance as halves start sliding apart
+        triggerHeroEntrance(200);
+
+        // Clean up after halves have fully exited
+        setTimeout(() => curtain.style.display = 'none', 1400);
+      }, 700);
+    }, 1200);
   });
 }
 
@@ -227,3 +294,83 @@ window.addEventListener('scroll', () => {
     scrollTicking = true;
   }
 }, { passive: true });
+
+// ============================================
+// CUSTOM CURSOR (from original design, adapted)
+// ============================================
+(function () {
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  if (isTouchDevice) return;
+
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+  const ringEase = 0.15;
+  let isRunning = false;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.left = mouseX + 'px';
+    dot.style.top = mouseY + 'px';
+
+    if (!isRunning) {
+      isRunning = true;
+      animateRing();
+    }
+  });
+
+  function animateRing() {
+    const dx = mouseX - ringX;
+    const dy = mouseY - ringY;
+
+    if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+      ringX = mouseX;
+      ringY = mouseY;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      isRunning = false;
+      return;
+    }
+
+    ringX += dx * ringEase;
+    ringY += dy * ringEase;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+
+    requestAnimationFrame(animateRing);
+  }
+
+  // Hover states for interactive elements
+  const hoverTargets = document.querySelectorAll(
+    'a, button, .work-item, .gallery-item, .intern-photo, .nav-item, .footer-social-link, .resume-link'
+  );
+
+  const textTargets = document.querySelectorAll(
+    '.hero-name, .about-heading, .experience-heading, .contact-heading, .intern-heading, .work-item-title'
+  );
+
+  hoverTargets.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
+  textTargets.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-text'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-text'));
+  });
+
+  // Hide cursor when leaving window
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity = '0';
+    ring.style.opacity = '0';
+  });
+
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity = '1';
+    ring.style.opacity = '1';
+  });
+})();

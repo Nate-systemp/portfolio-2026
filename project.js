@@ -361,3 +361,81 @@ function updateParallax() {
         }
     }, { passive: true });
 })();
+
+// ============================================
+// CUSTOM CURSOR
+// ============================================
+(function () {
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  if (isTouchDevice) return;
+
+  const dot = document.getElementById('cursorDot');
+  const ring = document.getElementById('cursorRing');
+  if (!dot || !ring) return;
+
+  let mouseX = 0, mouseY = 0;
+  let ringX = 0, ringY = 0;
+  const ringEase = 0.15;
+  let isRunning = false;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.left = mouseX + 'px';
+    dot.style.top = mouseY + 'px';
+
+    if (!isRunning) {
+      isRunning = true;
+      animateRing();
+    }
+  });
+
+  function animateRing() {
+    const dx = mouseX - ringX;
+    const dy = mouseY - ringY;
+
+    if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+      ringX = mouseX;
+      ringY = mouseY;
+      ring.style.left = ringX + 'px';
+      ring.style.top = ringY + 'px';
+      isRunning = false;
+      return;
+    }
+
+    ringX += dx * ringEase;
+    ringY += dy * ringEase;
+    ring.style.left = ringX + 'px';
+    ring.style.top = ringY + 'px';
+
+    requestAnimationFrame(animateRing);
+  }
+
+  const hoverTargets = document.querySelectorAll(
+    'a, button, .gallery-item, .project-nav-link, .lightbox-nav, .lightbox-close'
+  );
+
+  const textTargets = document.querySelectorAll(
+    '.project-title, .nav-title'
+  );
+
+  hoverTargets.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
+  textTargets.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-text'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-text'));
+  });
+
+  document.addEventListener('mouseleave', () => {
+    dot.style.opacity = '0';
+    ring.style.opacity = '0';
+  });
+
+  document.addEventListener('mouseenter', () => {
+    dot.style.opacity = '1';
+    ring.style.opacity = '1';
+  });
+})();
