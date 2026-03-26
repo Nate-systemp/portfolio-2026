@@ -1,10 +1,6 @@
 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="64" height="64" rx="12" fill="#0a0a0a"/>
-<g transform="translate(18, 4) scale(0.58)">
-<path d="M32.512 56.832H33.792L32.512 6.39999H50.304V96H27.392L20.48 44.928H19.2L20.48 96H2.56V6.39999H25.6L32.512 56.832Z" fill="#F9F5F0"/>
-<rect x="15" y="72" width="19" height="12" fill="#F9F5F0"/>
-<path d="M8 6H44L35.5 58H33L8 6Z" fill="#0a0a0a"/>
-<path d="M10 6.5H43L40.5 17H15.5L10 6.5Z" fill="#F9F5F0"/>
-<path d="M17.5 12H35L34 47H32L17.5 12Z" fill="#F9F5F0"/>
-</g>
+<rect width="64" height="64" rx="14" fill="#1A1A1A"/>
+<rect x="1" y="1" width="62" height="62" rx="13" stroke="#C45D3E" stroke-width="2" stroke-opacity="0.4"/>
+<text x="32" y="44" text-anchor="middle" font-family="Georgia, serif" font-size="36" font-weight="400" font-style="italic" fill="#F2EDE8">N</text>
+<line x1="14" y1="52" x2="50" y2="52" stroke="#C45D3E" stroke-width="1.5" stroke-opacity="0.6"/>
 </svg>

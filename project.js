@@ -175,6 +175,13 @@ const project = currentIndex !== -1 ? projects[currentIndex] : projects[0];
 
 // Populate Content
 document.getElementById("projectNum").textContent = project.num;
+
+// Set hero image from first gallery image
+const heroImgEl = document.getElementById("heroImg");
+if (heroImgEl && project.gallery && project.gallery.length > 0) {
+    heroImgEl.style.backgroundImage = `url('${project.gallery[0]}')`;
+}
+
 document.getElementById("projectTitle").textContent = project.title;
 document.getElementById("projectCat").textContent = project.category;
 document.getElementById("projectYear").textContent = project.year;
@@ -184,20 +191,41 @@ document.getElementById("projectStory").textContent = project.story;
 // Update page title
 document.title = `${project.title} — Nate`;
 
+// Populate image count metadata
+const imgCount = project.gallery ? project.gallery.length : 0;
+const imgCountEl = document.getElementById("projectImgCount");
+if (imgCountEl) imgCountEl.textContent = imgCount;
+
+const galleryCountEl = document.getElementById("galleryCount");
+if (galleryCountEl) galleryCountEl.textContent = `${imgCount} IMAGE${imgCount !== 1 ? 'S' : ''}`;
+
+// Build bento gallery
 const galleryGrid = document.getElementById("projectGallery");
+const gallerySection = document.querySelector(".project-gallery-section");
+
 if (galleryGrid && project.gallery && project.gallery.length > 0) {
     galleryGrid.innerHTML = "";
+    // Add bento layout class based on image count
+    const bentoClass = `bento-${Math.min(project.gallery.length, 4)}`;
+    galleryGrid.classList.add(bentoClass);
+
     project.gallery.forEach((src, i) => {
         const item = document.createElement("div");
         item.className = "gallery-item";
         item.setAttribute("data-reveal", "scale");
         item.style.backgroundImage = `url('${src}')`;
-        item.style.transitionDelay = `${i * 0.1}s`;
+        item.style.transitionDelay = `${i * 0.12}s`;
+
+        // Add numbered overlay
+        const numOverlay = document.createElement("span");
+        numOverlay.className = "gallery-item-num";
+        numOverlay.textContent = String(i + 1).padStart(2, '0');
+        item.appendChild(numOverlay);
+
         galleryGrid.appendChild(item);
     });
-} else if (galleryGrid) {
-    const label = document.querySelector(".project-gallery-label");
-    if (label) label.style.display = "none";
+} else if (gallerySection) {
+    gallerySection.style.display = "none";
 }
 
 // Populate Footer Navigation
