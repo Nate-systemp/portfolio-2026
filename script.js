@@ -208,6 +208,9 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
+// Expose globally so firestore-loader.js can attach dynamically loaded cards
+window.__revealObserver = revealObserver;
+
 document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
 
 // ============================================

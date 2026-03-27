@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin CMS — Nathaniel Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --paper: #F2EDE8;
+            --ink: #1A1A1A;
+            --terra: #C45D3E;
+            --gold: #D4A853;
+            --muted: #8A8580;
+            --line: rgba(26,26,26,0.1);
+            --font-display: 'Arial Black', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--font-body);
+            min-height: 100vh;
+        }
+
+        /* ── LOGIN ── */
+        #loginSection {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 60px;
+            max-width: 600px;
+        }
+
+        .login-title {
+            font-family: var(--font-display);
+            font-size: 72px;
+            line-height: 0.9;
+            margin-bottom: 48px;
+        }
+
+        .login-title span { color: var(--terra); font-style: italic; }
+
+        .field-group { width: 100%; margin-bottom: 20px; }
+
+        .field-group label {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        input[type="email"], input[type="password"], input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 14px 16px;
+            background: white;
+            border: 1px solid var(--line);
+            color: var(--ink);
+            font-family: var(--font-body);
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, textarea:focus, select:focus { border-color: var(--terra); }
+        textarea { resize: vertical; min-height: 100px; }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary { background: var(--ink); color: var(--paper); }
+        .btn-primary:hover { background: var(--terra); }
+        .btn-danger { background: transparent; color: var(--terra); border: 1px solid var(--terra); }
+        .btn-danger:hover { background: var(--terra); color: var(--paper); }
+        .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
+        .btn-ghost:hover { border-color: var(--ink); }
+
+        .error-msg {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--terra);
+            margin-top: 16px;
+            display: none;
+        }
+
+        /* ── DASHBOARD ── */
+        #dashboardSection { display: none; }
+
+        .dash-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 60px;
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            background: var(--paper);
+            z-index: 100;
+        }
+
+        .dash-logo {
+            font-family: var(--font-display);
+            font-size: 24px;
+        }
+
+        .dash-logo span { color: var(--terra); }
+
+        .dash-user {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .dash-body { padding: 40px 60px; max-width: 1400px; margin: 0 auto; }
+
+        .dash-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            padding: 32px;
+            border: 1px solid var(--line);
+            background: white;
+        }
+
+        .stat-num {
+            font-family: var(--font-display);
+            font-size: 64px;
+            line-height: 1;
+            color: var(--terra);
+        }
+
+        .stat-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 40px;
+        }
+
+        /* ── PROJECT LIST ── */
+        .project-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 60px; }
+
+        .project-row {
+            display: grid;
+            grid-template-columns: 60px 80px 1fr 200px 120px auto;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 24px;
+            background: white;
+            border: 1px solid var(--line);
+            transition: border-color 0.3s ease;
+        }
+
+        .project-row:hover { border-color: var(--terra); }
+
+        .project-row-num {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .project-row-thumb {
+            width: 60px;
+            height: 40px;
+            object-fit: cover;
+            background: var(--line);
+        }
+
+        .project-row-title {
+            font-family: var(--font-display);
+            font-size: 18px;
+        }
+
+        .project-row-cat {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: var(--muted);
+        }
+
+        .project-row-year {
+            font-family: var(--font-mono);
+            font-size: 11px;
+        }
+
+        .project-row-actions { display: flex; gap: 8px; }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(26,26,26,0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active { display: flex; justify-content: center; align-items: flex-start; padding: 40px 20px; }
+
+        .modal {
+            background: var(--paper);
+            width: 100%;
+            max-width: 720px;
+            padding: 48px;
+        }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 40px;
+            margin-bottom: 40px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-full { grid-column: 1 / -1; }
+
+        .gallery-inputs { display: flex; flex-direction: column; gap: 10px; }
+
+        .gallery-hint {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .modal-actions { display: flex; gap: 16px; margin-top: 32px; }
+
+        .toast {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 16px 24px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 1px;
+            z-index: 9999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.success { background: var(--ink); border-left: 4px solid var(--terra); }
+    </style>
+</head>
+<body>
+
+    <!-- ══ LOGIN ══ -->
+    <div id="loginSection">
+        <h1 class="login-title">CMS<br><span>Access</span></h1>
+        <div class="field-group">
+            <label>ADMIN EMAIL</label>
+            <input type="email" id="emailInput" placeholder="your@email.com">
+        </div>
+        <div class="field-group">
+            <label>PASSWORD</label>
+            <input type="password" id="passwordInput" placeholder="••••••••">
+        </div>
+        <button id="loginBtn" class="btn btn-primary">LOGIN →</button>
+        <p id="loginError" class="error-msg"></p>
+    </div>
+
+    <!-- ══ DASHBOARD ══ -->
+    <div id="dashboardSection">
+        <header class="dash-header">
+            <div class="dash-logo">N.<span>CMS</span></div>
+            <div class="dash-user">
+                <span id="userEmail">—</span>
+                <button id="logoutBtn" class="btn btn-ghost">LOG OUT</button>
+            </div>
+        </header>
+
+        <div class="dash-body">
+            <!-- Stats -->
+            <div class="dash-stats">
+                <div class="stat-card">
+                    <div class="stat-num" id="statTotal">0</div>
+                    <div class="stat-label">TOTAL PROJECTS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" id="statSlots">9</div>
+                    <div class="stat-label">ARCHIVE SLOTS</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num" id="statAvail">9</div>
+                    <div class="stat-label">SLOTS REMAINING</div>
+                </div>
+            </div>
+
+            <!-- Project List -->
+            <div class="section-header">
+                <h2 class="section-title">Projects</h2>
+                <button id="addProjectBtn" class="btn btn-primary">+ ADD PROJECT</button>
+            </div>
+
+            <div id="projectGrid" class="project-grid">
+                <p style="font-family: var(--font-mono); font-size: 12px; color: var(--muted);">Loading projects...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ MODAL: Add / Edit Project ══ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2 class="modal-title" id="modalTitle">Add Project</h2>
+            <input type="hidden" id="editDocId">
+
+            <div class="form-grid">
+                <div class="field-group">
+                    <label>PROJECT TITLE *</label>
+                    <input type="text" id="fTitle" placeholder="e.g. FRACT ERA">
+                </div>
+                <div class="field-group">
+                    <label>CATEGORY *</label>
+                    <input type="text" id="fCategory" placeholder="e.g. GAME DESIGN">
+                </div>
+                <div class="field-group">
+                    <label>YEAR</label>
+                    <input type="number" id="fYear" placeholder="2026">
+                </div>
+                <div class="field-group">
+                    <label>ROLE</label>
+                    <input type="text" id="fRole" placeholder="e.g. Lead Game Designer">
+                </div>
+                <div class="field-group">
+                    <label>TOOLS / TECH</label>
+                    <input type="text" id="fTech" placeholder="e.g. GameMaker, Figma">
+                </div>
+                <div class="field-group">
+                    <label>SORT ORDER (#)</label>
+                    <input type="number" id="fOrder" placeholder="1" min="1" max="9">
+                </div>
+                <div class="field-group form-full">
+                    <label>SHORT DESCRIPTION *</label>
+                    <textarea id="fDescription" placeholder="One sentence about the project..."></textarea>
+                </div>
+                <div class="field-group form-full">
+                    <label>STORY / PROCESS</label>
+                    <textarea id="fStory" placeholder="The deeper story and creative process..." style="min-height: 120px;"></textarea>
+                </div>
+                <div class="field-group form-full">
+                    <label>GALLERY IMAGE PATHS</label>
+                    <p class="gallery-hint">Enter the path to each image relative to your /assets folder (e.g. assets/FRACERA1.webp). One per line.</p>
+                    <div class="gallery-inputs" id="galleryInputs">
+                        <input type="text" class="gallery-img" placeholder="assets/your-image-1.webp">
+                        <input type="text" class="gallery-img" placeholder="assets/your-image-2.webp">
+                        <input type="text" class="gallery-img" placeholder="assets/your-image-3.webp">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button id="saveProjectBtn" class="btn btn-primary">SAVE PROJECT</button>
+                <button id="cancelModalBtn" class="btn btn-ghost">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

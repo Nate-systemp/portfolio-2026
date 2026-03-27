@@ -63,42 +63,47 @@
     </section>
 
     <!-- Essential Scripts -->
-    <script src="project.js"></script>
-    <script>
-        (function renderArchive() {
+    <script type="module">
+        import { fetchProjects } from './firestore-loader.js';
+
+        async function renderArchive() {
             const grid = document.getElementById('archiveGrid');
-            if(!grid || !projects) return;
+            if(!grid) return;
+
+            const projects = await fetchProjects();
+            if (!projects) return;
 
             grid.innerHTML = '';
             const totalSlots = 9;
 
             // Render existing projects
-            projects.forEach(p => {
+            projects.forEach((p, i) => {
                 const item = document.createElement('a');
-                item.href = `project.html?id=${p.id}`;
+                item.href = `project.html?docId=${p.docId}`;
                 item.className = 'archive-item';
                 item.setAttribute('data-reveal', '');
                 
                 const thumb = (p.gallery && p.gallery[0]) ? p.gallery[0] : 'assets/M01.png';
+                const num = String(p.order || i + 1).padStart(2, '0');
 
                 item.innerHTML = `
                     <div class="archive-img-wrap">
                         <div class="archive-img" style="background-image: url('${thumb}')"></div>
                     </div>
-                    <div class="archive-meta"><span>${p.num}</span><span>${p.category}</span></div>
+                    <div class="archive-meta"><span>${num}</span><span>${p.category || ''}</span></div>
                     <h3 class="archive-item-title">${p.title}</h3>
                 `;
                 grid.appendChild(item);
             });
 
-            // Fill remaining slots with gray placeholders
+            // Fill remaining slots with placeholders
             for (let i = projects.length + 1; i <= totalSlots; i++) {
                 const empty = document.createElement('div');
                 empty.className = 'archive-item is-placeholder';
                 empty.setAttribute('data-reveal', '');
                 
                 empty.innerHTML = `
-                    <div class="archive-img-wrap gray-placeholder">
+                    <div class="archive-img-wrap gray-placeholder" style="background:var(--sand);">
                         <div class="archive-img"></div>
                     </div>
                     <div class="archive-meta"><span>0${i}</span><span>TBD</span></div>
@@ -112,7 +117,9 @@
                 const revealElements = document.querySelectorAll('[data-reveal]');
                 revealElements.forEach(el => el.classList.add('revealed'));
             }, 100);
-        })();
+        }
+
+        renderArchive();
     </script>
 </body>
 

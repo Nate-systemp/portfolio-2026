@@ -165,68 +165,10 @@
         </div>
 
         <div class="work-grid" id="workGrid">
-            <!-- Work Card 1 (Large) -->
-            <div class="work-card card-large" data-reveal>
-                <a href="project.html?id=1" class="work-card-link">
-                    <div class="work-card-img-wrap">
-                        <div class="work-card-img" style="background-image: url('assets/FRACERA3.webp')"></div>
-                    </div>
-                    <div class="work-card-info">
-                        <div class="work-card-top">
-                            <span class="work-card-num">01</span>
-                            <span class="work-card-cat">UI DESIGN / DEV</span>
-                        </div>
-                        <h3 class="work-card-title">FRACT ERA</h3>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Work Card 2 (Medium) -->
-            <div class="work-card card-medium" data-reveal>
-                <a href="project.html?id=2" class="work-card-link">
-                    <div class="work-card-img-wrap">
-                        <div class="work-card-img" style="background-image: url('assets/SQ1.webp')"></div>
-                    </div>
-                    <div class="work-card-info">
-                        <div class="work-card-top">
-                            <span class="work-card-num">02</span>
-                            <span class="work-card-cat">GAME DESIGN</span>
-                        </div>
-                        <h3 class="work-card-title">SWIVEL QUIVER</h3>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Work Card 3 (Medium) -->
-            <div class="work-card card-medium" data-reveal>
-                <a href="project.html?id=3" class="work-card-link">
-                    <div class="work-card-img-wrap">
-                        <div class="work-card-img" style="background-image: url('assets/OF1.webp')"></div>
-                    </div>
-                    <div class="work-card-info">
-                        <div class="work-card-top">
-                            <span class="work-card-num">03</span>
-                            <span class="work-card-cat">TTRPG DESIGN</span>
-                        </div>
-                        <h3 class="work-card-title">OUTFALL</h3>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Work Card 4 (Large) -->
-            <div class="work-card card-large" data-reveal>
-                <a href="project.html?id=4" class="work-card-link">
-                    <div class="work-card-img-wrap">
-                        <div class="work-card-img" style="background-image: url('assets/M01.png')"></div>
-                    </div>
-                    <div class="work-card-info">
-                        <div class="work-card-top">
-                            <span class="work-card-num">04</span>
-                            <span class="work-card-cat">WEB DESIGN / DEV</span>
-                        </div>
-                        <h3 class="work-card-title">MERGE</h3>
-                    </div>
-                </a>
+            <!-- Dynamically populated from Firestore via firestore-loader.js -->
+            <div class="work-card card-large" style="opacity:0.3;pointer-events:none;" data-reveal>
+                <div class="work-card-img-wrap"><div class="work-card-img" style="background:#ddd;"></div></div>
+                <div class="work-card-info"><div class="work-card-top"><span class="work-card-num">—</span></div><h3 class="work-card-title">Loading...</h3></div>
             </div>
         </div>
 
@@ -416,6 +358,7 @@
         </div>
     </div>
 
+    <script type="module" src="firestore-loader.js"></script>
     <script src="script.js"></script>
 </body>
 

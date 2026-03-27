@@ -53,79 +53,47 @@ class SmoothScroll {
 
 const smoothScroll = new SmoothScroll({ ease: 0.05, wheelMultiplier: 0.8 });
 
-// ============================================
-// GLOBAL STATE & DATA
-// ============================================
-const projects = [
-    {
-        id: 1,
-        num: "01",
-        title: "FRACT ERA",
-        category: "GAME DESIGN",
-        year: "2026",
-        role: "Lead Game Design",
-        tech: "GameMaker, Figma",
-        description: "An ancient-futuristic math puzzle adventure that explores procedural narrative and brutalist aesthetics.",
-        story: "Inspired by the architectural geometry of the 80s sci-fi, Fract Era was a challenge in balancing education with atmosphere. We developed a custom shader system to give every level a unique, shifting mood.",
-        gallery: ["assets/FRACERA3.webp", "assets/FRACERA1.webp", "assets/FRACERA2.webp"],
-    },
-    {
-        id: 2,
-        num: "02",
-        title: "SWIVEL QUIVER",
-        category: "GAME DESIGN",
-        year: "2024",
-        role: "Developer",
-        tech: "ASENPRITE, LUA",
-        description: "A fast-paced, high-precision one-button archery game built for immediate accessibility.",
-        story: "The challenge was simplicity. How do we make one button feel like a dozen different actions? Through variable timing and momentum-based physics, we created a game that's easy to learn but hard to master.",
-        gallery: ["assets/SQ1.webp", "assets/SQ2.webp", "assets/SQ3.webp"],
-    },
-    {
-        id: 3,
-        num: "03",
-        title: "OUTFALL",
-        category: "TTRPG DESIGN",
-        year: "2025",
-        role: "Rulebook Author",
-        tech: "Adobe InDesign",
-        description: "A post-apocalyptic tabletop RPG system focused on resource management and moral ambiguity.",
-        story: "Design wasn't just about graphics; it was about systems. We spent months testing the 'Strain' mechanic to ensure that every choice a player makes carries heavy narrative weight.",
-        gallery: ["assets/OF1.webp", "assets/OF2.webp", "assets/OF3.webp"],
-    },
-    {
-        id: 4,
-        num: "04",
-        title: "MERGE",
-        category: "WEB DESIGN / DEV",
-        year: "2026",
-        role: "Frontend Dev",
-        tech: "HTML, CSS, JS",
-        description: "A premium streetwear e-commerce platform focusing on minimalist UI and high-impact product photography.",
-        story: "For Merge, the goal was to create a digital shopping experience that reflected the brand's aesthetic. We focused on micro-interactions and smooth transitions to keep the customer engaged throughout the journey.",
-        gallery: ["assets/M01.png", "assets/M02.png", "assets/M03.png"],
-    }
-];
-
-// Fallback for missing projects
-const params = new URLSearchParams(window.location.search);
-const id = parseInt(params.get("id")) || 1;
-const project = projects.find(p => p.id === id) || projects[0];
+import { db } from './firebase-config.js';
+import { doc, getDoc, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
 // ============================================
-// DATA INJECTION (with robustness)
+// DATA INJECTION (Firestore)
 // ============================================
-(function populate() {
+async function populate() {
     try {
+        const params = new URLSearchParams(window.location.search);
+        let docId = params.get("docId");
+        
+        // Let's get all projects directly sorted by order to figure out nextProject logic too
+        const q = query(collection(db, 'projects'), orderBy('order', 'asc'));
+        const snapAll = await getDocs(q);
+        let allProjects = [];
+        snapAll.forEach(d => allProjects.push({ docId: d.id, ...d.data() }));
+
+        if (allProjects.length === 0) {
+            console.error("No projects in database.");
+            return;
+        }
+
+        // If no docId in URL (or invalid), fallback to the first project in the sorted list
+        let project = allProjects.find(p => p.docId === docId);
+        if (!project) {
+            project = allProjects[0];
+            docId = project.docId;
+        }
+
         console.log("Populating project:", project);
+
         // Basic Info - using a helper to avoid script halt
         const setVal = (id, val) => {
             const el = document.getElementById(id);
             if(el) el.textContent = val;
         };
 
-        document.title = `${project.title} — Nathan Portfolio`;
-        setVal("projectNum", project.num);
+        const num = String(project.order || allProjects.indexOf(project) + 1).padStart(2, '0');
+
+        document.title = `${project.title || 'Untitled'} — Nathan Portfolio`;
+        setVal("projectNum", num);
         setVal("projectTitle", project.title);
         setVal("projectCat", project.category);
         setVal("projectYear", project.year);
@@ -148,15 +116,19 @@ const project = projects.find(p => p.id === id) || projects[0];
             });
         }
 
-        // Next Project
-        const nextIdx = (projects.findIndex(p => p.id === project.id) + 1) % projects.length;
-        const nextProj = projects[nextIdx];
+        // Initialize Lightbox now that images exist
+        initLightbox();
+
+        // Next Project Logic
+        let currIdx = allProjects.findIndex(p => p.docId === docId);
+        let nextProj = allProjects[(currIdx + 1) % allProjects.length];
+        
         const nextLink = document.getElementById("nextProject");
         const nextTitle = document.getElementById("nextTitle");
         const nextImg = document.getElementById("nextImg");
 
         if (nextLink && nextProj) {
-            nextLink.href = `project.html?id=${nextProj.id}`;
+            nextLink.href = `project.html?docId=${nextProj.docId}`;
             nextTitle.textContent = nextProj.title;
             if (nextProj.gallery && nextProj.gallery[0]) {
                 nextImg.style.backgroundImage = `url('${nextProj.gallery[0]}')`;
@@ -165,7 +137,8 @@ const project = projects.find(p => p.id === id) || projects[0];
     } catch (e) {
         console.error("Population error:", e);
     }
-})();
+}
+populate();
 
 // ============================================
 // REVEAL ON SCROLL ENGINE
@@ -258,31 +231,34 @@ const project = projects.find(p => p.id === id) || projects[0];
 // ============================================
 // LIGHTBOX
 // ============================================
-(function() {
+function initLightbox() {
     const overlay = document.getElementById('lightboxOverlay');
     const img = document.getElementById('lightboxImage');
     const close = document.getElementById('lightboxClose');
 
     if (!overlay || !img || !close) return;
 
-    document.querySelectorAll('.p-gallery-item').forEach(item => {
-        item.addEventListener('click', () => {
+    // Reset old listeners if called multiple times
+    const galleryItems = document.querySelectorAll('.p-gallery-item');
+    
+    galleryItems.forEach(item => {
+        item.onclick = () => {
             const bg = item.querySelector('.p-gallery-img').style.backgroundImage;
             const url = bg.replace('url("', '').replace('")', '');
             img.src = url;
             overlay.classList.add('active');
-        });
+        };
     });
 
-    close.addEventListener('click', () => overlay.classList.remove('active'));
-    overlay.addEventListener('click', (e) => {
+    close.onclick = () => overlay.classList.remove('active');
+    overlay.onclick = (e) => {
         if (e.target === overlay || e.target.classList.contains('lightbox-backdrop')) {
             overlay.classList.remove('active');
         }
-    });
+    };
 
     // ESC to close
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') overlay.classList.remove('active');
     });
-})();
+}
