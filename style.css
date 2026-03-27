@@ -1396,6 +1396,382 @@ body.loading-active {
     gap: 18px;
 }
 
+/* ── Resume Actions Container ── */
+.resume-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.resume-peek-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--paper);
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    padding: 16px 24px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s var(--ease-out);
+}
+
+.resume-peek-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--terra), var(--gold));
+    transform: translateX(-101%);
+    transition: transform 0.5s var(--ease-out);
+    z-index: 0;
+}
+
+.resume-peek-btn:hover::before {
+    transform: translateX(0);
+}
+
+.resume-peek-btn > * {
+    position: relative;
+    z-index: 1;
+}
+
+.peek-icon {
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.resume-peek-btn:hover .peek-icon {
+    transform: scale(1.2);
+    animation: peekBlink 1.5s ease-in-out infinite;
+}
+
+@keyframes peekBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+.peek-hint {
+    font-size: 9px;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.4s var(--ease-out);
+    color: rgba(242, 237, 232, 0.6);
+}
+
+.resume-peek-btn:hover .peek-hint {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* ═══════════════════════════════════════════
+   RESUME VIEWER OVERLAY
+   ═══════════════════════════════════════════ */
+.resume-viewer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.resume-viewer-overlay.active {
+    pointer-events: all;
+    opacity: 1;
+    visibility: visible;
+}
+
+.resume-viewer-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.resume-viewer-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transform: translateY(30px) scale(0.97);
+    transition: transform 0.5s var(--ease-out);
+}
+
+.resume-viewer-overlay.active .resume-viewer-container {
+    transform: translateY(0) scale(1);
+}
+
+/* ── Viewer Header ── */
+.resume-viewer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 32px;
+    background: rgba(242, 237, 232, 0.06);
+    border-bottom: 1px solid rgba(242, 237, 232, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    flex-shrink: 0;
+}
+
+.resume-viewer-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.rv-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--terra);
+    background: rgba(196, 93, 62, 0.12);
+    padding: 4px 10px;
+    border-radius: 2px;
+}
+
+.rv-name {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(242, 237, 232, 0.7);
+    letter-spacing: 0.5px;
+}
+
+.resume-viewer-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.rv-control-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(242, 237, 232, 0.1);
+    border-radius: 4px;
+    color: rgba(242, 237, 232, 0.6);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-decoration: none;
+}
+
+.rv-control-btn:hover {
+    color: var(--paper);
+    background: rgba(242, 237, 232, 0.08);
+    border-color: rgba(242, 237, 232, 0.2);
+}
+
+.rv-zoom-level {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(242, 237, 232, 0.5);
+    width: 48px;
+    text-align: center;
+}
+
+.rv-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(242, 237, 232, 0.08);
+    margin: 0 8px;
+}
+
+.rv-download-btn {
+    width: auto;
+    padding: 0 16px;
+    gap: 8px;
+    background: linear-gradient(135deg, rgba(196, 93, 62, 0.15), rgba(212, 168, 83, 0.15));
+    border-color: rgba(196, 93, 62, 0.2);
+}
+
+.rv-download-btn span {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.rv-download-btn:hover {
+    background: linear-gradient(135deg, var(--terra), var(--gold));
+    color: var(--paper);
+    border-color: var(--terra);
+}
+
+.rv-close-btn {
+    margin-left: 4px;
+}
+
+.rv-close-btn:hover {
+    background: rgba(196, 93, 62, 0.15);
+    border-color: var(--terra);
+    color: var(--terra);
+}
+
+/* ── Viewer Body ── */
+.resume-viewer-body {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.resume-viewer-scroll {
+    position: relative;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(242, 237, 232, 0.15) transparent;
+}
+
+.resume-viewer-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.resume-viewer-scroll::-webkit-scrollbar-thumb {
+    background: rgba(242, 237, 232, 0.15);
+    border-radius: 4px;
+}
+
+.resume-canvas {
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(242, 237, 232, 0.05);
+    border-radius: 4px;
+    transition: transform 0.3s var(--ease-out);
+}
+
+/* ── Page Navigation ── */
+.resume-page-nav {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 24px;
+    padding: 8px 20px;
+    background: rgba(242, 237, 232, 0.06);
+    border: 1px solid rgba(242, 237, 232, 0.08);
+    border-radius: 40px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.rv-page-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: rgba(242, 237, 232, 0.5);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.rv-page-btn:hover {
+    background: rgba(242, 237, 232, 0.1);
+    color: var(--paper);
+}
+
+.rv-page-btn:disabled {
+    opacity: 0.2;
+    cursor: default;
+}
+
+.rv-page-info {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(242, 237, 232, 0.5);
+}
+
+/* ── Resume viewer loading state ── */
+.resume-viewer-body .rv-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    color: rgba(242, 237, 232, 0.5);
+}
+
+.rv-loading-spinner {
+    width: 32px;
+    height: 32px;
+    border: 2px solid rgba(242, 237, 232, 0.1);
+    border-top-color: var(--terra);
+    border-radius: 50%;
+    animation: rvSpin 0.8s linear infinite;
+}
+
+@keyframes rvSpin {
+    to { transform: rotate(360deg); }
+}
+
+.rv-loading-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+/* ── Night mode overrides for resume actions ── */
+body.night-mode .resume-peek-btn {
+    background: #E8E3DE;
+    color: #141414;
+    border-color: #E8E3DE;
+}
+
+body.night-mode .resume-peek-btn .peek-hint {
+    color: rgba(20, 20, 20, 0.5);
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .resume-viewer-header {
+        padding: 12px 16px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .rv-name { display: none; }
+
+    .rv-download-btn span { display: none; }
+    .rv-download-btn { width: 36px; padding: 0; }
+
+    .resume-viewer-body {
+        padding: 16px;
+    }
+
+    .resume-peek-btn {
+        font-size: 10px;
+        padding: 14px 18px;
+    }
+
+    .peek-hint { display: none; }
+}
+
 /* ============================================
    MARQUEE STRIP — Skills ticker
    ============================================ */

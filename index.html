@@ -124,12 +124,24 @@
                     <span class="detail-label">TOOLS</span>
                     <p class="detail-text">Figma, HTML/CSS/JS, React, Unity, Godot, Adobe Creative Suite</p>
                 </div>
-                <a href="assets/resume.pdf" class="resume-link" download>
-                    <span>DOWNLOAD RESUME</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                        <path d="M12 5v14M5 12l7 7 7-7"/>
-                    </svg>
-                </a>
+                <div class="resume-actions">
+                    <button class="resume-peek-btn" id="resumePeekBtn" aria-label="Preview resume">
+                        <span class="peek-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </span>
+                        <span>PEEK RESUME</span>
+                        <span class="peek-hint">— view without downloading</span>
+                    </button>
+                    <a href="assets/resume.pdf" class="resume-link" download>
+                        <span>DOWNLOAD RESUME</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 5v14M5 12l7 7 7-7"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -364,6 +376,50 @@
                 <div class="terminal-input-line">
                     <span class="terminal-prompt">visitor@nate ~ $</span>
                     <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ RESUME VIEWER OVERLAY ═══ -->
+    <div class="resume-viewer-overlay" id="resumeViewerOverlay">
+        <div class="resume-viewer-backdrop" id="resumeViewerBackdrop"></div>
+        <div class="resume-viewer-container">
+            <div class="resume-viewer-header">
+                <div class="resume-viewer-title">
+                    <span class="rv-label">RÉSUMÉ</span>
+                    <span class="rv-name">Nathaniel Pangilinan</span>
+                </div>
+                <div class="resume-viewer-controls">
+                    <button class="rv-control-btn" id="rvZoomOut" title="Zoom out">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <span class="rv-zoom-level" id="rvZoomLevel">100%</span>
+                    <button class="rv-control-btn" id="rvZoomIn" title="Zoom in">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    </button>
+                    <div class="rv-divider"></div>
+                    <a href="assets/resume.pdf" class="rv-control-btn rv-download-btn" download title="Download PDF">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span>DOWNLOAD</span>
+                    </a>
+                    <button class="rv-control-btn rv-close-btn" id="rvCloseBtn" title="Close viewer">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+            </div>
+            <div class="resume-viewer-body" id="resumeViewerBody">
+                <div class="resume-viewer-scroll" id="resumeViewerScroll">
+                    <canvas id="resumeCanvas" class="resume-canvas"></canvas>
+                    <div class="resume-page-nav" id="resumePageNav">
+                        <button class="rv-page-btn" id="rvPrevPage">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+                        </button>
+                        <span class="rv-page-info"><span id="rvCurrentPage">1</span> / <span id="rvTotalPages">1</span></span>
+                        <button class="rv-page-btn" id="rvNextPage">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

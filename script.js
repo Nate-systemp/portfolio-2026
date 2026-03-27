@@ -1077,3 +1077,232 @@ function toggleGravity() {
     }
   });
 }
+
+// ============================================
+// RESUME VIEWER — PDF Preview Engine
+// ============================================
+(function() {
+  const overlay = document.getElementById('resumeViewerOverlay');
+  const peekBtn = document.getElementById('resumePeekBtn');
+  if (!overlay || !peekBtn) return;
+
+  const backdrop = document.getElementById('resumeViewerBackdrop');
+  const closeBtn = document.getElementById('rvCloseBtn');
+  const zoomInBtn = document.getElementById('rvZoomIn');
+  const zoomOutBtn = document.getElementById('rvZoomOut');
+  const zoomLevelEl = document.getElementById('rvZoomLevel');
+  const canvas = document.getElementById('resumeCanvas');
+  const prevPageBtn = document.getElementById('rvPrevPage');
+  const nextPageBtn = document.getElementById('rvNextPage');
+  const currentPageEl = document.getElementById('rvCurrentPage');
+  const totalPagesEl = document.getElementById('rvTotalPages');
+  const viewerBody = document.getElementById('resumeViewerBody');
+  const scrollContainer = document.getElementById('resumeViewerScroll');
+
+  let pdfDoc = null;
+  let currentPage = 1;
+  let zoomLevel = 1.0;
+  let isRendering = false;
+  let pdfjsLoaded = false;
+
+  const PDF_URL = 'assets/resume.pdf';
+  const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+  const PDFJS_WORKER_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+  // Lazy-load PDF.js
+  function loadPdfJs() {
+    return new Promise((resolve, reject) => {
+      if (pdfjsLoaded && window.pdfjsLib) {
+        resolve();
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = PDFJS_CDN;
+      script.onload = () => {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_WORKER_CDN;
+        pdfjsLoaded = true;
+        resolve();
+      };
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  // Show loading state
+  function showLoading() {
+    canvas.style.display = 'none';
+    const pageNav = document.getElementById('resumePageNav');
+    if (pageNav) pageNav.style.display = 'none';
+
+    let loader = viewerBody.querySelector('.rv-loading');
+    if (!loader) {
+      loader = document.createElement('div');
+      loader.className = 'rv-loading';
+      loader.innerHTML = '<div class="rv-loading-spinner"></div><span class="rv-loading-text">LOADING RÉSUMÉ...</span>';
+      viewerBody.appendChild(loader);
+    }
+    loader.style.display = 'flex';
+  }
+
+  function hideLoading() {
+    const loader = viewerBody.querySelector('.rv-loading');
+    if (loader) loader.style.display = 'none';
+    canvas.style.display = 'block';
+    const pageNav = document.getElementById('resumePageNav');
+    if (pageNav) pageNav.style.display = 'flex';
+  }
+
+  // Render a page
+  async function renderPage(pageNum) {
+    if (!pdfDoc || isRendering) return;
+    isRendering = true;
+
+    const page = await pdfDoc.getPage(pageNum);
+    const baseViewport = page.getViewport({ scale: 1 });
+
+    // Calculate scale to fit the viewer body nicely
+    const bodyRect = viewerBody.getBoundingClientRect();
+    const availableHeight = bodyRect.height - 100; // leave room for page nav
+    const availableWidth = bodyRect.width - 60;
+
+    const fitScale = Math.min(
+      availableWidth / baseViewport.width,
+      availableHeight / baseViewport.height
+    );
+
+    const viewport = page.getViewport({ scale: fitScale * zoomLevel * (window.devicePixelRatio || 1) });
+
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+    canvas.style.width = `${viewport.width / (window.devicePixelRatio || 1)}px`;
+    canvas.style.height = `${viewport.height / (window.devicePixelRatio || 1)}px`;
+
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    await page.render({
+      canvasContext: ctx,
+      viewport: viewport
+    }).promise;
+
+    currentPageEl.textContent = pageNum;
+    prevPageBtn.disabled = pageNum <= 1;
+    nextPageBtn.disabled = pageNum >= pdfDoc.numPages;
+
+    isRendering = false;
+  }
+
+  // Open viewer
+  async function openViewer() {
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    showLoading();
+
+    try {
+      await loadPdfJs();
+
+      if (!pdfDoc) {
+        pdfDoc = await window.pdfjsLib.getDocument(PDF_URL).promise;
+        totalPagesEl.textContent = pdfDoc.numPages;
+
+        // Hide page nav if single page
+        const pageNav = document.getElementById('resumePageNav');
+        if (pdfDoc.numPages <= 1 && pageNav) {
+          pageNav.style.display = 'none';
+        }
+      }
+
+      hideLoading();
+      currentPage = 1;
+      zoomLevel = 1.0;
+      zoomLevelEl.textContent = '100%';
+      await renderPage(currentPage);
+    } catch (err) {
+      console.error('Failed to load resume PDF:', err);
+      hideLoading();
+      canvas.style.display = 'none';
+
+      let errorEl = viewerBody.querySelector('.rv-loading');
+      if (!errorEl) {
+        errorEl = document.createElement('div');
+        errorEl.className = 'rv-loading';
+        viewerBody.appendChild(errorEl);
+      }
+      errorEl.style.display = 'flex';
+      errorEl.innerHTML = '<span class="rv-loading-text">COULD NOT LOAD PDF — TRY DOWNLOADING INSTEAD</span>';
+    }
+  }
+
+  // Close viewer
+  function closeViewer() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Zoom
+  function setZoom(newZoom) {
+    zoomLevel = Math.max(0.5, Math.min(2.0, newZoom));
+    zoomLevelEl.textContent = Math.round(zoomLevel * 100) + '%';
+    renderPage(currentPage);
+  }
+
+  // Event listeners
+  peekBtn.addEventListener('click', openViewer);
+  closeBtn.addEventListener('click', closeViewer);
+  backdrop.addEventListener('click', closeViewer);
+
+  zoomInBtn.addEventListener('click', () => setZoom(zoomLevel + 0.25));
+  zoomOutBtn.addEventListener('click', () => setZoom(zoomLevel - 0.25));
+
+  prevPageBtn.addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderPage(currentPage);
+    }
+  });
+
+  nextPageBtn.addEventListener('click', () => {
+    if (pdfDoc && currentPage < pdfDoc.numPages) {
+      currentPage++;
+      renderPage(currentPage);
+    }
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (!overlay.classList.contains('active')) return;
+
+    if (e.key === 'Escape') {
+      closeViewer();
+      e.preventDefault();
+    }
+    if (e.key === '+' || e.key === '=') {
+      setZoom(zoomLevel + 0.25);
+      e.preventDefault();
+    }
+    if (e.key === '-' || e.key === '_') {
+      setZoom(zoomLevel - 0.25);
+      e.preventDefault();
+    }
+    if (e.key === 'ArrowLeft' && currentPage > 1) {
+      currentPage--;
+      renderPage(currentPage);
+      e.preventDefault();
+    }
+    if (e.key === 'ArrowRight' && pdfDoc && currentPage < pdfDoc.numPages) {
+      currentPage++;
+      renderPage(currentPage);
+      e.preventDefault();
+    }
+  });
+
+  // Re-render on resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    if (!overlay.classList.contains('active')) return;
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => renderPage(currentPage), 200);
+  });
+})();
+
