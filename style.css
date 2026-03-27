@@ -1145,6 +1145,18 @@ body.loading-active {
     z-index: 2;
 }
 
+#threeCanvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1;
+    opacity: 0.85;
+    pointer-events: none;
+}
+
 .hero-marquee-inner {
     display: flex;
     gap: 40px;

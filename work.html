@@ -74,6 +74,7 @@
     </header>
 
     <section class="archive-hero">
+        <canvas id="threeCanvas"></canvas>
         <h1 class="archive-title" data-reveal>SELECT ARCHIVE</h1>
     </section>
     <section class="archive-grid" id="archiveGrid">
@@ -81,6 +82,8 @@
     </section>
 
     <!-- Essential Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="three-scene.js"></script>
     <script type="module">
         import { fetchProjects } from './firestore-loader.js';
 
