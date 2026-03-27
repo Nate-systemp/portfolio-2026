@@ -40,10 +40,28 @@
             .archive-hero { padding: 120px 24px 60px; }
             .archive-grid { grid-template-columns: 1fr; padding: 0 24px 80px; }
         }
+
+        /* Night Mode for Archive */
+        body.night-mode.archive-body { background: #141414; color: #E8E3DE; }
+        body.night-mode .archive-title { color: #E8E3DE; }
+        body.night-mode .archive-item { color: #E8E3DE; }
+        body.night-mode .archive-item-title { color: #E8E3DE; }
+        body.night-mode .archive-meta { color: #908A85; }
+        body.night-mode .archive-img-wrap { background: #1e1e1e; }
+        body.night-mode .gray-placeholder { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.08); }
+        body.night-mode .project-back-link { color: #E8E3DE; }
     </style>
 </head>
 
 <body class="archive-body">
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('night-mode');
+            document.body.style.background = '#141414';
+            document.body.style.color = '#E8E3DE';
+        }
+    </script>
+    
     <!-- Custom Cursor -->
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="cursor-ring" id="cursorRing"></div>

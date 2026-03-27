@@ -57,6 +57,13 @@ import { db } from './firebase-config.js';
 import { doc, getDoc, collection, getDocs, orderBy, query } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
 // ============================================
+// THEME INIT 
+// ============================================
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('night-mode');
+}
+
+// ============================================
 // DATA INJECTION (Firestore)
 // ============================================
 async function populate() {

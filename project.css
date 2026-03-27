@@ -15,6 +15,19 @@
     color: #f2ede8;
 }
 
+/* Night mode overrides for all project page elements */
+body.night-mode .p-hero { background: #0a0a0a; }
+body.night-mode .p-title { color: #E8E3DE; }
+body.night-mode .p-num { color: #E8E3DE; }
+body.night-mode .p-meta-val { color: #E8E3DE; }
+body.night-mode .p-overview { background: #0a0a0a; }
+body.night-mode .p-overview-text { color: #E8E3DE; }
+body.night-mode .project-back-link { color: #E8E3DE; }
+body.night-mode .project-nav-logo { color: #E8E3DE; }
+body.night-mode .p-hero-meta { border-color: rgba(232, 227, 222, 0.1); }
+body.night-mode .p-footer { background: #0a0a0a; border-color: rgba(232, 227, 222, 0.06); }
+body.night-mode .p-footer-back { color: #E8E3DE; }
+
 /* ── REVEAL ENGINE ── */
 [data-reveal] {
     opacity: 0;

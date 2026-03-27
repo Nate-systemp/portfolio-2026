@@ -4,6 +4,13 @@
  */
 
 // ============================================
+// THEME INIT (Run immediately to prevent flash)
+// ============================================
+if (localStorage.getItem('theme') === 'dark') {
+  document.body.classList.add('night-mode');
+}
+
+// ============================================
 // LOADING CURTAIN + HERO ENTRANCE ANIMATION
 // ============================================
 const curtain = document.getElementById('loadingCurtain');
@@ -114,6 +121,10 @@ class SmoothScroll {
   }
 
   _onWheel(e) {
+    if (document.body.classList.contains('loading-active')) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     this.targetY += e.deltaY * this.wheelMultiplier;
@@ -249,6 +260,8 @@ if (workToggle && workExtra) {
     }
   });
 }
+
+// Night mode toggle is handled via inline onclick in the HTML button
 
 // ============================================
 // ACTIVE NAV STATE
@@ -652,13 +665,7 @@ window.addEventListener('scroll', () => {
   const toggle = document.getElementById('nightToggle');
   if (!toggle) return;
 
-  if (localStorage.getItem('nightMode') === 'true') {
-    document.body.classList.add('night-mode');
-  }
-
   toggle.addEventListener('click', () => {
-    const isNight = document.body.classList.toggle('night-mode');
-    localStorage.setItem('nightMode', isNight);
     toggle.style.transform = 'scale(1.2) rotate(360deg)';
     setTimeout(() => { toggle.style.transform = ''; }, 600);
   });

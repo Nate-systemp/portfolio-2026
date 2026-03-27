@@ -15,6 +15,14 @@
 </head>
 
 <body class="project-body">
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('night-mode');
+            document.body.style.background = '#0a0a0a';
+            document.body.style.color = '#E8E3DE';
+        }
+    </script>
+
     <!-- Custom Cursor -->
     <div class="cursor-dot" id="cursorDot"></div>
     <div class="cursor-ring" id="cursorRing"></div>

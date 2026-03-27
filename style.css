@@ -74,6 +74,40 @@ body.night-mode .site-header {
     border-bottom-color: rgba(242, 237, 232, 0.06);
 }
 
+/* ── Theme Toggle Button ── */
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--light-line);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--ink);
+    transition: all 0.3s ease;
+    margin-left: 20px;
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+    border-color: var(--terra);
+    color: var(--terra);
+}
+
+/* Show sun in light mode, moon in dark mode */
+.theme-icon-moon { display: none; }
+.theme-icon-sun { display: block; }
+
+body.night-mode .theme-icon-moon { display: block; }
+body.night-mode .theme-icon-sun { display: none; }
+
+body.night-mode .theme-toggle {
+    border-color: rgba(242, 237, 232, 0.15);
+    color: #E8E3DE;
+}
+
 /* Hero */
 body.night-mode .hero-name {
     color: #E8E3DE;
@@ -270,12 +304,38 @@ body.night-mode .intern-heading {
     color: #E8E3DE;
 }
 
+body.night-mode .intern-description,
 body.night-mode .intern-text {
     color: #B0AAA4;
 }
 
 body.night-mode .intern-text-label {
     color: #908A85;
+}
+
+/* Contact & Footer Night Mode */
+body.night-mode .contact {
+    background: #0E0E0E;
+    color: #E8E3DE;
+}
+
+body.night-mode .detail-label,
+body.night-mode .footer-col-label,
+body.night-mode .footer-tagline,
+body.night-mode .footer-meta,
+body.night-mode .footer-credits {
+    color: rgba(232, 227, 222, 0.4);
+}
+
+body.night-mode .detail-link,
+body.night-mode .big-contact-button,
+body.night-mode .footer-social-link {
+    color: #E8E3DE;
+}
+
+/* Terminal Night Mode */
+body.night-mode .terminal-output .term-cmd {
+    color: #E8E3DE;
 }
 
 /* ============================================
@@ -1028,6 +1088,12 @@ body.loading-active {
     font-weight: 700;
 }
 
+.header-right-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
 .header-status {
     display: flex;
     align-items: center;
@@ -1187,9 +1253,11 @@ body.loading-active {
     font-size: 10px;
     letter-spacing: 3px;
     color: var(--muted);
-    cursor: none;
+    cursor: pointer;
     transition: color 0.3s ease;
-    z-index: 10;
+    z-index: 100;
+    padding: 10px 15px;
+    user-select: none;
 }
 
 .hero-corner-toggle:hover {

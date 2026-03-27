@@ -29,6 +29,11 @@
 </head>
 
 <body class="site-body">
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('night-mode');
+        }
+    </script>
     <div class="magnetic-label" id="magneticLabel">VIEW</div>
 
     <!-- Loading Curtain -->
@@ -55,9 +60,15 @@
             <a href="#experience-section" class="nav-item" data-nav="exp"><span class="nav-num">03</span>Experience</a>
             <a href="#contact-section" class="nav-item" data-nav="contact"><span class="nav-num">04</span>Contact</a>
         </nav>
-        <div class="header-status">
-            <span class="status-dot"></span>
-            <span class="status-text">AVAILABLE FOR WORK</span>
+        <div class="header-right-group">
+            <div class="header-status">
+                <span class="status-dot"></span>
+                <span class="status-text">AVAILABLE FOR WORK</span>
+            </div>
+            <button class="theme-toggle" id="nightToggle" title="Toggle dark mode" aria-label="Toggle dark mode" onclick="document.body.classList.toggle('night-mode'); localStorage.setItem('theme', document.body.classList.contains('night-mode') ? 'dark' : 'light');">
+                <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </button>
         </div>
     </header>
 
@@ -83,8 +94,8 @@
             </div>
         </div>
 
-        <!-- Float the toggle button more discretely -->
-        <div class="hero-corner-toggle" id="nightToggle" title="Toggle theme">
+        <!-- ©2026 decorative only -->
+        <div class="hero-corner-toggle" aria-hidden="true">
             <span>©2026</span>
         </div>
     </section>
