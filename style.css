@@ -151,7 +151,46 @@ body.night-mode .marker-line {
     background: var(--terra);
 }
 
+/* ── SKIP TO CONTENT (Accessibility) ── */
+.skip-link {
+    position: fixed;
+    top: -100%;
+    left: 20px;
+    background: var(--terra);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    padding: 12px 24px;
+    border-radius: 4px;
+    z-index: 999999;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+.skip-link:focus {
+    top: 20px;
+}
 
+/* ── SCROLL PROGRESS BAR ── */
+.scroll-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: linear-gradient(90deg, var(--terra), var(--gold));
+    z-index: 99999;
+    pointer-events: none;
+    transition: width 0.05s linear;
+    transform-origin: left;
+}
+
+/* ── FOCUS STYLES (Keyboard navigation) ── */
+:focus-visible {
+    outline: 2px solid var(--terra);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
 
 /* ── Magnetic Label ── */
 .magnetic-label {

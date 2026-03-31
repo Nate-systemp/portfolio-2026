@@ -88,8 +88,12 @@
     });
 
     // --- ANIMATION REEL ---
+    let animationId = null;
+    let isVisible = true;
+
     const animate = () => {
-        requestAnimationFrame(animate);
+        animationId = requestAnimationFrame(animate);
+        if (!isVisible) return; // Skip rendering when off-screen
 
         const time = Date.now() * 0.001;
 
@@ -97,7 +101,6 @@
         if (isArchive || isProject) {
             for (let i = 0; i < positionAttribute.count; i++) {
                 vertex.fromBufferAttribute(positionAttribute, i);
-                const distance = vertex.length();
                 const distortion = Math.sin(vertex.x * 2 + time) * 0.1 +
                                  Math.sin(vertex.y * 2 + time) * 0.1;
                 vertex.normalize().multiplyScalar(1.5 + distortion);
@@ -123,6 +126,12 @@
 
         renderer.render(scene, camera);
     };
+
+    // Pause rendering when canvas is out of viewport (saves battery/GPU)
+    const visibilityObserver = new IntersectionObserver((entries) => {
+        isVisible = entries[0].isIntersecting;
+    }, { threshold: 0 });
+    visibilityObserver.observe(canvas);
 
     // --- RESPONSIVE ---
     window.addEventListener('resize', () => {

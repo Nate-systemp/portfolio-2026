@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Page not found — Nathaniel's Portfolio">
+    <title>404 — Nate</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Tusker Grotesk';
+            src: url('assets/fonts/TuskerGrotesk-5700Bold.ttf') format('truetype');
+            font-weight: bold;
+        }
+
+        :root {
+            --paper: #F2EDE8;
+            --ink: #1A1A1A;
+            --terra: #C45D3E;
+            --muted: #8A8580;
+            --gold: #D4A853;
+            --font-display: 'Tusker Grotesk', sans-serif;
+            --font-serif: 'DM Serif Display', Georgia, serif;
+            --font-mono: 'Space Mono', monospace;
+            --font-body: 'Inter', sans-serif;
+            --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--paper);
+            color: var(--ink);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Paper grain */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* Night mode */
+        body.night-mode { background: #141414; color: #E8E3DE; }
+        body.night-mode .caption { color: #908A85; }
+        body.night-mode .home-link { color: #E8E3DE; border-bottom-color: rgba(242,237,232,0.2); }
+
+        /* Custom cursor */
+        .cursor-dot {
+            position: fixed; top: 0; left: 0;
+            width: 8px; height: 8px;
+            background: var(--terra);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: width .3s var(--ease-out), height .3s var(--ease-out);
+            mix-blend-mode: exclusion;
+        }
+        .cursor-ring {
+            position: fixed; top: 0; left: 0;
+            width: 40px; height: 40px;
+            border: 1.5px solid rgba(196,93,62,0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99998;
+            transform: translate(-50%, -50%);
+            transition: width .4s var(--ease-out), height .4s var(--ease-out);
+        }
+        body.cursor-hover .cursor-dot { width: 50px; height: 50px; background: rgba(196,93,62,0.08); }
+        body.cursor-hover .cursor-ring { width: 50px; height: 50px; border-color: var(--terra); }
+
+        @media (hover: none) and (pointer: coarse) {
+            body, a { cursor: auto; }
+            .cursor-dot, .cursor-ring { display: none; }
+        }
+
+        /* Layout */
+        .error-page {
+            text-align: center;
+            padding: 60px;
+            max-width: 800px;
+            animation: fadeUp 1s var(--ease-out) both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .error-num {
+            font-family: var(--font-display);
+            font-size: clamp(120px, 25vw, 300px);
+            line-height: 0.85;
+            font-weight: bold;
+            letter-spacing: -8px;
+            color: var(--ink);
+            display: block;
+            margin-bottom: 24px;
+            animation: fadeUp 1s var(--ease-out) 0.1s both;
+        }
+        body.night-mode .error-num { color: #E8E3DE; }
+
+        .error-subtitle {
+            font-family: var(--font-serif);
+            font-size: clamp(22px, 4vw, 42px);
+            font-style: italic;
+            color: var(--terra);
+            margin-bottom: 24px;
+            animation: fadeUp 1s var(--ease-out) 0.2s both;
+        }
+
+        .caption {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: var(--muted);
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            animation: fadeUp 1s var(--ease-out) 0.3s both;
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(26,26,26,0.2);
+            padding-bottom: 8px;
+            transition: gap 0.4s var(--ease-out), border-color 0.3s ease, color 0.3s ease;
+            animation: fadeUp 1s var(--ease-out) 0.4s both;
+        }
+
+        .home-link:hover {
+            gap: 28px;
+            border-color: var(--terra);
+            color: var(--terra);
+        }
+
+        .home-link svg { transition: transform 0.4s var(--ease-out); }
+        .home-link:hover svg { transform: translateX(6px); }
+
+        /* Decorative rule */
+        .deco-line {
+            width: 60px;
+            height: 1px;
+            background: var(--terra);
+            margin: 0 auto 32px;
+            animation: scaleIn 1s var(--ease-out) 0.15s both;
+        }
+        @keyframes scaleIn {
+            from { transform: scaleX(0); opacity: 0; }
+            to   { transform: scaleX(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body id="body404">
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('night-mode');
+            document.body.style.background = '#141414';
+        }
+    </script>
+
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <main class="error-page" id="main-content" role="main">
+        <span class="error-num" aria-hidden="true">404</span>
+        <div class="deco-line"></div>
+        <p class="error-subtitle">This page went missing.</p>
+        <p class="caption">The page you're looking for doesn't exist — or has been moved.</p>
+        <a href="index.html" class="home-link" id="homeLink" aria-label="Return to Nathaniel's home page">
+            <span>← Return Home</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M7 17L17 7M17 7H7M17 7v10"/>
+            </svg>
+        </a>
+    </main>
+
+    <script>
+        // custom cursor
+        (function() {
+            const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+            if (isTouchDevice) return;
+            const dot = document.getElementById('cursorDot');
+            const ring = document.getElementById('cursorRing');
+            let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+            let isRunning = false;
+            document.addEventListener('mousemove', e => {
+                mouseX = e.clientX; mouseY = e.clientY;
+                dot.style.left = mouseX + 'px';
+                dot.style.top  = mouseY + 'px';
+                if (!isRunning) { isRunning = true; animateRing(); }
+            });
+            function animateRing() {
+                const dx = mouseX - ringX, dy = mouseY - ringY;
+                if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) { ringX = mouseX; ringY = mouseY; isRunning = false; }
+                else { ringX += dx * 0.15; ringY += dy * 0.15; requestAnimationFrame(animateRing); }
+                ring.style.left = ringX + 'px'; ring.style.top = ringY + 'px';
+            }
+            const link = document.getElementById('homeLink');
+            if (link) {
+                link.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+                link.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+            }
+        })();
+    </script>
+</body>
+</html>

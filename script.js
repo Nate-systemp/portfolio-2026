@@ -1306,3 +1306,25 @@ function toggleGravity() {
   });
 })();
 
+// ============================================
+// SCROLL PROGRESS BAR
+// ============================================
+(function() {
+  const bar = document.getElementById('scrollProgressBar');
+  if (!bar) return;
+
+  let ticking = false;
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        bar.style.width = progress + '%';
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+})();

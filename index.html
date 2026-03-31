@@ -25,10 +25,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://nateportfolio.vercel.app/">
     <title>Nathaniel — Designer & Developer</title>
 </head>
 
 <body class="site-body">
+    <!-- Skip to main content (Accessibility) -->
+    <a href="#main-content" class="skip-link">Skip to content</a>
+    <!-- Scroll progress bar -->
+    <div class="scroll-progress-bar" id="scrollProgressBar" aria-hidden="true"></div>
     <script>
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('night-mode');
@@ -73,7 +78,7 @@
     </header>
 
     <!-- ═══ HERO SECTION ═══ -->
-    <section class="hero" id="hero">
+    <section class="hero" id="hero" role="region" aria-label="Hero">
         <canvas id="threeCanvas"></canvas>
         <div class="hero-marquee">
             <div class="hero-marquee-inner">
@@ -102,7 +107,7 @@
     </section>
 
     <!-- ═══ ABOUT SECTION ═══ -->
-    <section class="about" id="about-section">
+    <section class="about" id="about-section" aria-label="About">
         <div class="section-marker">
             <span class="marker-num">01</span>
             <span class="marker-line"></span>
