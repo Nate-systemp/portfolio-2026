@@ -20,8 +20,8 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="project.css">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="assets/fonts/TuskerGrotesk-5700Bold.ttf" as="font" type="font/truetype" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <title>Project — Nate</title>
 </head>
@@ -46,6 +46,12 @@
             <span class="back-text">BACK TO ALL WORK</span>
         </a>
         <div class="project-nav-logo">N.</div>
+        <button class="project-share-btn" id="shareBtn" aria-label="Share project">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/>
+            </svg>
+            <span class="share-tooltip">COPY LINK</span>
+        </button>
     </header>
 
     <!-- ═══ PROJECT HERO ═══ -->
@@ -108,7 +114,7 @@
              <div class="p-process-grid">
                 <div class="p-process-left" data-reveal>
                     <span class="p-section-label">THE PROCESS</span>
-                    <h2 class="p-process-heading">Building a <br><em>New Era</em></h2>
+                    <h2 class="p-process-heading" data-reveal-line>Building a <br><em>New Era</em></h2>
                 </div>
                 <div class="p-process-right" data-reveal>
                     <p class="p-process-text" id="projectStory">

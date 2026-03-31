@@ -24,6 +24,7 @@
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="assets/fonts/TuskerGrotesk-5700Bold.ttf" as="font" type="font/truetype" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="canonical" href="https://nateportfolio.vercel.app/">
     <title>Nathaniel — Designer & Developer</title>
@@ -113,9 +114,9 @@
             <span class="marker-line"></span>
         </div>
         <div class="about-grid">
-            <div class="about-left" data-reveal>
+            <div class="about-left">
                 <span class="section-label">ABOUT</span>
-                <h2 class="about-heading">
+                <h2 class="about-heading" data-reveal-line>
                     I craft <em>interfaces</em> that balance<br>
                     aesthetics with function — building<br>
                     responsive web apps & experiences.
@@ -297,10 +298,10 @@
             </div>
             <div class="intern-photo-col">
                 <div class="intern-photo-grid">
-                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-one.webp')"></div>
-                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-two.webp')"></div>
-                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-three.webp')"></div>
-                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-four.webp')"></div>
+                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-one.webp')" aria-label="Visual design internship project showcase"></div>
+                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-two.webp')" aria-label="Creative coding and UI exploration"></div>
+                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-three.webp')" aria-label="Brand identity development project"></div>
+                    <div class="intern-photo" data-reveal style="background-image: url('assets/ojt-four.webp')" aria-label="Interactive design and prototyping"></div>
                 </div>
             </div>
         </div>
@@ -309,9 +310,9 @@
     <!-- ═══ CONTACT SECTION ═══ -->
     <section class="contact" id="contact-section">
         <div class="contact-inner">
-            <div class="contact-header" data-reveal>
+            <div class="contact-header">
                 <span class="section-label section-label-light">READY TO START?</span>
-                <h2 class="contact-heading">LET'S WORK <br><em>TOGETHER</em></h2>
+                <h2 class="contact-heading" data-reveal-line>LET'S WORK <br><em>TOGETHER</em></h2>
             </div>
             
             <div class="contact-cta" data-reveal>

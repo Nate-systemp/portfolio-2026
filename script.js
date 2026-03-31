@@ -172,6 +172,24 @@ class SmoothScroll {
 const smoothScroll = new SmoothScroll({ ease: 0.08, wheelMultiplier: 1 });
 
 // ============================================
+// LINE REVEAL UTILITY
+// ============================================
+function initLineReveal() {
+  const lineRevealElements = document.querySelectorAll('[data-reveal-line]');
+  
+  lineRevealElements.forEach(el => {
+    const lines = el.innerHTML.split(/<br\s*\/?>/i);
+    el.innerHTML = lines.map(line => 
+      `<span class="line-reveal-wrap"><span class="line-reveal-item">${line.trim()}</span></span>`
+    ).join('');
+    
+    // Add to reveal observer
+    el.setAttribute('data-reveal', '');
+  });
+}
+initLineReveal();
+
+// ============================================
 // NAVIGATION
 // ============================================
 const header = document.getElementById('siteHeader');
@@ -591,19 +609,12 @@ window.addEventListener('scroll', () => {
     // Handle "cat" command
     if (cmd.indexOf('cat ') === 0) {
       var file = cmd.slice(4).trim();
-      if (file === 'easter-egg.txt') {
-        addOutput([
-          '',
-          '  <span class="term-gold">Congratulations!</span>',
-          '',
-          '  You found the secret! You\'re the kind of',
-          '  person who explores every corner of a website.',
-          '  <span class="term-accent">That\'s exactly the type of curiosity</span>',
-          '  <span class="term-accent">that makes a great designer/developer.</span>',
-          '',
-          '  <span class="term-muted">\u2014 Nathaniel</span>',
-          ''
-        ].join('\n'));
+      if (file === 'easter-egg.txt' || file === 'secrets.txt') {
+        const secretContent = file === 'secrets.txt' 
+          ? '\n  <span class="term-gold">SECRET UNLOCKED:</span>\n  Every design choice was inspired by the balance between\n  precision and creative chaos. You\'ve gone deep.'
+          : '\n  <span class="term-gold">Congratulations!</span>\n\n  You found the secret! You\'re the kind of\n  person who explores every corner of a website.\n  <span class="term-accent">That\'s exactly the type of curiosity</span>\n  <span class="term-accent">that makes a great designer/developer.</span>\n\n  <span class="term-muted">\u2014 Nathaniel</span>';
+        
+        addOutput(secretContent + '\n');
       } else {
         addOutput('\n  <span class="term-error">cat: ' + escapeHtml(file) + ': No such file</span>\n');
       }
@@ -767,6 +778,13 @@ window.addEventListener('scroll', () => {
   textTargets.forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-text'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-text'));
+  });
+
+  // Project Preview "VIEW" Label
+  const projectPreviews = document.querySelectorAll('.work-card, .work-item, .next-project-link, .p-gallery-item');
+  projectPreviews.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-view-mode'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-view-mode'));
   });
 
   // Hide cursor when leaving window
@@ -1327,4 +1345,37 @@ function toggleGravity() {
       ticking = true;
     }
   }, { passive: true });
+})();
+// ============================================
+// EXPANDED MAGNETIC EFFECTS
+// ============================================
+(function() {
+  const magnets = document.querySelectorAll(
+    '.header-logo, .nav-item, .resume-link, .resume-peek-btn, .footer-social-link, .next-circle-badge, .project-back-link'
+  );
+  
+  magnets.forEach(m => {
+    m.addEventListener('mousemove', (e) => {
+      const { left, top, width, height } = m.getBoundingClientRect();
+      const centerX = left + width / 2;
+      const centerY = top + height / 2;
+      const dx = e.clientX - centerX;
+      const dy = e.clientY - centerY;
+      
+      // Different pull strengths
+      const strength = m.classList.contains('header-logo') ? 0.4 : 0.3;
+      
+      m.style.transform = `translate(${dx * strength}px, ${dy * strength}px)`;
+      if (m.querySelector('span')) {
+        m.querySelector('span').style.transform = `translate(${dx * 0.1}px, ${dy * 0.1}px)`;
+      }
+    });
+    
+    m.addEventListener('mouseleave', () => {
+      m.style.transform = '';
+      if (m.querySelector('span')) {
+        m.querySelector('span').style.transform = '';
+      }
+    });
+  });
 })();

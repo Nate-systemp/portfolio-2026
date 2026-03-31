@@ -269,3 +269,42 @@ function initLightbox() {
         if (e.key === 'Escape') overlay.classList.remove('active');
     });
 }
+
+// ============================================
+// PROJECT SHARE FEATURE
+// ============================================
+(function() {
+    const btn = document.getElementById('shareBtn');
+    if (!btn) return;
+    const tooltip = btn.querySelector('.share-tooltip');
+    
+    btn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(window.location.href);
+            btn.classList.add('copied');
+            if (tooltip) tooltip.textContent = 'COPIED!';
+            
+            setTimeout(() => {
+                btn.classList.remove('copied');
+                if (tooltip) tooltip.textContent = 'COPY LINK';
+            }, 2000);
+        } catch (err) {
+            console.error('Failed to copy!', err);
+        }
+    });
+})();
+
+// ============================================
+// LINE REVEAL UTILITY (Local version for project page)
+// ============================================
+function initLineReveal() {
+  const lineRevealElements = document.querySelectorAll('[data-reveal-line]');
+  lineRevealElements.forEach(el => {
+    const lines = el.innerHTML.split(/<br\s*\/?>/i);
+    el.innerHTML = lines.map(line => 
+      `<span class="line-reveal-wrap"><span class="line-reveal-item">${line.trim()}</span></span>`
+    ).join('');
+    el.setAttribute('data-reveal', '');
+  });
+}
+initLineReveal();

@@ -3246,3 +3246,98 @@ body.night-mode .work-card.is-skeleton .work-card-img-wrap {
     background: none;
 }
 }
+
+/* ── LINE REVEAL ANIMATION ── */
+.line-reveal-wrap {
+    overflow: hidden;
+    line-height: 1.1;
+    display: block;
+}
+
+.line-reveal-item {
+    display: block;
+    transform: translateY(110%);
+    transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: transform;
+}
+
+[data-reveal].revealed .line-reveal-item {
+    transform: translateY(0);
+}
+
+.line-reveal-item:nth-child(1) { transition-delay: 0.1s; }
+.line-reveal-item:nth-child(2) { transition-delay: 0.2s; }
+.line-reveal-item:nth-child(3) { transition-delay: 0.3s; }
+
+/* ── REFINED CURSOR INTERACTIONS ── */
+body.cursor-view-mode .cursor-dot {
+    opacity: 0 !important;
+}
+
+body.cursor-view-mode .cursor-ring {
+    width: 90px;
+    height: 90px;
+    background: var(--terra);
+    border: none;
+    mix-blend-mode: normal;
+}
+
+body.cursor-view-mode #magneticLabel {
+    opacity: 1;
+    transform: scale(1);
+    color: var(--paper);
+    z-index: 999999;
+}
+
+/* ── PROJECT SHARE BUTTON ── */
+.project-share-btn {
+    position: relative;
+    background: none;
+    border: 1px solid rgba(26,26,26,0.1);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: none;
+    transition: all 0.4s var(--ease-out);
+    color: var(--ink);
+    margin-left: auto;
+}
+
+body.night-mode .project-share-btn {
+    border-color: rgba(232,227,222,0.1);
+}
+
+.project-share-btn:hover {
+    background: var(--terra);
+    border-color: var(--terra);
+    color: var(--paper);
+}
+
+.share-tooltip {
+    position: absolute;
+    top: 50%;
+    right: 120%;
+    transform: translateY(-50%) translateX(10px);
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s var(--ease-out);
+}
+
+.project-share-btn:hover .share-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+.project-share-btn.copied .share-tooltip {
+    background: var(--terra);
+}
