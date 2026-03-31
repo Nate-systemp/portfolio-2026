@@ -54,6 +54,36 @@ function buildCard(project, index) {
 }
 
 /**
+ * Build a single skeleton card HTML string.
+ */
+function buildSkeletonCard(index) {
+    const sizeClass = CARD_SIZES[index % CARD_SIZES.length];
+    return `
+        <div class="work-card ${sizeClass} is-skeleton">
+            <div class="work-card-img-wrap skeleton"></div>
+            <div class="work-card-info">
+                <div class="work-card-top">
+                    <span class="skeleton-text skeleton-num skeleton"></span>
+                    <span class="skeleton-text skeleton-cat skeleton"></span>
+                </div>
+                <h3 class="skeleton-text skeleton-title skeleton"></h3>
+            </div>
+        </div>`;
+}
+
+/**
+ * Populate a grid with skeletons.
+ */
+function populateSkeletons(container, count) {
+    if (!container) return;
+    let html = '';
+    for (let i = 0; i < count; i++) {
+        html += buildSkeletonCard(i);
+    }
+    container.innerHTML = html;
+}
+
+/**
  * Build a "coming soon" placeholder card.
  */
 function buildPlaceholder(num) {
@@ -77,9 +107,12 @@ function buildPlaceholder(num) {
 // ══════════════════════════════════════════
 const workGrid = document.getElementById('workGrid');
 if (workGrid) {
+    // Show 4 skeletons initially
+    populateSkeletons(workGrid, 4);
+
     fetchProjects().then(projects => {
         if (!projects || projects.length === 0) {
-            // Firestore empty or unreachable — keep skeleton visible
+            // Keep skeletons or show error state if needed
             return;
         }
 
@@ -101,10 +134,13 @@ if (workGrid) {
 // ══════════════════════════════════════════
 const archiveGrid = document.getElementById('archiveGrid');
 if (archiveGrid) {
+    const TOTAL_SLOTS = 9;
+    // Show 9 skeletons initially
+    populateSkeletons(archiveGrid, TOTAL_SLOTS);
+
     fetchProjects().then(projects => {
         if (!projects) return;
 
-        const TOTAL_SLOTS = 9;
         let html = projects.slice(0, TOTAL_SLOTS).map((p, i) => buildCard(p, i)).join('');
 
         // Fill remaining slots with placeholders

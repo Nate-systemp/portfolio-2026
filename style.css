@@ -3164,4 +3164,85 @@ body.night-mode .exp-body p {
     .footer-meta {
         font-size: 9px;
     }
+/* ── SKELETON LOADER ── */
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background-color: rgba(26, 26, 26, 0.05);
+}
+
+body.night-mode .skeleton {
+    background-color: rgba(232, 227, 222, 0.08);
+}
+
+.skeleton::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.3) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: shimmer 1.5s infinite;
+}
+
+body.night-mode .skeleton::after {
+    background-image: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.05) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.work-card.is-skeleton {
+    pointer-events: none;
+}
+
+.work-card.is-skeleton .work-card-img-wrap {
+    background: rgba(26, 26, 26, 0.03);
+    border: none;
+}
+
+body.night-mode .work-card.is-skeleton .work-card-img-wrap {
+    background: rgba(232, 227, 222, 0.03);
+}
+
+.skeleton-text {
+    height: 1rem;
+    margin-bottom: 0.8rem;
+    border-radius: 2px;
+}
+
+.skeleton-title {
+    width: 70%;
+    height: 1.8rem;
+}
+
+.skeleton-num {
+    width: 24px;
+    height: 0.8rem;
+}
+
+.skeleton-cat {
+    width: 100px;
+    height: 0.8rem;
+}
+
+/* Gallery Skeleton */
+.p-gallery-item.is-skeleton .p-gallery-img {
+    background: none;
+}
 }
