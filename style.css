@@ -764,7 +764,8 @@ body::after {
 /* ============================================
    LOADING CURTAIN — Split-open reveal
    ============================================ */
-body.loading-active {
+body.loading-active,
+body.no-scroll {
     overflow: hidden;
     height: 100vh;
 }

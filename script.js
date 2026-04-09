@@ -121,7 +121,7 @@ class SmoothScroll {
   }
 
   _onWheel(e) {
-    if (document.body.classList.contains('loading-active')) {
+    if (document.body.classList.contains('loading-active') || document.body.classList.contains('no-scroll')) {
       e.preventDefault();
       return;
     }
@@ -389,6 +389,7 @@ window.addEventListener('scroll', () => {
     if (isOpen) return;
     isOpen = true;
     overlay.classList.add('active');
+    document.body.classList.add('no-scroll');
     output.innerHTML = '';
     typeWelcome();
     setTimeout(() => input.focus(), 400);
@@ -397,6 +398,7 @@ window.addEventListener('scroll', () => {
   function closeTerminal() {
     isOpen = false;
     overlay.classList.remove('active');
+    document.body.classList.remove('no-scroll');
     input.value = '';
   }
 
@@ -1213,7 +1215,7 @@ function toggleGravity() {
   // Open viewer
   async function openViewer() {
     overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('no-scroll');
 
     showLoading();
 
@@ -1255,7 +1257,7 @@ function toggleGravity() {
   // Close viewer
   function closeViewer() {
     overlay.classList.remove('active');
-    document.body.style.overflow = '';
+    document.body.classList.remove('no-scroll');
   }
 
   // Zoom

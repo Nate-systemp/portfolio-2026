@@ -26,6 +26,10 @@ class SmoothScroll {
   }
 
   _onWheel(e) {
+    if (document.body.classList.contains('no-scroll')) {
+      e.preventDefault();
+      return;
+    }
     e.preventDefault();
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     this.targetY += e.deltaY * this.wheelMultiplier;
@@ -254,19 +258,27 @@ function initLightbox() {
             const url = bg.replace('url("', '').replace('")', '');
             img.src = url;
             overlay.classList.add('active');
+            document.body.classList.add('no-scroll');
         };
     });
 
-    close.onclick = () => overlay.classList.remove('active');
+    close.onclick = () => {
+        overlay.classList.remove('active');
+        document.body.classList.remove('no-scroll');
+    };
     overlay.onclick = (e) => {
         if (e.target === overlay || e.target.classList.contains('lightbox-backdrop')) {
             overlay.classList.remove('active');
+            document.body.classList.remove('no-scroll');
         }
     };
 
     // ESC to close
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') overlay.classList.remove('active');
+        if (e.key === 'Escape') {
+            overlay.classList.remove('active');
+            document.body.classList.remove('no-scroll');
+        }
     });
 }
 

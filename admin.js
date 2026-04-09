@@ -218,10 +218,12 @@ function openModal(docId = null) {
     }
 
     modalOverlay.classList.add('active');
+    document.body.classList.add('no-scroll');
 }
 
 function closeModal() {
     modalOverlay.classList.remove('active');
+    document.body.classList.remove('no-scroll');
 }
 
 function clearForm() {
