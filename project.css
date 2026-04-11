@@ -158,6 +158,55 @@ body.night-mode .p-footer-back { color: #E8E3DE; }
     width: 100%;
 }
 
+/* Project Action Links */
+.p-hero-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.p-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--terra);
+    border: 1px solid var(--terra);
+    transition: all 0.4s var(--ease-smooth);
+    cursor: pointer;
+}
+
+.p-link-btn:hover {
+    background: transparent;
+    color: var(--terra);
+}
+
+.p-link-secondary {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--light-line);
+}
+
+.p-link-secondary:hover {
+    border-color: var(--terra);
+    color: var(--terra);
+}
+
+body.night-mode .p-link-secondary {
+    color: #E8E3DE;
+    border-color: rgba(232, 227, 222, 0.15);
+}
+
+body.night-mode .p-link-secondary:hover {
+    border-color: var(--terra);
+    color: var(--terra);
+}
+
 .p-meta-box {
     display: flex;
     flex-direction: column;

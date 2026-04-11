@@ -1435,6 +1435,66 @@ body.no-scroll {
     line-height: 1.7;
 }
 
+/* About Personality Text */
+.about-personality {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-top: 32px;
+    max-width: 520px;
+    font-style: italic;
+}
+
+body.night-mode .about-personality {
+    color: #908A85;
+}
+
+/* ── Skill Badges ── */
+.skill-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.skill-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--ink);
+    border: 1px solid var(--light-line);
+    border-radius: 40px;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.skill-badge svg {
+    flex-shrink: 0;
+    color: var(--terra);
+}
+
+.skill-badge:hover {
+    border-color: var(--terra);
+    background: rgba(196, 93, 62, 0.06);
+    transform: translateY(-2px);
+}
+
+body.night-mode .skill-badge {
+    color: #E8E3DE;
+    border-color: rgba(232, 227, 222, 0.12);
+}
+
+body.night-mode .skill-badge:hover {
+    border-color: var(--terra);
+    background: rgba(196, 93, 62, 0.1);
+}
+
 .resume-link {
     display: inline-flex;
     align-items: center;
@@ -2323,6 +2383,112 @@ body.night-mode .exp-body p {
 }
 
 /* ============================================
+   TESTIMONIALS SECTION
+   ============================================ */
+.testimonials {
+    padding: 100px 60px;
+    background: var(--paper);
+    border-top: 1px solid var(--light-line);
+}
+
+.testimonials-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.testimonial-card {
+    padding: 48px;
+    border: 1px solid var(--light-line);
+    border-radius: 4px;
+    position: relative;
+    transition: border-color 0.3s ease, transform 0.4s var(--ease-out);
+}
+
+.testimonial-card:hover {
+    border-color: var(--terra);
+    transform: translateY(-4px);
+}
+
+.quote-icon {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    color: var(--terra);
+}
+
+.testimonial-quote p {
+    font-family: var(--font-serif);
+    font-size: clamp(16px, 1.5vw, 20px);
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--ink);
+    padding-right: 32px;
+}
+
+.testimonial-author {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.testimonial-name {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+}
+
+.testimonial-role {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+}
+
+/* Testimonials Night Mode */
+body.night-mode .testimonials {
+    background: #141414;
+    border-color: rgba(232, 227, 222, 0.06);
+}
+
+body.night-mode .testimonial-card {
+    border-color: rgba(232, 227, 222, 0.08);
+}
+
+body.night-mode .testimonial-card:hover {
+    border-color: var(--terra);
+}
+
+body.night-mode .testimonial-quote p {
+    color: #E8E3DE;
+}
+
+body.night-mode .testimonial-name {
+    color: #E8E3DE;
+}
+
+@media (max-width: 768px) {
+    .testimonials {
+        padding: 60px 24px;
+    }
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    .testimonial-card {
+        padding: 32px;
+    }
+}
+
+/* ============================================
    INTERNSHIP SECTION
    ============================================ */
 .internship {
@@ -2485,12 +2651,152 @@ body.night-mode .exp-body p {
 }
 
 .contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 32px;
+}
+
+/* Contact Seeking Role */
+.contact-seeking {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 300;
+    color: rgba(242, 237, 232, 0.5);
+    margin-top: 24px;
+    font-style: italic;
+}
+
+/* Contact Body Layout */
+.contact-body {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 100px;
-    margin-top: 120px;
-    padding-top: 60px;
-    border-top: 1px solid rgba(242, 237, 232, 0.05);
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 60px;
+}
+
+.contact-body-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-body-right {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Contact Socials */
+.contact-socials {
+    margin-top: 40px;
+}
+
+.contact-social-links {
+    display: flex;
+    gap: 24px;
+    margin-top: 16px;
+}
+
+.contact-social-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: rgba(242, 237, 232, 0.6);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-social-link:hover {
+    color: var(--paper);
+    transform: translateY(-2px);
+}
+
+.contact-social-link svg {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.contact-social-link:hover svg {
+    opacity: 1;
+}
+
+/* Contact Form */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contact-form .detail-label {
+    margin-bottom: 8px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.contact-input,
+.contact-textarea {
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(242, 237, 232, 0.06);
+    border: 1px solid rgba(242, 237, 232, 0.1);
+    border-radius: 4px;
+    color: var(--paper);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.contact-input::placeholder,
+.contact-textarea::placeholder {
+    color: rgba(242, 237, 232, 0.25);
+}
+
+.contact-input:focus,
+.contact-textarea:focus {
+    border-color: var(--terra);
+    background: rgba(242, 237, 232, 0.08);
+}
+
+.contact-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.contact-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 18px 32px;
+    background: linear-gradient(135deg, var(--terra), var(--gold));
+    border: none;
+    border-radius: 4px;
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.4s var(--ease-out);
+    width: 100%;
+}
+
+.contact-submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(196, 93, 62, 0.3);
+}
+
+.contact-submit-btn:disabled {
+    cursor: default;
+    transform: none;
+    box-shadow: none;
 }
 
 .contact-detail-item {
@@ -3098,6 +3404,19 @@ body.night-mode .exp-body p {
     .section-marker {
         display: none;
     }
+    
+    .contact-body {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-social-links {
+        flex-wrap: wrap;
+    }
 }
 
 /* ============================================
@@ -3347,4 +3666,46 @@ body.night-mode .project-share-btn {
 
 .project-share-btn.copied .share-tooltip {
     background: var(--terra);
+}
+
+/* ============================================
+   PAGE TRANSITION OVERLAY
+   ============================================ */
+.page-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    pointer-events: none;
+}
+
+.pt-half {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: var(--ink);
+    transition: transform 0.6s var(--ease-smooth);
+}
+
+.pt-top {
+    top: 0;
+    height: 50%;
+    transform: translateY(-100%);
+}
+
+.pt-bottom {
+    bottom: 0;
+    height: 50%;
+    transform: translateY(100%);
+}
+
+.page-transition.active .pt-top {
+    transform: translateY(0);
+}
+
+.page-transition.active .pt-bottom {
+    transform: translateY(0);
+}
+
+body.night-mode .pt-half {
+    background: #0a0a0a;
 }

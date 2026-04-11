@@ -107,9 +107,8 @@
             if (!projects) return;
 
             grid.innerHTML = '';
-            const totalSlots = 9;
 
-            // Render existing projects
+            // Render only real projects — no placeholders
             projects.forEach((p, i) => {
                 const item = document.createElement('a');
                 item.href = `project.html?docId=${p.docId}`;
@@ -128,22 +127,6 @@
                 `;
                 grid.appendChild(item);
             });
-
-            // Fill remaining slots with placeholders
-            for (let i = projects.length + 1; i <= totalSlots; i++) {
-                const empty = document.createElement('div');
-                empty.className = 'archive-item is-placeholder';
-                empty.setAttribute('data-reveal', '');
-                
-                empty.innerHTML = `
-                    <div class="archive-img-wrap gray-placeholder" style="background:var(--sand);">
-                        <div class="archive-img"></div>
-                    </div>
-                    <div class="archive-meta"><span>0${i}</span><span>TBD</span></div>
-                    <h3 class="archive-item-title" style="opacity: 0.2">PROJECT COMING SOON</h3>
-                `;
-                grid.appendChild(empty);
-            }
 
             // Reveal engine trigger
             setTimeout(() => {

@@ -529,7 +529,7 @@ window.addEventListener('scroll', () => {
           '',
           '  <span class="term-gold">Contact</span>',
           '',
-          '  <span class="term-accent">Email</span>     hello@nathaniel.dev',
+          '  <span class="term-accent">Email</span>     natederek99@gmail.com',
           '  <span class="term-accent">Status</span>    <span class="term-success">\u25cf Open to opportunities</span>',
           '',
           '  <span class="term-muted">Scroll to the Contact section</span>',
@@ -1378,6 +1378,84 @@ function toggleGravity() {
       if (m.querySelector('span')) {
         m.querySelector('span').style.transform = '';
       }
+    });
+  });
+})();
+
+// ============================================
+// CONTACT FORM HANDLER
+// ============================================
+(function() {
+  const form = document.getElementById('contactForm');
+  const submitBtn = document.getElementById('contactSubmitBtn');
+  if (!form || !submitBtn) return;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btnSpan = submitBtn.querySelector('span');
+    const originalText = btnSpan.textContent;
+    
+    // Show sending state
+    btnSpan.textContent = 'SENDING...';
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.6';
+
+    try {
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        btnSpan.textContent = 'MESSAGE SENT \u2713';
+        submitBtn.style.background = 'var(--sage)';
+        form.reset();
+        setTimeout(() => {
+          btnSpan.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+          submitBtn.style.background = '';
+        }, 3000);
+      } else {
+        throw new Error('Failed');
+      }
+    } catch (err) {
+      btnSpan.textContent = 'FAILED — TRY EMAIL';
+      submitBtn.style.background = 'var(--terra)';
+      setTimeout(() => {
+        btnSpan.textContent = originalText;
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.background = '';
+      }, 3000);
+    }
+  });
+})();
+
+// ============================================
+// PAGE TRANSITIONS
+// ============================================
+(function() {
+  const transition = document.getElementById('pageTransition');
+  if (!transition) return;
+
+  // Intercept internal link clicks for page transition
+  document.querySelectorAll('a[href]').forEach(link => {
+    const href = link.getAttribute('href');
+    // Only apply to internal page links (not anchors, mailto, external)
+    if (!href || href.startsWith('#') || href.startsWith('mailto:') || 
+        href.startsWith('http') || href.startsWith('javascript:') ||
+        link.hasAttribute('download') || link.getAttribute('target') === '_blank') return;
+
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      transition.classList.add('active');
+      
+      setTimeout(() => {
+        window.location.href = href;
+      }, 600);
     });
   });
 })();

@@ -210,6 +210,8 @@ function openModal(docId = null) {
         document.getElementById('fOrder').value = p.order || '';
         document.getElementById('fDescription').value = p.description || '';
         document.getElementById('fStory').value = p.story || '';
+        document.getElementById('fLiveUrl').value = p.liveUrl || '';
+        document.getElementById('fSourceUrl').value = p.sourceUrl || '';
         // Gallery
         const imgs = document.querySelectorAll('.gallery-img');
         (p.gallery || []).forEach((src, i) => { 
@@ -227,7 +229,7 @@ function closeModal() {
 }
 
 function clearForm() {
-    ['fTitle','fCategory','fYear','fRole','fTech','fOrder','fDescription','fStory'].forEach(id => {
+    ['fTitle','fCategory','fYear','fRole','fTech','fOrder','fDescription','fStory','fLiveUrl','fSourceUrl'].forEach(id => {
         document.getElementById(id).value = '';
     });
     document.querySelectorAll('.gallery-img').forEach(i => i.value = '');
@@ -267,6 +269,8 @@ saveProjectBtn.addEventListener('click', async () => {
             order: parseInt(document.getElementById('fOrder').value) || allProjects.length + 1,
             description: document.getElementById('fDescription').value.trim(),
             story: document.getElementById('fStory').value.trim(),
+            liveUrl: document.getElementById('fLiveUrl').value.trim(),
+            sourceUrl: document.getElementById('fSourceUrl').value.trim(),
             gallery,
             updatedAt: new Date().toISOString()
         };

@@ -127,6 +127,19 @@ async function populate() {
             });
         }
 
+        // Populate project links (live demo / source code)
+        const liveLink = document.getElementById('projectLiveLink');
+        const sourceLink = document.getElementById('projectSourceLink');
+
+        if (liveLink && project.liveUrl) {
+            liveLink.href = project.liveUrl;
+            liveLink.style.display = 'inline-flex';
+        }
+        if (sourceLink && project.sourceUrl) {
+            sourceLink.href = project.sourceUrl;
+            sourceLink.style.display = 'inline-flex';
+        }
+
         // Initialize Lightbox now that images exist
         initLightbox();
 
