@@ -67,6 +67,21 @@ if (localStorage.getItem('theme') === 'dark') {
   document.body.classList.add('night-mode');
 }
 
+const STATIC_PROJECTS = [
+    {
+        docId: "static-task-dashboard",
+        order: 5,
+        title: "TASK DASHBOARD",
+        category: "WEB APP / REACT",
+        year: "2026",
+        role: "Fullstack Developer",
+        tech: "REACT, SUPABASE, JS",
+        description: "A comprehensive task management system featuring real-time data synchronization and a highly responsive React-based interface.",
+        story: "This project explores the integration of Supabase as a backend-as-a-service with a React frontend. The goal was to create a seamless, real-time collaboration tool where task updates are reflected instantly across all connected clients without page reloads.",
+        gallery: ["assets/FB1.png", "assets/FB2.png", "assets/FB3.png"],
+    }
+];
+
 // ============================================
 // DATA INJECTION (Firestore)
 // ============================================
@@ -75,11 +90,23 @@ async function populate() {
         const params = new URLSearchParams(window.location.search);
         let docId = params.get("docId");
         
-        // Let's get all projects directly sorted by order to figure out nextProject logic too
-        const q = query(collection(db, 'projects'), orderBy('order', 'asc'));
-        const snapAll = await getDocs(q);
         let allProjects = [];
-        snapAll.forEach(d => allProjects.push({ docId: d.id, ...d.data() }));
+        try {
+            // Let's get all projects directly sorted by order to figure out nextProject logic too
+            const q = query(collection(db, 'projects'), orderBy('order', 'asc'));
+            const snapAll = await getDocs(q);
+            snapAll.forEach(d => allProjects.push({ docId: d.id, ...d.data() }));
+        } catch (err) {
+            console.warn("Firestore fetch failed, using static fallback.");
+        }
+
+        // Merge static projects
+        STATIC_PROJECTS.forEach(sp => {
+            if (!allProjects.some(p => p.title === sp.title)) {
+                allProjects.push(sp);
+            }
+        });
+        allProjects.sort((a, b) => (a.order || 99) - (b.order || 99));
 
         if (allProjects.length === 0) {
             console.error("No projects in database.");

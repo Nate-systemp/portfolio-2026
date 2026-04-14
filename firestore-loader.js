@@ -11,6 +11,20 @@ import {
 // Card size pattern: repeat pattern of large/medium/medium for a dynamic grid
 const CARD_SIZES = ['card-large', 'card-medium', 'card-medium', 'card-large', 'card-medium', 'card-medium', 'card-large', 'card-medium', 'card-medium'];
 
+const STATIC_PROJECTS = [
+    {
+        docId: "static-task-dashboard",
+        order: 5,
+        title: "TASK DASHBOARD",
+        category: "WEB APP / REACT",
+        year: "2026",
+        role: "Fullstack Developer",
+        tech: "REACT, SUPABASE, JS",
+        description: "A comprehensive task management system featuring real-time data synchronization and a highly responsive React-based interface.",
+        gallery: ["assets/FB1.png", "assets/FB2.png", "assets/FB3.png"],
+    }
+];
+
 /**
  * Fetch all projects sorted by 'order' field.
  * Falls back gracefully if Firestore is unreachable.
@@ -21,10 +35,19 @@ async function fetchProjects() {
         const snapshot = await getDocs(q);
         const projects = [];
         snapshot.forEach(d => projects.push({ docId: d.id, ...d.data() }));
-        return projects;
+        
+        // Merge static projects if they aren't already in the list by title
+        STATIC_PROJECTS.forEach(sp => {
+            if (!projects.some(p => p.title === sp.title)) {
+                projects.push(sp);
+            }
+        });
+
+        // re-sort after merge
+        return projects.sort((a, b) => (a.order || 99) - (b.order || 99));
     } catch (e) {
         console.warn('[Firestore Loader] Could not fetch projects:', e.message);
-        return null; // null = fallback to static content
+        return STATIC_PROJECTS; // Fallback to static if firestore fails
     }
 }
 

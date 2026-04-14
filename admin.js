@@ -127,6 +127,17 @@ const SEED_PROJECTS = [
         description: "A premium streetwear e-commerce platform focusing on minimalist UI and high-impact product photography.",
         story: "For Merge, the goal was to create a digital shopping experience that reflected the brand's aesthetic. We focused on micro-interactions and smooth transitions to keep the customer engaged throughout the journey.",
         gallery: ["assets/M01.png", "assets/M02.png", "assets/M03.png"],
+    },
+    {
+        order: 5,
+        title: "TASK DASHBOARD",
+        category: "WEB APP / REACT",
+        year: "2026",
+        role: "Fullstack Developer",
+        tech: "REACT, SUPABASE, JS",
+        description: "A comprehensive task management system featuring real-time data synchronization and a highly responsive React-based interface.",
+        story: "This project explores the integration of Supabase as a backend-as-a-service with a React frontend. The goal was to create a seamless, real-time collaboration tool where task updates are reflected instantly across all connected clients without page reloads.",
+        gallery: ["assets/FB1.png", "assets/FB2.png", "assets/FB3.png"],
     }
 ];
 
@@ -149,7 +160,25 @@ async function seedProjects() {
     }
 }
 
+async function seedTaskDashboard() {
+    try {
+        const taskDash = SEED_PROJECTS.find(p => p.title === "TASK DASHBOARD");
+        if (!taskDash) return;
+        
+        await addDoc(collection(db, 'projects'), {
+            ...taskDash,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        });
+        showToast('Task Dashboard imported successfully ✓');
+        loadProjects();
+    } catch (e) {
+        showToast('Import failed: ' + e.message, true);
+    }
+}
+
 window.seedProjects = seedProjects;
+window.seedTaskDashboard = seedTaskDashboard;
 
 // ══════════════════════════════════════════════
 // 3. RENDER PROJECTS
@@ -159,12 +188,24 @@ function renderProjects() {
         projectGrid.innerHTML = `
             <div style="padding:40px;border:1px dashed rgba(26,26,26,0.2);text-align:center;">
                 <p style="font-family:'Space Mono',monospace;font-size:13px;color:#8A8580;margin-bottom:24px;">Your Firestore database is empty.</p>
-                <button id="seedBtn" class="btn btn-primary" onclick="seedProjects()">↓ IMPORT EXISTING PROJECTS (FRACT ERA, SWIVEL QUIVER, OUTFALL, MERGE)</button>
+                <button id="seedBtn" class="btn btn-primary" onclick="seedProjects()">↓ IMPORT INITIAL PROJECTS (FRACT ERA, SWIVEL QUIVER, OUTFALL, MERGE, TASK DASHBOARD)</button>
             </div>`;
         return;
     }
 
-    projectGrid.innerHTML = allProjects.map(p => `
+    // If projects exist, offer a way to sync missing static projects
+    const hasTaskDash = allProjects.some(p => p.title === "TASK DASHBOARD");
+    let syncHtml = '';
+    if (!hasTaskDash) {
+        syncHtml = `
+            <div style="margin-bottom:24px; padding:16px; background:rgba(196,93,62,0.05); border-left:4px solid var(--terra); display:flex; justify-content:space-between; align-items:center;">
+                <p style="font-family:var(--font-mono); font-size:11px;">NEW PROJECT DETECTED: <b>TASK DASHBOARD</b></p>
+                <button class="btn btn-primary" onclick="seedTaskDashboard()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
+            </div>
+        `;
+    }
+
+    projectGrid.innerHTML = syncHtml + allProjects.map(p => `
         <div class="project-row">
             <span class="project-row-num">${String(p.order || '—').padStart(2, '0')}</span>
             <img class="project-row-thumb" src="${p.gallery?.[0] || ''}" alt="${p.title}" onerror="this.style.background='#eee';this.src='';">
