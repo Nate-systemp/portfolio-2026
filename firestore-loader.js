@@ -15,12 +15,13 @@ const STATIC_PROJECTS = [
     {
         docId: "static-task-dashboard",
         order: 5,
-        title: "TASK DASHBOARD",
+        title: "VANTAGE",
         category: "WEB APP / REACT",
         year: "2026",
         role: "Fullstack Developer",
         tech: "REACT, SUPABASE, JS",
         description: "A comprehensive task management system featuring real-time data synchronization and a highly responsive React-based interface.",
+        liveUrl: "https://vantage-peach-ten.vercel.app/",
         gallery: ["assets/FB1.png", "assets/FB2.png", "assets/FB3.png"],
     }
 ];

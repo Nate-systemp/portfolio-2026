@@ -130,13 +130,14 @@ const SEED_PROJECTS = [
     },
     {
         order: 5,
-        title: "TASK DASHBOARD",
+        title: "VANTAGE",
         category: "WEB APP / REACT",
         year: "2026",
         role: "Fullstack Developer",
         tech: "REACT, SUPABASE, JS",
         description: "A comprehensive task management system featuring real-time data synchronization and a highly responsive React-based interface.",
         story: "This project explores the integration of Supabase as a backend-as-a-service with a React frontend. The goal was to create a seamless, real-time collaboration tool where task updates are reflected instantly across all connected clients without page reloads.",
+        liveUrl: "https://vantage-peach-ten.vercel.app/",
         gallery: ["assets/FB1.png", "assets/FB2.png", "assets/FB3.png"],
     }
 ];
@@ -160,17 +161,17 @@ async function seedProjects() {
     }
 }
 
-async function seedTaskDashboard() {
+async function seedVantage() {
     try {
-        const taskDash = SEED_PROJECTS.find(p => p.title === "TASK DASHBOARD");
-        if (!taskDash) return;
+        const vantage = SEED_PROJECTS.find(p => p.title === "VANTAGE");
+        if (!vantage) return;
         
         await addDoc(collection(db, 'projects'), {
-            ...taskDash,
+            ...vantage,
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString()
         });
-        showToast('Task Dashboard imported successfully ✓');
+        showToast('Vantage imported successfully ✓');
         loadProjects();
     } catch (e) {
         showToast('Import failed: ' + e.message, true);
@@ -178,7 +179,7 @@ async function seedTaskDashboard() {
 }
 
 window.seedProjects = seedProjects;
-window.seedTaskDashboard = seedTaskDashboard;
+window.seedVantage = seedVantage;
 
 // ══════════════════════════════════════════════
 // 3. RENDER PROJECTS
@@ -188,19 +189,19 @@ function renderProjects() {
         projectGrid.innerHTML = `
             <div style="padding:40px;border:1px dashed rgba(26,26,26,0.2);text-align:center;">
                 <p style="font-family:'Space Mono',monospace;font-size:13px;color:#8A8580;margin-bottom:24px;">Your Firestore database is empty.</p>
-                <button id="seedBtn" class="btn btn-primary" onclick="seedProjects()">↓ IMPORT INITIAL PROJECTS (FRACT ERA, SWIVEL QUIVER, OUTFALL, MERGE, TASK DASHBOARD)</button>
+                <button id="seedBtn" class="btn btn-primary" onclick="seedProjects()">↓ IMPORT INITIAL PROJECTS (FRACT ERA, SWIVEL QUIVER, OUTFALL, MERGE, VANTAGE)</button>
             </div>`;
         return;
     }
 
     // If projects exist, offer a way to sync missing static projects
-    const hasTaskDash = allProjects.some(p => p.title === "TASK DASHBOARD");
+    const hasVantage = allProjects.some(p => p.title === "VANTAGE");
     let syncHtml = '';
-    if (!hasTaskDash) {
+    if (!hasVantage) {
         syncHtml = `
             <div style="margin-bottom:24px; padding:16px; background:rgba(196,93,62,0.05); border-left:4px solid var(--terra); display:flex; justify-content:space-between; align-items:center;">
-                <p style="font-family:var(--font-mono); font-size:11px;">NEW PROJECT DETECTED: <b>TASK DASHBOARD</b></p>
-                <button class="btn btn-primary" onclick="seedTaskDashboard()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
+                <p style="font-family:var(--font-mono); font-size:11px;">NEW PROJECT DETECTED: <b>VANTAGE</b></p>
+                <button class="btn btn-primary" onclick="seedVantage()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
             </div>
         `;
     }

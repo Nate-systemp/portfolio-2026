@@ -71,13 +71,14 @@ const STATIC_PROJECTS = [
     {
         docId: "static-task-dashboard",
         order: 5,
-        title: "TASK DASHBOARD",
+        title: "VANTAGE",
         category: "WEB APP / REACT",
         year: "2026",
         role: "Fullstack Developer",
         tech: "REACT, SUPABASE, JS",
         description: "A comprehensive task management system featuring real-time data synchronization and a highly responsive React-based interface.",
         story: "This project explores the integration of Supabase as a backend-as-a-service with a React frontend. The goal was to create a seamless, real-time collaboration tool where task updates are reflected instantly across all connected clients without page reloads.",
+        liveUrl: "https://vantage-peach-ten.vercel.app/",
         gallery: ["assets/FB1.png", "assets/FB2.png", "assets/FB3.png"],
     }
 ];
@@ -165,6 +166,12 @@ async function populate() {
         if (sourceLink && project.sourceUrl) {
             sourceLink.href = project.sourceUrl;
             sourceLink.style.display = 'inline-flex';
+        }
+
+        // Store liveUrl on share button for the share feature
+        const shareBtn = document.getElementById('shareBtn');
+        if (shareBtn && project.liveUrl) {
+            shareBtn.dataset.liveUrl = project.liveUrl;
         }
 
         // Initialize Lightbox now that images exist
@@ -332,7 +339,9 @@ function initLightbox() {
     
     btn.addEventListener('click', async () => {
         try {
-            await navigator.clipboard.writeText(window.location.href);
+            // Copy the project's live URL if available, otherwise copy the current page URL
+            const urlToCopy = btn.dataset.liveUrl || window.location.href;
+            await navigator.clipboard.writeText(urlToCopy);
             btn.classList.add('copied');
             if (tooltip) tooltip.textContent = 'COPIED!';
             
