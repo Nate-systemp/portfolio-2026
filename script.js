@@ -504,9 +504,9 @@ window.addEventListener('scroll', () => {
           '  <span class="term-gold">Skills & Technologies</span>',
           '',
           '  <span class="term-accent">Design</span>    Figma \u00b7 Photoshop \u00b7 Illustrator',
-          '  <span class="term-accent">Frontend</span>  HTML \u00b7 CSS \u00b7 JavaScript \u00b7 React',
-          '  <span class="term-accent">Tools</span>     Git \u00b7 VS Code \u00b7 Firebase',
-          '  <span class="term-accent">Other</span>     UI/UX \u00b7 Responsive \u00b7 Animation',
+          '  <span class="term-accent">Frontend</span>  React \u00b7 Vue.js \u00b7 Tailwind \u00b7 JS (ES6+)',
+          '  <span class="term-accent">AI & Dev</span>  Claude \u00b7 Antigravity \u00b7 Git \u00b7 Firebase',
+          '  <span class="term-accent">Core</span>      UI/UX \u00b7 Responsive \u00b7 Component Arch',
           ''
         ].join('\n');
       },
@@ -557,6 +557,7 @@ window.addEventListener('scroll', () => {
           '  <span class="term-sage">d</span> <span class="term-accent">skills/</span>',
           '  <span class="term-sage">d</span> <span class="term-accent">work/</span>',
           '  <span class="term-sage">d</span> <span class="term-accent">experience/</span>',
+          '  <span class="term-sage">d</span> <span class="term-accent">seminars/</span>',
           '  <span class="term-sage">d</span> <span class="term-accent">internship/</span>',
           '  <span class="term-sage">d</span> <span class="term-accent">contact/</span>',
           '  <span class="term-muted">-</span> <span class="term-muted">easter-egg.txt</span>  <span class="term-muted">\u2190 you found it!</span>',
