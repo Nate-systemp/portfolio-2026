@@ -56,9 +56,9 @@
 body.night-mode {
     --paper: #141414;
     --ink: #E8E3DE;
-    --muted: #908A85;
-    --light-line: rgba(242, 237, 232, 0.08);
-    --dark-line: rgba(242, 237, 232, 0.12);
+    --muted: #A39E99;
+    --light-line: rgba(242, 237, 232, 0.12);
+    --dark-line: rgba(242, 237, 232, 0.15);
     background: #141414;
     color: #E8E3DE;
     scrollbar-color: var(--terra) #141414;
@@ -126,12 +126,12 @@ body.night-mode .hero-name {
 body.night-mode .hero-description,
 body.night-mode .hero-location,
 body.night-mode .hero-corner-toggle {
-    color: #908A85;
+    color: #B0AAA4;
 }
 
 /* Section markers */
 body.night-mode .marker-num {
-    color: rgba(242, 237, 232, 0.15);
+    color: rgba(242, 237, 232, 0.35);
 }
 
 body.night-mode .marker-line {
@@ -238,11 +238,11 @@ body.night-mode .about-heading {
 }
 
 body.night-mode .detail-text {
-    color: #B0AAA4;
+    color: #C0B9B3;
 }
 
 body.night-mode .detail-label {
-    color: #908A85;
+    color: #A39E99;
 }
 
 body.night-mode .about-detail {
@@ -279,7 +279,7 @@ body.night-mode .work-heading {
 }
 
 body.night-mode .work-intro-text {
-    color: #908A85;
+    color: #A39E99;
 }
 
 body.night-mode .work-item {
@@ -295,19 +295,19 @@ body.night-mode .work-item-title {
 }
 
 body.night-mode .work-item-num {
-    color: #908A85;
+    color: #A39E99;
 }
 
 body.night-mode .work-item-cat {
-    color: #908A85;
+    color: #A39E99;
 }
 
 body.night-mode .work-item-year {
-    color: #908A85;
+    color: #A39E99;
 }
 
 body.night-mode .work-toggle {
-    color: #908A85;
+    color: #A39E99;
 }
 
 body.night-mode .work-toggle-line {
@@ -329,19 +329,19 @@ body.night-mode .exp-header {
 }
 
 body.night-mode .exp-year {
-    color: rgba(242, 237, 232, 0.4);
+    color: rgba(242, 237, 232, 0.6);
 }
 
 body.night-mode .exp-org {
-    color: rgba(242, 237, 232, 0.4);
+    color: rgba(242, 237, 232, 0.6);
 }
 
 body.night-mode .exp-toggle {
-    color: rgba(242, 237, 232, 0.4);
+    color: rgba(242, 237, 232, 0.6);
 }
 
 body.night-mode .exp-body p {
-    color: rgba(242, 237, 232, 0.6);
+    color: rgba(242, 237, 232, 0.8);
 }
 
 /* Internship */
@@ -356,11 +356,11 @@ body.night-mode .intern-heading {
 
 body.night-mode .intern-description,
 body.night-mode .intern-text {
-    color: #B0AAA4;
+    color: #C0B9B3;
 }
 
 body.night-mode .intern-text-label {
-    color: #908A85;
+    color: #A39E99;
 }
 
 /* Contact & Footer Night Mode */
@@ -374,7 +374,7 @@ body.night-mode .footer-col-label,
 body.night-mode .footer-tagline,
 body.night-mode .footer-meta,
 body.night-mode .footer-credits {
-    color: rgba(232, 227, 222, 0.4);
+    color: rgba(232, 227, 222, 0.55);
 }
 
 body.night-mode .detail-link,
@@ -733,7 +733,7 @@ body.night-mode .big-contact-button {
 
 body.night-mode .footer-tagline,
 body.night-mode .footer-bottom {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 @media (max-width: 768px) {
@@ -2625,7 +2625,7 @@ body.night-mode .exp-role {
 }
 
 body.night-mode .exp-body p {
-    color: #908A85;
+    color: #B0AAA4;
 }
 
 @media (max-width: 1024px) {
@@ -2933,7 +2933,7 @@ body.night-mode .testimonial-name {
     font-family: var(--font-body);
     font-size: 16px;
     font-weight: 300;
-    color: rgba(242, 237, 232, 0.5);
+    color: rgba(242, 237, 232, 0.65);
     margin-top: 24px;
     font-style: italic;
 }
@@ -3027,7 +3027,7 @@ body.night-mode .testimonial-name {
 
 .contact-input::placeholder,
 .contact-textarea::placeholder {
-    color: rgba(242, 237, 232, 0.25);
+    color: rgba(242, 237, 232, 0.45);
 }
 
 .contact-input:focus,
@@ -3080,7 +3080,7 @@ body.night-mode .testimonial-name {
     font-family: var(--font-mono);
     font-size: 8px;
     letter-spacing: 2px;
-    color: rgba(242, 237, 232, 0.3);
+    color: rgba(242, 237, 232, 0.5);
 }
 
 .detail-link {
@@ -3123,7 +3123,7 @@ body.night-mode .testimonial-name {
     font-family: var(--font-mono);
     font-size: 11px;
     line-height: 1.8;
-    color: rgba(242, 237, 232, 0.4);
+    color: rgba(242, 237, 232, 0.6);
     letter-spacing: 0.5px;
 }
 
@@ -3137,7 +3137,7 @@ body.night-mode .testimonial-name {
     font-family: var(--font-mono);
     font-size: 8px;
     letter-spacing: 2px;
-    color: rgba(242, 237, 232, 0.2);
+    color: rgba(242, 237, 232, 0.4);
     margin-bottom: 8px;
 }
 
@@ -3167,14 +3167,14 @@ body.night-mode .testimonial-name {
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 2px;
-    color: rgba(242, 237, 232, 0.2);
+    color: rgba(242, 237, 232, 0.4);
 }
 
 .footer-credits {
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 1px;
-    color: rgba(242, 237, 232, 0.2);
+    color: rgba(242, 237, 232, 0.4);
 }
 
 /* ============================================
