@@ -1616,11 +1616,11 @@ body.no-scroll {
 }
 
 /* ============================================
-   ABOUT SECTION
+   ABOUT SECTION — Redesigned Bento & Stats
    ============================================ */
 .about {
     position: relative;
-    padding: 120px 60px 100px;
+    padding: 160px 60px 140px;
     border-top: 1px solid var(--light-line);
 }
 
@@ -1628,18 +1628,18 @@ body.no-scroll {
     max-width: 1400px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 80px;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 100px;
     align-items: start;
 }
 
 .about-heading {
     font-family: var(--font-body);
-    font-size: clamp(24px, 3.2vw, 48px);
+    font-size: clamp(32px, 4.5vw, 64px);
     font-weight: 300;
-    line-height: 1.4;
+    line-height: 1.1;
     color: var(--ink);
-    letter-spacing: -0.5px;
+    letter-spacing: -1.5px;
 }
 
 .about-heading em {
@@ -1652,48 +1652,116 @@ body.no-scroll {
     font-weight: 400;
 }
 
-.about-right {
-    padding-top: 48px;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-}
-
-.about-detail {
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--light-line);
-}
-
-.detail-label {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 3px;
-    color: var(--muted);
-    display: block;
-    margin-bottom: 8px;
-}
-
-.detail-text {
-    font-size: 15px;
-    font-weight: 300;
-    color: #4a4540;
-    line-height: 1.7;
-}
-
-/* About Personality Text */
 .about-personality {
     font-family: var(--font-body);
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 300;
     color: var(--muted);
     line-height: 1.8;
-    margin-top: 32px;
-    max-width: 520px;
-    font-style: italic;
+    margin-top: 40px;
+    max-width: 580px;
 }
 
-body.night-mode .about-personality {
-    color: #908A85;
+/* ── About Stats ── */
+.about-stats {
+    display: flex;
+    gap: 60px;
+    margin-top: 60px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stat-num {
+    font-family: var(--font-display);
+    font-size: 48px;
+    line-height: 1;
+    color: var(--terra);
+}
+
+.stat-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    line-height: 1.4;
+}
+
+/* ── Bento Skills Grid ── */
+.bento-skills {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 20px;
+}
+
+.bento-card {
+    position: relative;
+    padding: 32px;
+    background: rgba(26, 26, 26, 0.02);
+    border: 1px solid var(--light-line);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.5s var(--ease-smooth);
+    display: flex;
+    flex-direction: column;
+}
+
+.bento-card:hover {
+    background: rgba(26, 26, 26, 0.04);
+    border-color: var(--terra);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.03);
+}
+
+.bento-large {
+    grid-column: span 2;
+    padding: 40px;
+}
+
+.bento-medium {
+    grid-column: span 1;
+}
+
+.bento-small {
+    grid-column: span 1;
+}
+
+.bento-card .detail-label {
+    margin-bottom: 24px;
+}
+
+.bento-text {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.bento-accent {
+    background: linear-gradient(135deg, rgba(196, 93, 62, 0.05), rgba(212, 168, 83, 0.05));
+    border-color: rgba(196, 93, 62, 0.15);
+}
+
+.bento-icon {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    opacity: 0.03;
+    transform: rotate(-15deg);
+    transition: all 0.6s var(--ease-smooth);
+    pointer-events: none;
+}
+
+.bento-card:hover .bento-icon {
+    opacity: 0.1;
+    transform: rotate(0deg) scale(1.1);
+    color: var(--terra);
 }
 
 /* ── Skill Badges ── */
@@ -1717,11 +1785,7 @@ body.night-mode .about-personality {
     border-radius: 40px;
     transition: all 0.3s ease;
     cursor: default;
-}
-
-.skill-badge svg {
-    flex-shrink: 0;
-    color: var(--terra);
+    background: var(--paper);
 }
 
 .skill-badge:hover {
@@ -1730,37 +1794,9 @@ body.night-mode .about-personality {
     transform: translateY(-2px);
 }
 
-body.night-mode .skill-badge {
-    color: #E8E3DE;
-    border-color: rgba(232, 227, 222, 0.12);
-}
-
-body.night-mode .skill-badge:hover {
-    border-color: var(--terra);
-    background: rgba(196, 93, 62, 0.1);
-}
-
-.resume-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: var(--ink);
-    padding: 16px 0;
-    border-bottom: 1px solid var(--ink);
-    transition: color 0.3s ease, border-color 0.3s ease, gap 0.3s ease;
-}
-
-.resume-link:hover {
-    color: var(--terra);
-    border-color: var(--terra);
-    gap: 18px;
-}
-
-/* ── Resume Actions Container ── */
+/* ── Resume Actions ── */
 .resume-actions {
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -1781,6 +1817,7 @@ body.night-mode .skill-badge:hover {
     position: relative;
     overflow: hidden;
     transition: all 0.4s var(--ease-out);
+    text-align: left;
 }
 
 .resume-peek-btn::before {
@@ -1797,7 +1834,7 @@ body.night-mode .skill-badge:hover {
     transform: translateX(0);
 }
 
-.resume-peek-btn>* {
+.resume-peek-btn > * {
     position: relative;
     z-index: 1;
 }
@@ -1814,15 +1851,8 @@ body.night-mode .skill-badge:hover {
 }
 
 @keyframes peekBlink {
-
-    0%,
-    100% {
-        opacity: 1;
-    }
-
-    50% {
-        opacity: 0.4;
-    }
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
 }
 
 .peek-hint {
@@ -1839,9 +1869,85 @@ body.night-mode .skill-badge:hover {
     transform: translateX(0);
 }
 
-/* ═══════════════════════════════════════════
-   RESUME VIEWER OVERLAY
-   ═══════════════════════════════════════════ */
+.resume-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--ink);
+    padding: 16px 0;
+    border-bottom: 1px solid var(--ink);
+    transition: all 0.3s ease;
+}
+
+.resume-link:hover {
+    color: var(--terra);
+    border-color: var(--terra);
+    gap: 18px;
+}
+
+/* ── Night Mode Overrides ── */
+body.night-mode .about-personality {
+    color: #908A85;
+}
+
+body.night-mode .bento-card {
+    background: rgba(242, 237, 232, 0.02);
+    border-color: rgba(242, 237, 232, 0.08);
+}
+
+body.night-mode .bento-card:hover {
+    background: rgba(242, 237, 232, 0.04);
+}
+
+body.night-mode .skill-badge {
+    color: #E8E3DE;
+    border-color: rgba(232, 227, 222, 0.12);
+    background: #141414;
+}
+
+body.night-mode .resume-peek-btn {
+    background: #E8E3DE;
+    color: #141414;
+    border-color: #E8E3DE;
+}
+
+body.night-mode .resume-peek-btn .peek-hint {
+    color: rgba(20, 20, 20, 0.5);
+}
+
+body.night-mode .resume-link {
+    color: #E8E3DE;
+    border-bottom-color: #E8E3DE;
+}
+
+@media (max-width: 1024px) {
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+}
+
+@media (max-width: 768px) {
+    .about {
+        padding: 100px 24px;
+    }
+    
+    .about-stats {
+        gap: 32px;
+        flex-wrap: wrap;
+    }
+    
+    .bento-skills {
+        grid-template-columns: 1fr;
+    }
+    
+    .bento-large, .bento-medium, .bento-small {
+        grid-column: span 1;
+    }
+}
 .resume-viewer-overlay {
     position: fixed;
     inset: 0;

@@ -132,7 +132,7 @@
         </div>
         <div class="about-grid">
             <div class="about-left">
-                <span class="section-label">ABOUT</span>
+                <span class="section-label" data-reveal>ABOUT</span>
                 <h2 class="about-heading" data-reveal-line>
                     I craft <em>digital experiences</em> that balance<br>
                     aesthetics with function — building<br>
@@ -144,95 +144,73 @@
                     React, Vue.js, and modern CSS. I'm passionate about translating complex
                     Figma designs into clean, pixel-accurate, and accessible code.
                 </p>
+                
+                <div class="about-stats" data-reveal>
+                    <div class="stat-item">
+                        <span class="stat-num">3+</span>
+                        <span class="stat-label">Years of <br>Craft</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">12+</span>
+                        <span class="stat-label">Digital <br>Projects</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-num">100%</span>
+                        <span class="stat-label">Pixel <br>Precision</span>
+                    </div>
+                </div>
             </div>
-            <div class="about-right" data-reveal>
-                <!-- Skills as visual badges -->
-                <div class="about-detail">
-                    <span class="detail-label">DESIGN</span>
-                    <div class="skill-badges">
-                        <span class="skill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 19l7-7 3 3-7 7-3-3z" />
-                                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-                                <path d="M2 2l7.586 7.586" />
-                                <circle cx="11" cy="11" r="2" />
-                            </svg>Figma</span>
-                        <span class="skill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <rect x="3" y="3" width="18" height="18" rx="2" />
-                                <path d="M3 9h18M9 21V9" />
-                            </svg>Photoshop</span>
-                        <span class="skill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                                <path d="M2 17l10 5 10-5" />
-                                <path d="M2 12l10 5 10-5" />
-                            </svg>Illustrator</span>
-                        <span class="skill-badge">UI/UX</span>
-                    </div>
-                </div>
-                <div class="about-detail">
-                    <span class="detail-label">DESIGN</span>
-                    <div class="skill-badges">
-                        <span class="skill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 19l7-7 3 3-7 7-3-3z" />
-                                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-                                <path d="M2 2l7.586 7.586" />
-                                <circle cx="11" cy="11" r="2" />
-                            </svg>Figma</span>
-                        <span class="skill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <rect x="3" y="3" width="18" height="18" rx="2" />
-                                <path d="M3 9h18M9 21V9" />
-                            </svg>Photoshop</span>
-                        <span class="skill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                                <path d="M2 17l10 5 10-5" />
-                                <path d="M2 12l10 5 10-5" />
-                            </svg>Illustrator</span>
-                        <span class="skill-badge">UI/UX Implementation</span>
-                    </div>
-                </div>
-                <div class="about-detail">
-                    <span class="detail-label">FRONTEND</span>
-                    <div class="skill-badges">
-                        <span class="skill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
+            
+            <div class="about-right">
+                <div class="bento-skills">
+                    <!-- Large Card: Frontend -->
+                    <div class="bento-card bento-large" data-reveal>
+                        <span class="detail-label">FRONTEND ENGINE</span>
+                        <div class="skill-badges">
+                            <span class="skill-badge">React</span>
+                            <span class="skill-badge">Vue.js</span>
+                            <span class="skill-badge">TypeScript</span>
+                            <span class="skill-badge">Next.js</span>
+                            <span class="skill-badge">Tailwind CSS</span>
+                            <span class="skill-badge">Three.js</span>
+                        </div>
+                        <div class="bento-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                 <polyline points="16 18 22 12 16 6" />
                                 <polyline points="8 6 2 12 8 18" />
-                            </svg>HTML / CSS</span>
-                        <span class="skill-badge">JavaScript (ES6+)</span>
-                        <span class="skill-badge">React / Vue.js</span>
-                        <span class="skill-badge">Tailwind CSS</span>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Medium Card: Design -->
+                    <div class="bento-card bento-medium" data-reveal>
+                        <span class="detail-label">VISUAL DESIGN</span>
+                        <div class="skill-badges">
+                            <span class="skill-badge">Figma</span>
+                            <span class="skill-badge">Photoshop</span>
+                            <span class="skill-badge">Illustrator</span>
+                            <span class="skill-badge">Motion</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Small Card: Core -->
+                    <div class="bento-card bento-small" data-reveal>
+                        <span class="detail-label">SYSTEMS</span>
+                        <div class="skill-badges">
+                            <span class="skill-badge">Firebase</span>
+                            <span class="skill-badge">Git</span>
+                            <span class="skill-badge">SEO</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Small Card: AI -->
+                    <div class="bento-card bento-small bento-accent" data-reveal>
+                        <span class="detail-label">AI TOOLS</span>
+                        <p class="bento-text">Leveraging AI to accelerate development & design workflows.</p>
                     </div>
                 </div>
-                <div class="about-detail">
-                    <span class="detail-label">CORE DEV</span>
-                    <div class="skill-badges">
-                        <span class="skill-badge">Responsive Design</span>
-                        <span class="skill-badge">Component Arch</span>
-                        <span class="skill-badge">State Management</span>
-                        <span class="skill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.5">
-                                <circle cx="12" cy="12" r="10" />
-                                <line x1="2" y1="12" x2="22" y2="12" />
-                                <path
-                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                            </svg>Git / GitHub</span>
-                    </div>
-                </div>
-                <div class="about-detail">
-                    <span class="detail-label">AI & TOOLS</span>
-                    <div class="skill-badges">
-                        <span class="skill-badge">Claude / Antigravity</span>
-                        <span class="skill-badge">AI-Assisted Dev</span>
-                        <span class="skill-badge">Firebase</span>
-                        <span class="skill-badge">Problem Solving</span>
-                    </div>
-                </div>
-                <div class="resume-actions">
+                
+                <div class="resume-actions" data-reveal>
                     <button class="resume-peek-btn" id="resumePeekBtn" aria-label="Preview resume">
                         <span class="peek-icon">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
