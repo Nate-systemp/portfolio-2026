@@ -139,6 +139,17 @@ const SEED_PROJECTS = [
         story: "This project explores the integration of Supabase as a backend-as-a-service with a React frontend. The goal was to create a seamless, real-time collaboration tool where task updates are reflected instantly across all connected clients without page reloads.",
         liveUrl: "https://vantage-peach-ten.vercel.app/",
         gallery: ["assets/FB1.png", "assets/FB2.png", "assets/FB3.png"],
+    },
+    {
+        order: 6,
+        title: "GRIDSENSE AI",
+        category: "UI/UX DESIGN / FIGMA",
+        year: "2026",
+        role: "UI/UX Designer",
+        tech: "FIGMA",
+        description: "Figma Skill Test Assessment for Wellevate — a Junior UI/UX Designer application. Includes a full AI-powered energy analytics Dashboard and a responsive Landing Page for GridSense AI.",
+        story: "Submitted as a Figma Skill Test (FST) for a Junior UI/UX Designer role at Wellevate. The brief required designing two core screens for GridSense AI: an analytics dashboard surfacing real-time grid data, and a marketing landing page communicating the product's value proposition. The design system was built from scratch — from color tokens and typography to component libraries — ensuring visual consistency across both deliverables.",
+        gallery: ["assets/FST.png", "assets/FST1.png", "assets/FST2.png"],
     }
 ];
 
@@ -178,8 +189,27 @@ async function seedVantage() {
     }
 }
 
+async function seedGridsense() {
+    try {
+        const gridsense = SEED_PROJECTS.find(p => p.title === "GRIDSENSE AI");
+        if (!gridsense) return;
+        
+        await addDoc(collection(db, 'projects'), {
+            ...gridsense,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        });
+        showToast('GridSense AI imported successfully ✓');
+        loadProjects();
+    } catch (e) {
+        showToast('Import failed: ' + e.message, true);
+    }
+}
+
 window.seedProjects = seedProjects;
 window.seedVantage = seedVantage;
+window.seedGridsense = seedGridsense;
+
 
 // ══════════════════════════════════════════════
 // 3. RENDER PROJECTS
@@ -196,12 +226,21 @@ function renderProjects() {
 
     // If projects exist, offer a way to sync missing static projects
     const hasVantage = allProjects.some(p => p.title === "VANTAGE");
+    const hasGridsense = allProjects.some(p => p.title === "GRIDSENSE AI");
     let syncHtml = '';
     if (!hasVantage) {
-        syncHtml = `
+        syncHtml += `
             <div style="margin-bottom:24px; padding:16px; background:rgba(196,93,62,0.05); border-left:4px solid var(--terra); display:flex; justify-content:space-between; align-items:center;">
                 <p style="font-family:var(--font-mono); font-size:11px;">NEW PROJECT DETECTED: <b>VANTAGE</b></p>
                 <button class="btn btn-primary" onclick="seedVantage()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
+            </div>
+        `;
+    }
+    if (!hasGridsense) {
+        syncHtml += `
+            <div style="margin-bottom:24px; padding:16px; background:rgba(196,93,62,0.05); border-left:4px solid var(--terra); display:flex; justify-content:space-between; align-items:center;">
+                <p style="font-family:var(--font-mono); font-size:11px;">NEW PROJECT DETECTED: <b>GRIDSENSE AI</b></p>
+                <button class="btn btn-primary" onclick="seedGridsense()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
             </div>
         `;
     }
