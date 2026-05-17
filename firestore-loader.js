@@ -49,9 +49,9 @@ async function fetchProjects() {
         const projects = [];
         snapshot.forEach(d => projects.push({ docId: d.id, ...d.data() }));
         
-        // Merge static projects if they aren't already in the list by title
+        // Merge static projects if they aren't already in the list by docId
         STATIC_PROJECTS.forEach(sp => {
-            if (!projects.some(p => p.title === sp.title)) {
+            if (!projects.some(p => p.docId === sp.docId)) {
                 projects.push(sp);
             }
         });
@@ -170,7 +170,7 @@ if (workGrid) {
 // ══════════════════════════════════════════
 const archiveGrid = document.getElementById('archiveGrid');
 if (archiveGrid) {
-    const TOTAL_SLOTS = 9;
+    const TOTAL_SLOTS = 12;
     // Show 9 skeletons initially
     populateSkeletons(archiveGrid, TOTAL_SLOTS);
 
