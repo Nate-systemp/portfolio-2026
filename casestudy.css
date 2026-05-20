@@ -716,23 +716,104 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 60px;
+}
+
+/* Premium Browser Frame Mockup */
+.cs-browser-frame {
+    width: 100%;
+    background: #1c1c1c;
+    border-radius: 12px;
+    border: 1px solid rgba(242, 237, 232, 0.12);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55);
     overflow: hidden;
-    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+.cs-browser-header-bar {
+    height: 48px;
+    background: #121212;
+    border-bottom: 1px solid rgba(242, 237, 232, 0.08);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+}
+
+.cs-browser-dots {
+    display: flex;
+    gap: 8px;
+    position: absolute;
+    left: 20px;
+}
+
+.cs-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.cs-dot.close { background: #FF5F56; }
+.cs-dot.minimize { background: #FFBD2E; }
+.cs-dot.maximize { background: #27C93F; }
+
+.cs-browser-address-bar {
+    margin: 0 auto;
+    width: 50%;
+    max-width: 360px;
+    background: rgba(242, 237, 232, 0.04);
+    border: 1px solid rgba(242, 237, 232, 0.06);
+    border-radius: 6px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(242, 237, 232, 0.45);
+    letter-spacing: 0.5px;
+    padding: 0 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .cs-screenshot-container {
     position: relative;
     width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
+    height: 55vh;
+    min-height: 350px;
+    max-height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #121212;
+    scroll-behavior: smooth;
+}
+
+/* Custom Sleek Scrollbar for simulated viewport */
+.cs-screenshot-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.cs-screenshot-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.cs-screenshot-container::-webkit-scrollbar-thumb {
+    background: rgba(242, 237, 232, 0.15);
+    border-radius: 100px;
+    border: 2px solid #121212;
+}
+
+.cs-screenshot-container::-webkit-scrollbar-thumb:hover {
+    background: var(--terra);
 }
 
 .cs-screenshot-img {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 8px;
-    transition: transform 0.6s var(--ease-smooth), opacity 0.5s ease;
+    transition: opacity 0.5s ease;
     cursor: pointer;
 }
 
@@ -742,10 +823,6 @@
     left: 0;
     opacity: 0;
     pointer-events: none;
-}
-
-.cs-screenshot-img:hover {
-    transform: scale(1.02);
 }
 
 .cs-screenshot-caption {

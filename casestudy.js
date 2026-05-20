@@ -74,6 +74,7 @@ const CASE_STUDIES = {
         badge: 'UI/UX CASE STUDY',
         title: 'BCGI',
         subtitle: 'About Page UX Redesign — The BlackCoders Group Inc.',
+        domain: 'theblackcoders.com/about',
         role: 'UX/UI Designer',
         tools: 'Figma, Photoshop, Canva',
         year: '2026',
@@ -257,6 +258,9 @@ function populate() {
     }
     if (imgBefore && cs.screenshotBefore) {
         imgBefore.src = cs.screenshotBefore;
+    }
+    if (cs.domain) {
+        set('csBrowserAddress', cs.domain);
     }
     set('csScreenshotTitle', cs.screenshotTitle);
     set('csScreenshotCaption', cs.screenshotCaption);
