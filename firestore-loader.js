@@ -17,6 +17,7 @@ const STATIC_PROJECTS = [
         order: 5,
         title: "VANTAGE",
         category: "WEB APP / REACT",
+        type: "development",
         year: "2026",
         role: "Fullstack Developer",
         tech: "REACT, SUPABASE, JS",
@@ -29,12 +30,26 @@ const STATIC_PROJECTS = [
         order: 6,
         title: "GRIDSENSE AI",
         category: "UI/UX DESIGN / FIGMA",
+        type: "development",
         year: "2026",
         role: "UI/UX Designer",
         tech: "FIGMA",
         description: "Figma Skill Test Assessment for Wellevate — a Junior UI/UX Designer application. Includes a full AI-powered energy analytics Dashboard and a responsive Landing Page for GridSense AI.",
         story: "Submitted as a Figma Skill Test (FST) for a Junior UI/UX Designer role at Wellevate. The brief required designing two core screens for GridSense AI: an analytics dashboard surfacing real-time grid data, and a marketing landing page communicating the product's value proposition. The design system was built from scratch — from color tokens and typography to component libraries — ensuring visual consistency across both deliverables.",
         gallery: ["assets/FST.png", "assets/FST1.png", "assets/FST2.png"],
+    },
+    {
+        docId: "static-bcgi-casestudy",
+        order: 7,
+        title: "BCGI",
+        category: "UX CASE STUDY",
+        type: "casestudy",
+        year: "2026",
+        role: "UX/UI Designer",
+        tech: "FIGMA, PHOTOSHOP, CANVA",
+        description: "A self-initiated UX/UI redesign of The BlackCoders Group Inc.'s About page — improving visual hierarchy, readability, trust-building, and user experience.",
+        casestudyId: "bcgi",
+        gallery: ["assets/bcgi_aboutus.png"],
     }
 ];
 
@@ -71,12 +86,22 @@ function buildCard(project, index) {
     const sizeClass = CARD_SIZES[index % CARD_SIZES.length];
     const img = project.gallery?.[0] || '';
     const num = String(project.order || index + 1).padStart(2, '0');
+    const projectType = project.type || 'development';
+    
+    // Route case study projects to casestudy.html, others to project.html
+    const href = projectType === 'casestudy' 
+        ? `casestudy.html?id=${encodeURIComponent(project.casestudyId || project.docId)}`
+        : `project.html?docId=${encodeURIComponent(project.docId)}`;
+
+    // Type badge label
+    const typeBadge = projectType === 'casestudy' ? 'UX DESIGN' : 'DEVELOPMENT';
 
     return `
-        <div class="work-card ${sizeClass}" data-reveal>
-            <a href="project.html?docId=${encodeURIComponent(project.docId)}" class="work-card-link">
+        <div class="work-card ${sizeClass}" data-reveal data-type="${projectType}">
+            <a href="${href}" class="work-card-link">
                 <div class="work-card-img-wrap">
                     <div class="work-card-img" style="background-image: url('${img}')"></div>
+                    <span class="work-card-type-badge ${projectType === 'casestudy' ? 'badge-casestudy' : 'badge-dev'}">${typeBadge}</span>
                 </div>
                 <div class="work-card-info">
                     <div class="work-card-top">

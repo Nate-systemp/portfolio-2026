@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="UX/UI Design Case Study — Problem solving through research-driven design.">
+    <meta name="author" content="Nathaniel">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Case Study — Nate">
+    <meta property="og:description" content="UX/UI Design Case Study — Problem solving through research-driven design.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Case Study — Nate">
+    <meta property="twitter:description" content="UX/UI Design Case Study — Problem solving through research-driven design.">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="casestudy.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="assets/fonts/TuskerGrotesk-5700Bold.ttf" as="font" type="font/truetype" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Case Study — Nate</title>
+</head>
+
+<body class="casestudy-body">
+    <script>
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('night-mode');
+            document.body.style.background = '#0a0a0a';
+            document.body.style.color = '#E8E3DE';
+        }
+    </script>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- ═══ HEADER / NAV ═══ -->
+    <header class="cs-nav">
+        <a href="work.html" class="cs-back-link">
+            <span class="cs-back-arrow">←</span>
+            <span class="cs-back-text">BACK TO ARCHIVE</span>
+        </a>
+        <div class="cs-nav-logo">N.</div>
+        <button class="cs-share-btn" id="csShareBtn" aria-label="Share case study">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/>
+            </svg>
+            <span class="cs-share-tooltip">COPY LINK</span>
+        </button>
+    </header>
+
+    <!-- ═══ HERO SECTION ═══ -->
+    <section class="cs-hero" id="csHero">
+        <canvas id="threeCanvas"></canvas>
+        <div class="cs-hero-inner">
+            <div class="cs-hero-badge" data-reveal>
+                <span class="cs-hero-badge-dot"></span>
+                <span id="csBadge">UI/UX CASE STUDY</span>
+            </div>
+            <h1 class="cs-hero-title" id="csTitle" data-reveal>&nbsp;</h1>
+            <p class="cs-hero-subtitle" id="csSubtitle" data-reveal>&nbsp;</p>
+            <div class="cs-hero-meta" data-reveal>
+                <div class="cs-meta-box">
+                    <span class="cs-meta-label">MY ROLE</span>
+                    <span class="cs-meta-val" id="csRole">UX Designer</span>
+                </div>
+                <div class="cs-meta-box">
+                    <span class="cs-meta-label">TOOLS USED</span>
+                    <span class="cs-meta-val" id="csTools">Figma</span>
+                </div>
+                <div class="cs-meta-box">
+                    <span class="cs-meta-label">YEAR</span>
+                    <span class="cs-meta-val" id="csYear">2026</span>
+                </div>
+                <div class="cs-meta-box">
+                    <span class="cs-meta-label">SCOPE</span>
+                    <span class="cs-meta-val" id="csScope">About Page</span>
+                </div>
+            </div>
+        </div>
+        <div class="cs-hero-scroll">
+            <span class="cs-scroll-text">SCROLL TO EXPLORE</span>
+            <span class="cs-scroll-line"></span>
+        </div>
+    </section>
+
+    <!-- ═══ PROJECT OVERVIEW ═══ -->
+    <section class="cs-overview">
+        <div class="cs-container">
+            <div class="cs-overview-grid">
+                <div data-reveal>
+                    <span class="cs-section-label">PROJECT OVERVIEW</span>
+                </div>
+                <div data-reveal>
+                    <p class="cs-overview-text" id="csOverview">
+                        Loading project overview...
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ THE PROBLEM ═══ -->
+    <section class="cs-problem">
+        <div class="cs-container">
+            <div class="cs-problem-grid">
+                <div data-reveal>
+                    <span class="cs-section-label" style="color: rgba(242,237,232,0.4);">IDENTIFYING ISSUES</span>
+                    <h2 class="cs-problem-heading">The<br><em>Problem</em></h2>
+                </div>
+                <div data-reveal>
+                    <p class="cs-problem-intro" id="csProblemIntro">Loading...</p>
+                    <ul class="cs-problem-list" id="csProblemList">
+                        <!-- Populated by JS -->
+                    </ul>
+                    <p class="cs-impact-text" id="csImpactText">Loading...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ DESIGN GOALS ═══ -->
+    <section class="cs-goals">
+        <div class="cs-container">
+            <div class="cs-goals-header" data-reveal>
+                <span class="cs-section-label">OBJECTIVES</span>
+                <h2 class="cs-goals-title">Design<br><em>Goals</em></h2>
+            </div>
+            <div class="cs-goals-grid" id="csGoalsGrid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ RESEARCH & ANALYSIS ═══ -->
+    <section class="cs-research">
+        <div class="cs-container">
+            <div class="cs-research-grid">
+                <div data-reveal>
+                    <span class="cs-section-label">METHODOLOGY</span>
+                    <h2 class="cs-research-heading">Research &<br><em>Analysis</em></h2>
+                </div>
+                <div data-reveal>
+                    <p class="cs-research-method" id="csResearchMethod">Loading...</p>
+                    <span class="cs-findings-label">KEY UX FINDINGS</span>
+                    <ul class="cs-finding-list" id="csFindingList">
+                        <!-- Populated by JS -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ DESIGN PROCESS ═══ -->
+    <section class="cs-process">
+        <div class="cs-container">
+            <div class="cs-process-header" data-reveal>
+                <span class="cs-section-label">HOW I SOLVED IT</span>
+                <h2 class="cs-process-title">Design<br><em>Process</em></h2>
+            </div>
+            <div class="cs-process-steps" id="csProcessSteps">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SCREENSHOT / CONCEPT DISPLAY ═══ -->
+    <section class="cs-screenshot">
+        <div class="cs-screenshot-header" data-reveal>
+            <span class="cs-screenshot-label">COMPARISON</span>
+            <h3 class="cs-screenshot-title" id="csScreenshotTitle">Before & After Redesign</h3>
+            <div class="cs-compare-toggle">
+                <button class="cs-compare-tab active" data-view="after">AFTER (REDESIGN)</button>
+                <button class="cs-compare-tab" data-view="before">BEFORE (ORIGINAL)</button>
+                <div class="cs-compare-indicator"></div>
+            </div>
+        </div>
+        <div class="cs-screenshot-wrap" data-reveal>
+            <div class="cs-screenshot-container">
+                <img class="cs-screenshot-img active" id="csScreenshotImgAfter" src="" alt="Redesigned UI concept" loading="lazy">
+                <img class="cs-screenshot-img" id="csScreenshotImgBefore" src="" alt="Original UI design" loading="lazy">
+            </div>
+        </div>
+        <p class="cs-screenshot-caption" id="csScreenshotCaption" data-reveal>Use the toggle above to compare the original layout with the redesigned concept.</p>
+    </section>
+
+    <!-- ═══ FINAL SOLUTION ═══ -->
+    <section class="cs-solution">
+        <div class="cs-container">
+            <div class="cs-solution-header" data-reveal>
+                <span class="cs-section-label">RESULTS</span>
+                <h2 class="cs-solution-title">Final<br><em>Solution</em></h2>
+            </div>
+            <div class="cs-outcome-grid" id="csOutcomeGrid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ WHAT I LEARNED ═══ -->
+    <section class="cs-learnings">
+        <div class="cs-container">
+            <div class="cs-learnings-grid">
+                <div data-reveal>
+                    <span class="cs-section-label">TAKEAWAYS</span>
+                    <h2 class="cs-learnings-heading">What I<br><em>Learned</em></h2>
+                </div>
+                <div class="cs-learning-items" id="csLearningItems" data-reveal>
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ DISCLAIMER ═══ -->
+    <section class="cs-disclaimer">
+        <div class="cs-disclaimer-inner" data-reveal>
+            <span class="cs-disclaimer-badge">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                DISCLAIMER
+            </span>
+            <p class="cs-disclaimer-text" id="csDisclaimer">Loading...</p>
+        </div>
+    </section>
+
+    <!-- ═══ NEXT PROJECT CTA ═══ -->
+    <section class="cs-next">
+        <a href="work.html" class="cs-next-link" id="csNextLink">
+            <div class="cs-next-badge">
+                <span class="cs-next-badge-text">VIEW ALL</span>
+            </div>
+            <h2 class="cs-next-title">BACK TO<br>ARCHIVE</h2>
+        </a>
+    </section>
+
+    <!-- ═══ FOOTER ═══ -->
+    <footer class="cs-footer">
+        <div class="cs-container">
+            <div class="cs-footer-inner">
+                <span class="cs-footer-copy">© 2026 Nate Portfolio</span>
+                <a href="index.html" class="cs-footer-back">BACK TO HOME</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="cs-lightbox" id="csLightbox">
+        <div class="cs-lightbox-backdrop"></div>
+        <button class="cs-lightbox-close" id="csLightboxClose">×</button>
+        <div class="cs-lightbox-img-wrap">
+            <img class="cs-lightbox-img" id="csLightboxImg" src="" alt="Enlarged screenshot">
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="three-scene.js"></script>
+    <script src="casestudy.js"></script>
+</body>
+
+</html>

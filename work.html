@@ -28,12 +28,74 @@
         .archive-hero { padding: 160px 60px 80px; text-align: center; position: relative; z-index: 1; }
         .archive-title { font-family: var(--font-display); font-size: clamp(60px, 12vw, 150px); line-height: 0.85; letter-spacing: -6px; margin: 0; text-transform: uppercase; position: relative; z-index: 10; }
         .archive-grid { max-width: 1400px; margin: 0 auto; padding: 0 60px 120px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-        .archive-item { text-decoration: none; color: var(--ink); cursor: none; }
-        .archive-img-wrap { aspect-ratio: 4/5; overflow: hidden; background: #eee; margin-bottom: 20px; }
+        .archive-item { text-decoration: none; color: var(--ink); cursor: none; transition: opacity 0.3s ease, transform 0.3s var(--ease-smooth); }
+        .archive-img-wrap { position: relative; aspect-ratio: 4/5; overflow: hidden; background: #eee; margin-bottom: 20px; }
         .archive-img { width: 100%; height: 100%; background-size: cover; background-position: center; transition: transform 0.8s var(--ease-smooth); filter: grayscale(0.5); }
         .archive-item:hover .archive-img { transform: scale(1.05) grayscale(0); }
         .archive-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--muted); }
         .archive-item-title { font-family: var(--font-body); font-size: 16px; margin: 10px 0 0; }
+
+        /* Type Badges */
+        .archive-type-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 12px;
+            font-family: var(--font-mono);
+            font-size: 8px;
+            letter-spacing: 1px;
+            border-radius: 20px;
+            font-weight: 700;
+            z-index: 5;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .badge-dev {
+            background: rgba(242, 237, 232, 0.9);
+            color: #1a1a1a;
+        }
+        .badge-casestudy {
+            background: var(--terra);
+            color: var(--paper);
+        }
+
+        /* Filter Tabs */
+        .archive-filter-bar {
+            display: inline-flex;
+            position: relative;
+            margin-top: 40px;
+            background: rgba(26, 26, 26, 0.04);
+            padding: 4px;
+            border-radius: 40px;
+            border: 1px solid var(--light-line);
+            z-index: 100;
+        }
+        .archive-filter-tab {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 10px 24px;
+            border-radius: 40px;
+            border: none;
+            background: none;
+            color: var(--muted);
+            cursor: pointer;
+            z-index: 2;
+            transition: color 0.3s ease;
+        }
+        .archive-filter-tab.active {
+            color: var(--paper);
+        }
+        .archive-filter-indicator {
+            position: absolute;
+            top: 4px;
+            bottom: 4px;
+            left: 4px;
+            background: var(--terra);
+            border-radius: 40px;
+            z-index: 1;
+            transition: all 0.4s var(--ease-smooth);
+        }
 
         .archive-item.is-placeholder { cursor: default; pointer-events: none; }
         .gray-placeholder { background: rgba(0,0,0,0.03); position: relative; border: 1px dashed rgba(0,0,0,0.1); }
@@ -62,6 +124,10 @@
         body.night-mode .archive-img-wrap { background: #1e1e1e; }
         body.night-mode .gray-placeholder { background: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.08); }
         body.night-mode .project-back-link { color: #E8E3DE; }
+        body.night-mode .archive-filter-bar { background: rgba(242, 237, 232, 0.05); border-color: rgba(242, 237, 232, 0.08); }
+        body.night-mode .archive-filter-tab.active { color: #141414; }
+        body.night-mode .badge-dev { background: rgba(26, 26, 26, 0.9); color: #f2ede8; }
+        body.night-mode .badge-casestudy { background: var(--terra); color: #f2ede8; }
     </style>
 </head>
 
@@ -88,9 +154,15 @@
     <section class="archive-hero">
         <canvas id="threeCanvas"></canvas>
         <h1 class="archive-title" data-reveal>SELECT ARCHIVE</h1>
+        <div class="archive-filter-bar" data-reveal>
+            <button class="archive-filter-tab active" data-filter="all">ALL WORK</button>
+            <button class="archive-filter-tab" data-filter="development">DEVELOPMENT</button>
+            <button class="archive-filter-tab" data-filter="casestudy">UI/UX DESIGN</button>
+            <div class="archive-filter-indicator"></div>
+        </div>
     </section>
     <section class="archive-grid" id="archiveGrid">
-        <!-- Will be populated by project.js -->
+        <!-- Will be populated by script -->
     </section>
 
     <!-- Essential Scripts -->
@@ -111,16 +183,28 @@
             // Render only real projects — no placeholders
             projects.forEach((p, i) => {
                 const item = document.createElement('a');
-                item.href = `project.html?docId=${p.docId}`;
+                const projectType = p.type || 'development';
+                
+                // Route case studies to casestudy.html
+                if (projectType === 'casestudy') {
+                    item.href = `casestudy.html?id=${p.casestudyId || p.docId}`;
+                } else {
+                    item.href = `project.html?docId=${p.docId}`;
+                }
+                
                 item.className = 'archive-item';
                 item.setAttribute('data-reveal', '');
+                item.setAttribute('data-type', projectType);
                 
                 const thumb = (p.gallery && p.gallery[0]) ? p.gallery[0] : 'assets/M01.png';
                 const num = String(p.order || i + 1).padStart(2, '0');
+                const typeBadge = projectType === 'casestudy' ? 'UX DESIGN' : 'DEVELOPMENT';
+                const badgeClass = projectType === 'casestudy' ? 'badge-casestudy' : 'badge-dev';
 
                 item.innerHTML = `
                     <div class="archive-img-wrap">
                         <div class="archive-img" style="background-image: url('${thumb}')"></div>
+                        <span class="archive-type-badge ${badgeClass}">${typeBadge}</span>
                     </div>
                     <div class="archive-meta"><span>${num}</span><span>${p.category || ''}</span></div>
                     <h3 class="archive-item-title">${p.title}</h3>
@@ -133,6 +217,69 @@
                 const revealElements = document.querySelectorAll('[data-reveal]');
                 revealElements.forEach(el => el.classList.add('revealed'));
             }, 100);
+
+            // Setup filter tabs
+            initFilterTabs();
+        }
+
+        function initFilterTabs() {
+            const tabs = document.querySelectorAll('.archive-filter-tab');
+            const items = document.querySelectorAll('.archive-item');
+            const indicator = document.querySelector('.archive-filter-indicator');
+
+            // Position indicator under active tab
+            function updateIndicator(tab) {
+                if (!indicator || !tab) return;
+                const rect = tab.getBoundingClientRect();
+                const parentRect = tab.parentElement.getBoundingClientRect();
+                indicator.style.width = rect.width + 'px';
+                indicator.style.left = (rect.left - parentRect.left) + 'px';
+            }
+
+            // Init indicator position
+            const activeTab = document.querySelector('.archive-filter-tab.active');
+            if (activeTab) {
+                setTimeout(() => updateIndicator(activeTab), 150);
+            }
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const filter = tab.dataset.filter;
+
+                    // Update active state
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    updateIndicator(tab);
+
+                    // Filter items with animation
+                    items.forEach(item => {
+                        const type = item.dataset.type;
+                        if (filter === 'all' || type === filter) {
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateY(20px)';
+                            item.style.display = '';
+                            requestAnimationFrame(() => {
+                                setTimeout(() => {
+                                    item.style.opacity = '1';
+                                    item.style.transform = 'translateY(0)';
+                                }, 50);
+                            });
+                        } else {
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateY(20px)';
+                            setTimeout(() => {
+                                item.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+
+            // Recalculate on resize
+            window.addEventListener('resize', () => {
+                const active = document.querySelector('.archive-filter-tab.active');
+                if (active) updateIndicator(active);
+            });
         }
 
         renderArchive();
