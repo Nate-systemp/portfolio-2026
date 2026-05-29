@@ -24,11 +24,31 @@ const cancelModalBtn = document.getElementById('cancelModalBtn');
 const saveProjectBtn = document.getElementById('saveProjectBtn');
 const projectGrid = document.getElementById('projectGrid');
 const toast = document.getElementById('toast');
+const themeToggle = document.getElementById('themeToggle');
+
+// New Modal Form Fields
+const fType = document.getElementById('fType');
+const fCasestudyId = document.getElementById('fCasestudyId');
+const casestudyIdField = document.getElementById('casestudyIdField');
 
 let allProjects = [];
 
 // ══════════════════════════════════════════════
-// 1. AUTH STATE
+// 1. THEME SUPPORT
+// ══════════════════════════════════════════════
+if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('night-mode');
+}
+
+if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+        const isDark = document.body.classList.toggle('night-mode');
+        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+}
+
+// ══════════════════════════════════════════════
+// 2. AUTH STATE
 // ══════════════════════════════════════════════
 onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -65,7 +85,7 @@ function showError(msg) {
 }
 
 // ══════════════════════════════════════════════
-// 2. LOAD PROJECTS FROM FIRESTORE
+// 3. LOAD PROJECTS FROM FIRESTORE
 // ══════════════════════════════════════════════
 async function loadProjects() {
     try {
@@ -76,18 +96,19 @@ async function loadProjects() {
         renderProjects();
         updateStats();
     } catch (e) {
-        projectGrid.innerHTML = `<p style="font-family:monospace;color:#C45D3E;">Error: ${e.message}</p>`;
+        projectGrid.innerHTML = `<p style="font-family:monospace;color:#C45D3E;font-size:12px;padding:24px;">Error loading projects: ${e.message}</p>`;
     }
 }
 
 // ══════════════════════════════════════════════
-// SEED DATA — Existing projects from project.js
+// SEED DATA — Existing and missing projects
 // ══════════════════════════════════════════════
 const SEED_PROJECTS = [
     {
         order: 1,
         title: "FRACT ERA",
         category: "GAME DESIGN",
+        type: "development",
         year: "2026",
         role: "Lead Game Design",
         tech: "GameMaker, Figma",
@@ -99,6 +120,7 @@ const SEED_PROJECTS = [
         order: 2,
         title: "SWIVEL QUIVER",
         category: "GAME DESIGN",
+        type: "development",
         year: "2024",
         role: "Developer",
         tech: "ASENPRITE, LUA",
@@ -110,6 +132,7 @@ const SEED_PROJECTS = [
         order: 3,
         title: "OUTFALL",
         category: "TTRPG DESIGN",
+        type: "development",
         year: "2025",
         role: "Rulebook Author",
         tech: "Adobe InDesign",
@@ -126,6 +149,7 @@ const SEED_PROJECTS = [
         role: "UI/UX Designer",
         tech: "FIGMA",
         description: "An elegant interactive macOS platform design and high-fidelity video demonstration showcasing refined aesthetic layouts.",
+        story: "An extensive UI/UX design project for MERGE, a high-fidelity interactive macOS platform. This design features premium dark mode layouts, high density information displays, and pixel-perfect interactive mockups. The project showcases how modern desktop applications can balance aesthetic minimalism with rich technical capabilities.",
         casestudyId: "merge",
         gallery: ["assets/M01.png"],
     },
@@ -133,6 +157,7 @@ const SEED_PROJECTS = [
         order: 5,
         title: "VANTAGE",
         category: "WEB APP / REACT",
+        type: "development",
         year: "2026",
         role: "Fullstack Developer",
         tech: "REACT, SUPABASE, JS",
@@ -145,12 +170,26 @@ const SEED_PROJECTS = [
         order: 6,
         title: "GRIDSENSE AI",
         category: "UI/UX DESIGN / FIGMA",
+        type: "development",
         year: "2026",
         role: "UI/UX Designer",
         tech: "FIGMA",
         description: "Figma Skill Test Assessment for Wellevate — a Junior UI/UX Designer application. Includes a full AI-powered energy analytics Dashboard and a responsive Landing Page for GridSense AI.",
         story: "Submitted as a Figma Skill Test (FST) for a Junior UI/UX Designer role at Wellevate. The brief required designing two core screens for GridSense AI: an analytics dashboard surfacing real-time grid data, and a marketing landing page communicating the product's value proposition. The design system was built from scratch — from color tokens and typography to component libraries — ensuring visual consistency across both deliverables.",
         gallery: ["assets/FST.png", "assets/FST1.png", "assets/FST2.png"],
+    },
+    {
+        order: 7,
+        title: "BCGI",
+        category: "UX CASE STUDY",
+        type: "casestudy",
+        year: "2026",
+        role: "UX/UI Designer",
+        tech: "FIGMA, PHOTOSHOP, CANVA",
+        description: "A self-initiated UX/UI redesign of The BlackCoders Group Inc.'s About page — improving visual hierarchy, readability, trust-building, and user experience.",
+        story: "A self-initiated UX/UI redesign of The BlackCoders Group Inc.'s About page focused on improving visual hierarchy, readability, trust-building, and overall user experience. This conceptual redesign was created to analyze usability issues within the existing interface and propose a cleaner, more modern, and conversion-focused experience for potential clients and visitors.",
+        casestudyId: "bcgi",
+        gallery: ["assets/bcgi_aboutus.png"],
     }
 ];
 
@@ -159,14 +198,19 @@ async function seedProjects() {
     if (btn) { btn.textContent = 'IMPORTING...'; btn.disabled = true; }
 
     try {
+        let count = 0;
         for (const p of SEED_PROJECTS) {
-            await addDoc(collection(db, 'projects'), {
-                ...p,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString()
-            });
+            const exists = allProjects.some(x => x.title === p.title);
+            if (!exists) {
+                await addDoc(collection(db, 'projects'), {
+                    ...p,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                });
+                count++;
+            }
         }
-        showToast('4 projects imported successfully ✓');
+        showToast(`${count} project(s) imported successfully ✓`);
         loadProjects();
     } catch (e) {
         showToast('Import failed: ' + e.message, true);
@@ -207,74 +251,158 @@ async function seedGridsense() {
     }
 }
 
+async function seedBcgi() {
+    try {
+        const bcgi = SEED_PROJECTS.find(p => p.title === "BCGI");
+        if (!bcgi) return;
+
+        await addDoc(collection(db, 'projects'), {
+            ...bcgi,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        });
+        showToast('BCGI imported successfully ✓');
+        loadProjects();
+    } catch (e) {
+        showToast('Import failed: ' + e.message, true);
+    }
+}
+
+async function seedMerge() {
+    try {
+        const mergeProj = SEED_PROJECTS.find(p => p.title === "MERGE");
+        if (!mergeProj) return;
+
+        await addDoc(collection(db, 'projects'), {
+            ...mergeProj,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        });
+        showToast('MERGE imported successfully ✓');
+        loadProjects();
+    } catch (e) {
+        showToast('Import failed: ' + e.message, true);
+    }
+}
+
 window.seedProjects = seedProjects;
 window.seedVantage = seedVantage;
 window.seedGridsense = seedGridsense;
-
+window.seedBcgi = seedBcgi;
+window.seedMerge = seedMerge;
 
 // ══════════════════════════════════════════════
-// 3. RENDER PROJECTS
+// 4. RENDER PROJECTS
 // ══════════════════════════════════════════════
 function renderProjects() {
     if (allProjects.length === 0) {
         projectGrid.innerHTML = `
-            <div style="padding:40px;border:1px dashed rgba(26,26,26,0.2);text-align:center;">
-                <p style="font-family:'Space Mono',monospace;font-size:13px;color:#8A8580;margin-bottom:24px;">Your Firestore database is empty.</p>
-                <button id="seedBtn" class="btn btn-primary" onclick="seedProjects()">↓ IMPORT INITIAL PROJECTS (FRACT ERA, SWIVEL QUIVER, OUTFALL, MERGE, VANTAGE)</button>
+            <div style="padding:60px 40px;border:2px dashed var(--line);text-align:center;border-radius:6px;">
+                <p style="font-family:'Space Mono',monospace;font-size:13px;color:var(--muted);margin-bottom:24px;">Your Firestore database is empty.</p>
+                <button id="seedBtn" class="btn btn-primary" onclick="seedProjects()">↓ IMPORT INITIAL PROJECTS</button>
             </div>`;
         return;
     }
 
-    // If projects exist, offer a way to sync missing static projects
+    // Sync banners for static projects if missing
     const hasVantage = allProjects.some(p => p.title === "VANTAGE");
     const hasGridsense = allProjects.some(p => p.title === "GRIDSENSE AI");
+    const hasBcgi = allProjects.some(p => p.title === "BCGI");
+    const hasMerge = allProjects.some(p => p.title === "MERGE");
+    
     let syncHtml = '';
     if (!hasVantage) {
         syncHtml += `
-            <div style="margin-bottom:24px; padding:16px; background:rgba(196,93,62,0.05); border-left:4px solid var(--terra); display:flex; justify-content:space-between; align-items:center;">
-                <p style="font-family:var(--font-mono); font-size:11px;">NEW PROJECT DETECTED: <b>VANTAGE</b></p>
+            <div class="sync-banner">
+                <div class="sync-info">
+                    <span class="sync-title">NEW PROJECT DETECTED: VANTAGE</span>
+                    <span class="sync-desc">Not found in your live Firestore database.</span>
+                </div>
                 <button class="btn btn-primary" onclick="seedVantage()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
             </div>
         `;
     }
     if (!hasGridsense) {
         syncHtml += `
-            <div style="margin-bottom:24px; padding:16px; background:rgba(196,93,62,0.05); border-left:4px solid var(--terra); display:flex; justify-content:space-between; align-items:center;">
-                <p style="font-family:var(--font-mono); font-size:11px;">NEW PROJECT DETECTED: <b>GRIDSENSE AI</b></p>
+            <div class="sync-banner">
+                <div class="sync-info">
+                    <span class="sync-title">NEW PROJECT DETECTED: GRIDSENSE AI</span>
+                    <span class="sync-desc">Not found in your live Firestore database.</span>
+                </div>
                 <button class="btn btn-primary" onclick="seedGridsense()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
             </div>
         `;
     }
+    if (!hasBcgi) {
+        syncHtml += `
+            <div class="sync-banner">
+                <div class="sync-info">
+                    <span class="sync-title">NEW CASE STUDY DETECTED: BCGI</span>
+                    <span class="sync-desc">Not found in your live Firestore database.</span>
+                </div>
+                <button class="btn btn-primary" onclick="seedBcgi()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
+            </div>
+        `;
+    }
+    if (!hasMerge) {
+        syncHtml += `
+            <div class="sync-banner">
+                <div class="sync-info">
+                    <span class="sync-title">NEW CASE STUDY DETECTED: MERGE</span>
+                    <span class="sync-desc">Not found in your live Firestore database.</span>
+                </div>
+                <button class="btn btn-primary" onclick="seedMerge()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
+            </div>
+        `;
+    }
 
-    projectGrid.innerHTML = syncHtml + allProjects.map(p => `
-        <div class="project-row">
-            <span class="project-row-num">${String(p.order || '—').padStart(2, '0')}</span>
-            <img class="project-row-thumb" src="${p.gallery?.[0] || ''}" alt="${p.title}" onerror="this.style.background='#eee';this.src='';">
-            <div>
-                <div class="project-row-title">${p.title}</div>
-                <div class="project-row-cat">${p.category || ''}</div>
+    projectGrid.innerHTML = syncHtml + allProjects.map(p => {
+        const isCaseStudy = p.type === 'casestudy';
+        const typeBadge = isCaseStudy 
+            ? `<span class="project-badge badge-casestudy">UX DESIGN</span>`
+            : `<span class="project-badge badge-dev">DEV</span>`;
+            
+        return `
+            <div class="project-row">
+                <span class="project-row-num">${String(p.order || '—').padStart(2, '0')}</span>
+                <img class="project-row-thumb" src="${p.gallery?.[0] || ''}" alt="${p.title}" onerror="this.style.background='var(--line)';this.src='';">
+                <div>
+                    <div class="project-row-title">${p.title} ${typeBadge}</div>
+                    <div class="project-row-cat">${p.category || ''}</div>
+                </div>
+                <span class="project-row-cat">${p.tech || '—'}</span>
+                <span class="project-row-year">${p.year || '—'}</span>
+                <div class="project-row-actions">
+                    <button class="btn btn-ghost" onclick="openEdit('${p.docId}')">EDIT</button>
+                    <button class="btn btn-danger" onclick="deleteProject('${p.docId}', '${p.title}')">DELETE</button>
+                </div>
             </div>
-            <span class="project-row-cat">${p.tech || '—'}</span>
-            <span class="project-row-year">${p.year || '—'}</span>
-            <div class="project-row-actions">
-                <button class="btn btn-ghost" onclick="openEdit('${p.docId}')">EDIT</button>
-                <button class="btn btn-danger" onclick="deleteProject('${p.docId}', '${p.title}')">DELETE</button>
-            </div>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function updateStats() {
     const total = allProjects.length;
     document.getElementById('statTotal').textContent = total;
-    document.getElementById('statAvail').textContent = Math.max(0, 9 - total);
+    document.getElementById('statSlots').textContent = 12;
+    document.getElementById('statAvail').textContent = Math.max(0, 12 - total);
 }
 
 // ══════════════════════════════════════════════
-// 4. MODAL — ADD / EDIT
+// 5. MODAL — ADD / EDIT
 // ══════════════════════════════════════════════
 addProjectBtn.addEventListener('click', () => openModal());
 cancelModalBtn.addEventListener('click', () => closeModal());
+
+// Toggle Case Study ID visibility dynamically
+fType.addEventListener('change', () => {
+    if (fType.value === 'casestudy') {
+        casestudyIdField.style.display = 'block';
+    } else {
+        casestudyIdField.style.display = 'none';
+        fCasestudyId.value = '';
+    }
+});
 
 function openModal(docId = null) {
     clearForm();
@@ -294,6 +422,16 @@ function openModal(docId = null) {
         document.getElementById('fStory').value = p.story || '';
         document.getElementById('fLiveUrl').value = p.liveUrl || '';
         document.getElementById('fSourceUrl').value = p.sourceUrl || '';
+        
+        // Load custom fields
+        fType.value = p.type || 'development';
+        fCasestudyId.value = p.casestudyId || '';
+        if (fType.value === 'casestudy') {
+            casestudyIdField.style.display = 'block';
+        } else {
+            casestudyIdField.style.display = 'none';
+        }
+
         // Gallery
         const imgs = document.querySelectorAll('.gallery-img');
         (p.gallery || []).forEach((src, i) => {
@@ -311,9 +449,12 @@ function closeModal() {
 }
 
 function clearForm() {
-    ['fTitle', 'fCategory', 'fYear', 'fRole', 'fTech', 'fOrder', 'fDescription', 'fStory', 'fLiveUrl', 'fSourceUrl'].forEach(id => {
-        document.getElementById(id).value = '';
+    ['fTitle', 'fCategory', 'fYear', 'fRole', 'fTech', 'fOrder', 'fDescription', 'fStory', 'fLiveUrl', 'fSourceUrl', 'fCasestudyId'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
     });
+    fType.value = 'development';
+    casestudyIdField.style.display = 'none';
     document.querySelectorAll('.gallery-img').forEach(i => i.value = '');
     document.getElementById('editDocId').value = '';
 }
@@ -322,15 +463,22 @@ function clearForm() {
 window.openEdit = (docId) => openModal(docId);
 
 // ══════════════════════════════════════════════
-// 5. SAVE PROJECT (add or update)
+// 6. SAVE PROJECT (add or update)
 // ══════════════════════════════════════════════
 saveProjectBtn.addEventListener('click', async () => {
     const title = document.getElementById('fTitle').value.trim();
     const category = document.getElementById('fCategory').value.trim();
     const description = document.getElementById('fDescription').value.trim();
+    const type = fType.value;
+    const casestudyId = fCasestudyId.value.trim();
 
     if (!title || !category || !description) {
         showToast('Title, category, and description are required!', true);
+        return;
+    }
+
+    if (type === 'casestudy' && !casestudyId) {
+        showToast('Case Study ID is required for UX Case Studies!', true);
         return;
     }
 
@@ -345,11 +493,13 @@ saveProjectBtn.addEventListener('click', async () => {
         const data = {
             title: title.toUpperCase(),
             category: category.toUpperCase(),
+            type,
+            casestudyId: type === 'casestudy' ? casestudyId : '',
             year: document.getElementById('fYear').value.trim() || new Date().getFullYear().toString(),
             role: document.getElementById('fRole').value.trim(),
             tech: document.getElementById('fTech').value.trim(),
             order: parseInt(document.getElementById('fOrder').value) || allProjects.length + 1,
-            description: document.getElementById('fDescription').value.trim(),
+            description,
             story: document.getElementById('fStory').value.trim(),
             liveUrl: document.getElementById('fLiveUrl').value.trim(),
             sourceUrl: document.getElementById('fSourceUrl').value.trim(),
@@ -378,7 +528,7 @@ saveProjectBtn.addEventListener('click', async () => {
 });
 
 // ══════════════════════════════════════════════
-// 6. DELETE PROJECT
+// 7. DELETE PROJECT
 // ══════════════════════════════════════════════
 window.deleteProject = async (docId, title) => {
     if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
@@ -392,10 +542,10 @@ window.deleteProject = async (docId, title) => {
 };
 
 // ══════════════════════════════════════════════
-// 7. TOAST NOTIFICATION
+// 8. TOAST NOTIFICATION
 // ══════════════════════════════════════════════
 function showToast(msg, isError = false) {
     toast.textContent = msg;
-    toast.className = 'toast show' + (isError ? '' : ' success');
+    toast.className = 'toast show ' + (isError ? 'error' : 'success');
     setTimeout(() => toast.className = 'toast', 3000);
 }
