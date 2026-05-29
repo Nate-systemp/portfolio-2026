@@ -157,61 +157,61 @@ const CASE_STUDIES = {
         id: 'merge',
         badge: 'UI/UX DESIGN',
         title: 'MERGE',
-        subtitle: 'High-Fidelity macOS Interactive Platform & Demo',
+        subtitle: 'Interactive Desktop Platform Design & Demo',
         domain: 'merge-platform.com',
         role: 'UI/UX Designer',
         tools: 'Figma',
         year: '2026',
         scope: 'Desktop App Design',
-        overview: 'A self-initiated personal UI/UX design project for MERGE, a high-fidelity interactive macOS platform concept. Designed entirely by me with no external client, this project features premium dark mode layouts, high density information displays, and pixel-perfect interactive mockups. The project showcases how modern desktop applications can balance aesthetic minimalism with rich technical capabilities.',
-        problemIntro: 'Designing a complex dashboard for high-end users presents unique challenges in terms of data density, scanning efficiency, and interaction visual styling.',
+        overview: 'A self-initiated personal UI/UX design project for MERGE, a high-fidelity desktop platform concept. Designed entirely by me, this project focuses on dark mode layouts, clean information displays, and interactive mockups. The design demonstrates how desktop application dashboards can balance rich technical utilities with aesthetic minimalism.',
+        problemIntro: 'Designing a complex dashboard for technical applications presents unique layout challenges, particularly around data readability and navigation efficiency.',
         problems: [
-            'High cognitive load due to complex technical data streams',
-            'Difficulty in balancing minimalism with dense technical instrumentation',
-            'Unrefined interaction flows for window management and platform navigation',
-            'Visual clutter when multiple panels are active simultaneously'
+            'Managing cognitive load when displaying complex data feeds',
+            'Balancing layout spacing with dense data instrumentation needs',
+            'Designing intuitive navigation flows for multi-panel dashboards',
+            'Visual clutter when multiple workspace tools are active simultaneously'
         ],
-        impactText: 'Without proper visual scaffolding and layout structuring, users can quickly become overwhelmed by data-dense environments.',
+        impactText: 'Without structured visual organization, users can quickly become overwhelmed by data-dense environments.',
         goals: [
-            { title: 'Simplify Complexity', desc: 'Present massive amounts of technical data in a clean, legible, and visual manner.' },
-            { title: 'Aesthetic Premium', desc: 'Craft a stunning, high-end dark mode design utilizing rich glassmorphism and subtle gradients.' },
-            { title: 'Fluid Interactions', desc: 'Design smooth macOS-style transitions and modular interactive desktop widgets.' }
+            { title: 'Simplify Complexity', desc: 'Present complex data streams in a clean, legible, and highly scannable visual format.' },
+            { title: 'Refined Dark Mode', desc: 'Craft a modern dark theme utilizing subtle glassmorphism and consistent layout styling.' },
+            { title: 'Fluid Interactions', desc: 'Design smooth transitions and modular interactive widgets for easy navigation.' }
         ],
-        researchMethod: 'I analyzed expert usability principles, window-docking patterns, and cognitive patterns under dense information workloads to design an optimal, low-stress workstation layout.',
+        researchMethod: 'I analyzed dashboard layout frameworks and information hierarchy models to design an intuitive, low-stress workstation layout.',
         findings: [
-            'Modular layouts with collapsable panels reduce interface stress',
-            'Dark mode with selected high-contrast color highlights increases long-term reading comfort',
+            'Modular widgets with collapsible panels significantly reduce layout stress',
+            'Consistent dark UI with selected highlights increases readability',
             'Predictable navigation anchors speed up professional workflows'
         ],
         process: [
             {
                 title: 'Wireframing & IA',
-                text: 'Mapped out user journeys for technical analysts and sketched modular widget arrangements.',
+                text: 'Mapped out user journeys and sketched layout arrangements for key dashboard components.',
                 tags: ['Information Architecture', 'Low-Fi Sketches']
             },
             {
                 title: 'High-Fidelity UI Design',
-                text: 'Engineered a cohesive macOS design system with refined dark modes, precise typography scales, and elegant shadow systems.',
+                text: 'Engineered a cohesive desktop design system with structured typography scales and subtle shadows for visual depth.',
                 tags: ['Figma', 'UI Kits', 'Design System']
             },
             {
-                title: 'Interaction & Video Prototyping',
-                text: 'Created dynamic high-fidelity video walkthroughs (M02.mp4) to simulate and test desktop transitions, overlays, and responsiveness.',
+                title: 'Interaction Prototyping',
+                text: 'Created dynamic video walkthroughs (M02.mp4) to demonstrate dashboard transitions and responsive adjustments.',
                 tags: ['Motion Design', 'Video Demo']
             }
         ],
         outcomes: [
-            { icon: '✦', title: 'Seamless Visuals', desc: 'An ultra-premium, modern dark aesthetic' },
-            { icon: '◈', title: 'Modular Control', desc: 'Flexible sidebars and widgets designed for power users' },
-            { icon: '▲', title: 'High-Fidelity Demo', desc: 'Rich motion prototype illustrating production-level interactions' }
+            { icon: '✦', title: 'Clean Visuals', desc: 'A modern, understated dark aesthetic focusing on data clarity' },
+            { icon: '◈', title: 'Modular Control', desc: 'Flexible sidebars and widgets designed for custom layouts' },
+            { icon: '▲', title: 'Interactive Demo', desc: 'A video prototype showing UI transitions and interaction details' }
         ],
         learnings: [
-            'Complex Data Layouts',
-            'Motion Design & Prototyping',
-            'macOS Interface Aesthetics',
-            'Precision Component Engineering'
+            'Dashboard Layout Design',
+            'Interaction Prototyping',
+            'Desktop Interface Aesthetics',
+            'Component System Engineering'
         ],
-        disclaimer: 'This is a personal, self-initiated conceptual project designed entirely by me. All original assets, design components, mockups, and interaction demo videos were created by me.'
+        disclaimer: 'This is a personal, self-initiated conceptual project designed entirely by me. All original design components, layouts, mockups, and interaction demo videos were created by me.'
     }
 };
 
@@ -317,10 +317,10 @@ function populate() {
             screenshotSection.innerHTML = `
                 <div class="cs-screenshot-header" data-reveal>
                     <span class="cs-screenshot-label">INTERACTIVE MOCKUPS</span>
-                    <h3 class="cs-screenshot-title" id="csScreenshotTitle">High-Fidelity macOS Desktop Mockups</h3>
+                    <h3 class="cs-screenshot-title" id="csScreenshotTitle">High-Fidelity Desktop Mockups</h3>
                 </div>
                 <div class="cs-merge-mockups-container" data-reveal>
-                    <!-- Left Side: Scrollable image in macOS style desktop frame -->
+                    <!-- Left Side: Scrollable image in desktop browser frame -->
                     <div class="cs-browser-frame">
                         <div class="cs-browser-header-bar">
                             <div class="cs-browser-dots">
@@ -335,7 +335,7 @@ function populate() {
                         </div>
                     </div>
                     
-                    <!-- Right Side: Video in macOS style desktop frame -->
+                    <!-- Right Side: Video in desktop browser frame -->
                     <div class="cs-browser-frame">
                         <div class="cs-browser-header-bar">
                             <div class="cs-browser-dots">
@@ -353,7 +353,7 @@ function populate() {
                         </div>
                     </div>
                 </div>
-                <p class="cs-screenshot-caption" id="csScreenshotCaption" data-reveal>On the left: The pixel-perfect scrollable layout (M01). On the right: The high-fidelity desktop interaction demonstration video (M02).</p>
+                <p class="cs-screenshot-caption" id="csScreenshotCaption" data-reveal>On the left: The scrollable dashboard layout (M01). On the right: The interactive desktop demonstration video (M02).</p>
             `;
 
             // Explicitly play and configure the video element programmatically
