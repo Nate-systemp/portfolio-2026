@@ -364,7 +364,7 @@ function populate() {
                 video.setAttribute('loop', '');
                 video.setAttribute('muted', '');
                 video.setAttribute('playsinline', '');
-                
+
                 video.defaultMuted = true;
                 video.muted = true;
                 video.autoplay = true;

@@ -76,7 +76,7 @@ async function fetchProjects() {
         const snapshot = await getDocs(q);
         const projects = [];
         snapshot.forEach(d => projects.push({ docId: d.id, ...d.data() }));
-        
+
         // Map dynamic MERGE projects in database to the premium UI/UX Case Study structure
         projects.forEach(p => {
             if (p.title === "MERGE") {
@@ -102,7 +102,7 @@ async function fetchProjects() {
         return projects.sort((a, b) => (a.order || 99) - (b.order || 99));
     } catch (e) {
         console.warn('[Firestore Loader] Could not fetch projects:', e.message);
-        
+
         // Map static fallback just in case
         const staticList = JSON.parse(JSON.stringify(STATIC_PROJECTS));
         return staticList.sort((a, b) => (a.order || 99) - (b.order || 99));
@@ -117,9 +117,9 @@ function buildCard(project, index) {
     const img = project.gallery?.[0] || '';
     const num = String(project.order || index + 1).padStart(2, '0');
     const projectType = project.type || 'development';
-    
+
     // Route case study projects to casestudy.html, others to project.html
-    const href = projectType === 'casestudy' 
+    const href = projectType === 'casestudy'
         ? `casestudy.html?id=${encodeURIComponent(project.casestudyId || project.docId)}`
         : `project.html?docId=${encodeURIComponent(project.docId)}`;
 

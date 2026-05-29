@@ -177,7 +177,7 @@ async function seedVantage() {
     try {
         const vantage = SEED_PROJECTS.find(p => p.title === "VANTAGE");
         if (!vantage) return;
-        
+
         await addDoc(collection(db, 'projects'), {
             ...vantage,
             createdAt: new Date().toISOString(),
@@ -194,7 +194,7 @@ async function seedGridsense() {
     try {
         const gridsense = SEED_PROJECTS.find(p => p.title === "GRIDSENSE AI");
         if (!gridsense) return;
-        
+
         await addDoc(collection(db, 'projects'), {
             ...gridsense,
             createdAt: new Date().toISOString(),
@@ -296,8 +296,8 @@ function openModal(docId = null) {
         document.getElementById('fSourceUrl').value = p.sourceUrl || '';
         // Gallery
         const imgs = document.querySelectorAll('.gallery-img');
-        (p.gallery || []).forEach((src, i) => { 
-            if (imgs[i]) imgs[i].value = src; 
+        (p.gallery || []).forEach((src, i) => {
+            if (imgs[i]) imgs[i].value = src;
         });
     }
 
@@ -311,7 +311,7 @@ function closeModal() {
 }
 
 function clearForm() {
-    ['fTitle','fCategory','fYear','fRole','fTech','fOrder','fDescription','fStory','fLiveUrl','fSourceUrl'].forEach(id => {
+    ['fTitle', 'fCategory', 'fYear', 'fRole', 'fTech', 'fOrder', 'fDescription', 'fStory', 'fLiveUrl', 'fSourceUrl'].forEach(id => {
         document.getElementById(id).value = '';
     });
     document.querySelectorAll('.gallery-img').forEach(i => i.value = '');
@@ -366,7 +366,7 @@ saveProjectBtn.addEventListener('click', async () => {
             await addDoc(collection(db, 'projects'), data);
             showToast('Project added ✓');
         }
-        
+
         closeModal();
         loadProjects();
     } catch (e) {
