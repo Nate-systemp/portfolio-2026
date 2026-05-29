@@ -77,9 +77,23 @@ async function fetchProjects() {
         const projects = [];
         snapshot.forEach(d => projects.push({ docId: d.id, ...d.data() }));
         
-        // Merge static projects if they aren't already in the list by docId
+        // Map dynamic MERGE projects in database to the premium UI/UX Case Study structure
+        projects.forEach(p => {
+            if (p.title === "MERGE") {
+                p.category = "UI/UX DESIGN";
+                p.type = "casestudy";
+                p.casestudyId = "merge";
+                p.gallery = ["assets/M01.png"];
+                p.description = "An elegant interactive macOS platform design and high-fidelity video demonstration showcasing refined aesthetic layouts.";
+                p.role = "UI/UX Designer";
+                p.tech = "FIGMA, AFTER EFFECTS";
+                p.year = "2026";
+            }
+        });
+
+        // Merge static projects if they aren't already in the list by docId OR case study title to prevent duplicates
         STATIC_PROJECTS.forEach(sp => {
-            if (!projects.some(p => p.docId === sp.docId)) {
+            if (!projects.some(p => p.docId === sp.docId || (p.title === sp.title && p.type === 'casestudy'))) {
                 projects.push(sp);
             }
         });
@@ -88,7 +102,10 @@ async function fetchProjects() {
         return projects.sort((a, b) => (a.order || 99) - (b.order || 99));
     } catch (e) {
         console.warn('[Firestore Loader] Could not fetch projects:', e.message);
-        return STATIC_PROJECTS; // Fallback to static if firestore fails
+        
+        // Map static fallback just in case
+        const staticList = JSON.parse(JSON.stringify(STATIC_PROJECTS));
+        return staticList.sort((a, b) => (a.order || 99) - (b.order || 99));
     }
 }
 

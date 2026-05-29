@@ -359,37 +359,71 @@ function populate() {
             // Explicitly play and configure the video element programmatically
             const video = screenshotSection.querySelector('video');
             if (video) {
+                // Explicitly set DOM attributes (essential for Chrome/Safari video parser recognition)
+                video.setAttribute('autoplay', '');
+                video.setAttribute('loop', '');
+                video.setAttribute('muted', '');
+                video.setAttribute('playsinline', '');
+                
                 video.defaultMuted = true;
                 video.muted = true;
                 video.autoplay = true;
                 video.loop = true;
                 video.playsInline = true;
 
+                let playPromise = null;
                 const startPlay = () => {
-                    video.play().catch(err => {
-                        console.warn('[Video Player] Playback failed or was blocked by browser autoplay policy:', err.message);
-                    });
+                    if (video.paused) {
+                        playPromise = video.play();
+                        if (playPromise !== undefined) {
+                            playPromise.catch(err => {
+                                console.warn('[Video Player] Playback was blocked or interrupted:', err.message);
+                            });
+                        }
+                    }
                 };
 
-                // Trigger play immediately
+                // Try playing immediately
                 startPlay();
 
-                // Trigger play on user interaction anywhere on the screen
-                const playOnInteraction = () => {
-                    startPlay();
-                    document.removeEventListener('click', playOnInteraction);
-                    document.removeEventListener('touchstart', playOnInteraction);
-                    document.removeEventListener('keydown', playOnInteraction);
-                };
-                document.addEventListener('click', playOnInteraction);
-                document.addEventListener('touchstart', playOnInteraction);
-                document.addEventListener('keydown', playOnInteraction);
+                // Listen for loaded events to play
+                video.addEventListener('loadedmetadata', startPlay);
+                video.addEventListener('canplay', startPlay);
 
-                // Add interactive toggle click directly on the video
+                // Use viewport-based playback: play when visible, pause when offscreen
+                if ('IntersectionObserver' in window) {
+                    const videoObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                startPlay();
+                            } else {
+                                video.pause();
+                            }
+                        });
+                    }, { threshold: 0.1 });
+                    videoObserver.observe(video);
+                }
+
+                // Register standard user activation listeners to kick off playback upon first tap/click/keypress
+                const userActivationEvents = ['click', 'touchstart', 'keydown', 'pointerdown'];
+                const playOnGesture = () => {
+                    startPlay();
+                    userActivationEvents.forEach(evt => {
+                        document.removeEventListener(evt, playOnGesture);
+                    });
+                };
+                userActivationEvents.forEach(evt => {
+                    document.addEventListener(evt, playOnGesture, { passive: true });
+                });
+
+                // Load source elements to trigger playback pipeline
+                video.load();
+
+                // Interactive tap/click toggle on the video itself
                 video.addEventListener('click', (e) => {
                     e.stopPropagation();
                     if (video.paused) {
-                        video.play();
+                        video.play().catch(err => console.warn('[Video Player] Toggle play failed:', err));
                     } else {
                         video.pause();
                     }
