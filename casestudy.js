@@ -152,6 +152,66 @@ const CASE_STUDIES = {
             'Trust-Centered UX Design'
         ],
         disclaimer: 'This was a self-initiated conceptual redesign created for educational and portfolio purposes. I am not affiliated with The BlackCoders Group Inc. All original content and branding belong to their respective owners.'
+    },
+    merge: {
+        id: 'merge',
+        badge: 'UI/UX DESIGN',
+        title: 'MERGE',
+        subtitle: 'High-Fidelity macOS Interactive Platform & Demo',
+        domain: 'merge-platform.com',
+        role: 'UI/UX Designer',
+        tools: 'Figma, After Effects',
+        year: '2026',
+        scope: 'Desktop App Design',
+        overview: 'An extensive UI/UX design project for MERGE, a high-fidelity interactive macOS platform. This design features premium dark mode layouts, high density information displays, and pixel-perfect interactive mockups. The project showcases how modern desktop applications can balance aesthetic minimalism with rich technical capabilities.',
+        problemIntro: 'Designing a complex dashboard for high-end users presents unique challenges in terms of data density, scanning efficiency, and interaction visual styling.',
+        problems: [
+            'High cognitive load due to complex technical data streams',
+            'Difficulty in balancing minimalism with dense technical instrumentation',
+            'Unrefined interaction flows for window management and platform navigation',
+            'Visual clutter when multiple panels are active simultaneously'
+        ],
+        impactText: 'Without proper visual scaffolding and layout structuring, users can quickly become overwhelmed by data-dense environments.',
+        goals: [
+            { title: 'Simplify Complexity', desc: 'Present massive amounts of technical data in a clean, legible, and visual manner.' },
+            { title: 'Aesthetic Premium', desc: 'Craft a stunning, high-end dark mode design utilizing rich glassmorphism and subtle gradients.' },
+            { title: 'Fluid Interactions', desc: 'Design smooth macOS-style transitions and modular interactive desktop widgets.' }
+        ],
+        researchMethod: 'We analyzed expert usability principles, window-docking patterns, and cognitive patterns under dense information workloads to design an optimal, low-stress workstation layout.',
+        findings: [
+            'Modular layouts with collapsable panels reduce interface stress',
+            'Dark mode with selected high-contrast color highlights increases long-term reading comfort',
+            'Predictable navigation anchors speed up professional workflows'
+        ],
+        process: [
+            {
+                title: 'Wireframing & IA',
+                text: 'Mapped out user journeys for technical analysts and sketched modular widget arrangements.',
+                tags: ['Information Architecture', 'Low-Fi Sketches']
+            },
+            {
+                title: 'High-Fidelity UI Design',
+                text: 'Engineered a cohesive macOS design system with refined dark modes, precise typography scales, and elegant shadow systems.',
+                tags: ['Figma', 'UI Kits', 'Design System']
+            },
+            {
+                title: 'Interaction & Video Prototyping',
+                text: 'Created dynamic high-fidelity video walkthroughs (M02.mp4) to simulate and test desktop transitions, overlays, and responsiveness.',
+                tags: ['Motion Design', 'Video Demo', 'After Effects']
+            }
+        ],
+        outcomes: [
+            { icon: '✦', title: 'Seamless Visuals', desc: 'An ultra-premium, modern dark aesthetic' },
+            { icon: '◈', title: 'Modular Control', desc: 'Flexible sidebars and widgets designed for power users' },
+            { icon: '▲', title: 'High-Fidelity Demo', desc: 'Rich motion prototype illustrating production-level interactions' }
+        ],
+        learnings: [
+            'Complex Data Layouts',
+            'Motion Design & Prototyping',
+            'macOS Interface Aesthetics',
+            'Precision Component Engineering'
+        ],
+        disclaimer: 'All original assets, design components, and videos presented in this conceptual project are property of their respective creators.'
     }
 };
 
@@ -250,23 +310,111 @@ function populate() {
         `).join('');
     }
 
-    // Screenshot Before/After Population
-    const imgAfter = document.getElementById('csScreenshotImgAfter');
-    const imgBefore = document.getElementById('csScreenshotImgBefore');
-    if (imgAfter && cs.screenshotAfter) {
-        imgAfter.src = cs.screenshotAfter;
-    }
-    if (imgBefore && cs.screenshotBefore) {
-        imgBefore.src = cs.screenshotBefore;
-    }
-    if (cs.domain) {
-        set('csBrowserAddress', cs.domain);
-    }
-    set('csScreenshotTitle', cs.screenshotTitle);
-    set('csScreenshotCaption', cs.screenshotCaption);
+    // Screenshot / Concept Display
+    if (id === 'merge') {
+        const screenshotSection = document.querySelector('.cs-screenshot');
+        if (screenshotSection) {
+            screenshotSection.innerHTML = `
+                <div class="cs-screenshot-header" data-reveal>
+                    <span class="cs-screenshot-label">INTERACTIVE MOCKUPS</span>
+                    <h3 class="cs-screenshot-title" id="csScreenshotTitle">High-Fidelity macOS Desktop Mockups</h3>
+                </div>
+                <div class="cs-merge-mockups-container" data-reveal>
+                    <!-- Left Side: Scrollable image in macOS style desktop frame -->
+                    <div class="cs-browser-frame">
+                        <div class="cs-browser-header-bar">
+                            <div class="cs-browser-dots">
+                                <span class="cs-dot close"></span>
+                                <span class="cs-dot minimize"></span>
+                                <span class="cs-dot maximize"></span>
+                            </div>
+                            <div class="cs-browser-address-bar">merge-platform.com/dashboard</div>
+                        </div>
+                        <div class="cs-screenshot-container" style="height: 480px; overflow-y: auto; background: #0e0e0e;">
+                            <img class="cs-screenshot-img active" src="assets/M01.png" alt="Merge Dashboard Design Layout" style="width: 100%; height: auto; display: block; cursor: zoom-in;">
+                        </div>
+                    </div>
+                    
+                    <!-- Right Side: Video in macOS style desktop frame -->
+                    <div class="cs-browser-frame">
+                        <div class="cs-browser-header-bar">
+                            <div class="cs-browser-dots">
+                                <span class="cs-dot close"></span>
+                                <span class="cs-dot minimize"></span>
+                                <span class="cs-dot maximize"></span>
+                            </div>
+                            <div class="cs-browser-address-bar">merge-platform.com/interaction-demo</div>
+                        </div>
+                        <div class="cs-screenshot-container" style="height: 480px; overflow: hidden; background: #0a0a0a; display: flex; align-items: center; justify-content: center;">
+                            <video autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover; display: block; cursor: pointer;">
+                                <source src="assets/M02.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+                <p class="cs-screenshot-caption" id="csScreenshotCaption" data-reveal>On the left: The pixel-perfect scrollable layout (M01). On the right: The high-fidelity desktop interaction demonstration video (M02).</p>
+            `;
 
-    // Setup interactive comparison switcher
-    initCompareTabs();
+            // Explicitly play and configure the video element programmatically
+            const video = screenshotSection.querySelector('video');
+            if (video) {
+                video.defaultMuted = true;
+                video.muted = true;
+                video.autoplay = true;
+                video.loop = true;
+                video.playsInline = true;
+
+                const startPlay = () => {
+                    video.play().catch(err => {
+                        console.warn('[Video Player] Playback failed or was blocked by browser autoplay policy:', err.message);
+                    });
+                };
+
+                // Trigger play immediately
+                startPlay();
+
+                // Trigger play on user interaction anywhere on the screen
+                const playOnInteraction = () => {
+                    startPlay();
+                    document.removeEventListener('click', playOnInteraction);
+                    document.removeEventListener('touchstart', playOnInteraction);
+                    document.removeEventListener('keydown', playOnInteraction);
+                };
+                document.addEventListener('click', playOnInteraction);
+                document.addEventListener('touchstart', playOnInteraction);
+                document.addEventListener('keydown', playOnInteraction);
+
+                // Add interactive toggle click directly on the video
+                video.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (video.paused) {
+                        video.play();
+                    } else {
+                        video.pause();
+                    }
+                });
+            }
+        }
+    } else {
+        // Screenshot Before/After Population
+        const imgAfter = document.getElementById('csScreenshotImgAfter');
+        const imgBefore = document.getElementById('csScreenshotImgBefore');
+        if (imgAfter && cs.screenshotAfter) {
+            imgAfter.src = cs.screenshotAfter;
+        }
+        if (imgBefore && cs.screenshotBefore) {
+            imgBefore.src = cs.screenshotBefore;
+        }
+        if (cs.domain) {
+            set('csBrowserAddress', cs.domain);
+        }
+        set('csScreenshotTitle', cs.screenshotTitle);
+        set('csScreenshotCaption', cs.screenshotCaption);
+
+        // Setup interactive comparison switcher
+        initCompareTabs();
+    }
 
     // Outcomes
     const outcomeGrid = document.getElementById('csOutcomeGrid');
@@ -448,8 +596,6 @@ function initLightbox() {
     const overlay = document.getElementById('csLightbox');
     const img = document.getElementById('csLightboxImg');
     const close = document.getElementById('csLightboxClose');
-    const imgAfter = document.getElementById('csScreenshotImgAfter');
-    const imgBefore = document.getElementById('csScreenshotImgBefore');
 
     if (!overlay || !img || !close) return;
 
@@ -462,8 +608,9 @@ function initLightbox() {
         });
     };
 
-    bindLightbox(imgAfter);
-    bindLightbox(imgBefore);
+    // Bind all screenshot images dynamically
+    const screenshotImgs = document.querySelectorAll('.cs-screenshot-img, .cs-screenshot-container img');
+    screenshotImgs.forEach(bindLightbox);
 
     close.addEventListener('click', closeLightbox);
     overlay.addEventListener('click', (e) => {

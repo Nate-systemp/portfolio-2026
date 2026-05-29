@@ -50,6 +50,19 @@ const STATIC_PROJECTS = [
         description: "A self-initiated UX/UI redesign of The BlackCoders Group Inc.'s About page — improving visual hierarchy, readability, trust-building, and user experience.",
         casestudyId: "bcgi",
         gallery: ["assets/bcgi_aboutus.png"],
+    },
+    {
+        docId: "static-merge-casestudy",
+        order: 8,
+        title: "MERGE",
+        category: "UI/UX DESIGN",
+        type: "casestudy",
+        year: "2026",
+        role: "UI/UX Designer",
+        tech: "FIGMA, AFTER EFFECTS",
+        description: "An elegant interactive macOS platform design and high-fidelity video demonstration showcasing refined aesthetic layouts.",
+        casestudyId: "merge",
+        gallery: ["assets/M01.png"],
     }
 ];
 

@@ -1223,6 +1223,30 @@ body.night-mode .cs-share-btn {
     color: #E8E3DE;
 }
 
+/* ── MERGE Case Study Side-by-Side Mockup Styles ── */
+.cs-merge-mockups-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.cs-merge-mockups-container .cs-browser-frame {
+    transition: transform 0.4s var(--ease-smooth), box-shadow 0.4s var(--ease-smooth);
+}
+
+.cs-merge-mockups-container .cs-browser-frame:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 45px 120px rgba(0, 0, 0, 0.65);
+}
+
+.cs-merge-mockups-container video {
+    outline: none;
+    border: none;
+}
+
 /* ════════════════════════════════════════════
    RESPONSIVE
    ════════════════════════════════════════════ */
@@ -1238,6 +1262,7 @@ body.night-mode .cs-share-btn {
     .cs-learnings-grid { grid-template-columns: 1fr; gap: 40px; }
     .cs-nav { padding: 0 30px; height: 80px; }
     .cs-hero-scroll { display: none; }
+    .cs-merge-mockups-container { grid-template-columns: 1fr; gap: 30px; padding: 0 24px; }
 }
 
 @media (max-width: 768px) {
