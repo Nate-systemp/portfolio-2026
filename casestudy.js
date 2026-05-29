@@ -163,7 +163,7 @@ const CASE_STUDIES = {
         tools: 'Figma',
         year: '2026',
         scope: 'Desktop App Design',
-        overview: 'An extensive UI/UX design project for MERGE, a high-fidelity interactive macOS platform. This design features premium dark mode layouts, high density information displays, and pixel-perfect interactive mockups. The project showcases how modern desktop applications can balance aesthetic minimalism with rich technical capabilities.',
+        overview: 'A self-initiated personal UI/UX design project for MERGE, a high-fidelity interactive macOS platform concept. Designed entirely by me with no external client, this project features premium dark mode layouts, high density information displays, and pixel-perfect interactive mockups. The project showcases how modern desktop applications can balance aesthetic minimalism with rich technical capabilities.',
         problemIntro: 'Designing a complex dashboard for high-end users presents unique challenges in terms of data density, scanning efficiency, and interaction visual styling.',
         problems: [
             'High cognitive load due to complex technical data streams',
@@ -177,7 +177,7 @@ const CASE_STUDIES = {
             { title: 'Aesthetic Premium', desc: 'Craft a stunning, high-end dark mode design utilizing rich glassmorphism and subtle gradients.' },
             { title: 'Fluid Interactions', desc: 'Design smooth macOS-style transitions and modular interactive desktop widgets.' }
         ],
-        researchMethod: 'We analyzed expert usability principles, window-docking patterns, and cognitive patterns under dense information workloads to design an optimal, low-stress workstation layout.',
+        researchMethod: 'I analyzed expert usability principles, window-docking patterns, and cognitive patterns under dense information workloads to design an optimal, low-stress workstation layout.',
         findings: [
             'Modular layouts with collapsable panels reduce interface stress',
             'Dark mode with selected high-contrast color highlights increases long-term reading comfort',
@@ -211,7 +211,7 @@ const CASE_STUDIES = {
             'macOS Interface Aesthetics',
             'Precision Component Engineering'
         ],
-        disclaimer: 'All original assets, design components, and videos presented in this conceptual project are property of their respective creators.'
+        disclaimer: 'This is a personal, self-initiated conceptual project designed entirely by me. All original assets, design components, mockups, and interaction demo videos were created by me.'
     }
 };
 

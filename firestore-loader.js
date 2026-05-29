@@ -60,7 +60,7 @@ const STATIC_PROJECTS = [
         year: "2026",
         role: "UI/UX Designer",
         tech: "FIGMA",
-        description: "An elegant interactive macOS platform design and high-fidelity video demonstration showcasing refined aesthetic layouts.",
+        description: "A personal interactive macOS platform design concept and high-fidelity video demonstration designed entirely by me.",
         casestudyId: "merge",
         gallery: ["assets/M01.png"],
     }
@@ -84,7 +84,7 @@ async function fetchProjects() {
                 p.type = "casestudy";
                 p.casestudyId = "merge";
                 p.gallery = ["assets/M01.png"];
-                p.description = "An elegant interactive macOS platform design and high-fidelity video demonstration showcasing refined aesthetic layouts.";
+                p.description = "A personal interactive macOS platform design concept and high-fidelity video demonstration designed entirely by me.";
                 p.role = "UI/UX Designer";
                 p.tech = "FIGMA";
                 p.year = "2026";
