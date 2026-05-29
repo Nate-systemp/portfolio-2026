@@ -141,7 +141,7 @@ const SEED_PROJECTS = [
         gallery: ["assets/OF1.webp", "assets/OF2.webp", "assets/OF3.webp"],
     },
     {
-        order: 4,
+        order: 8,
         title: "MERGE",
         category: "UI/UX DESIGN",
         type: "casestudy",
