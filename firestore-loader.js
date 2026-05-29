@@ -59,7 +59,7 @@ const STATIC_PROJECTS = [
         type: "casestudy",
         year: "2026",
         role: "UI/UX Designer",
-        tech: "FIGMA, AFTER EFFECTS",
+        tech: "FIGMA",
         description: "An elegant interactive macOS platform design and high-fidelity video demonstration showcasing refined aesthetic layouts.",
         casestudyId: "merge",
         gallery: ["assets/M01.png"],
@@ -86,7 +86,7 @@ async function fetchProjects() {
                 p.gallery = ["assets/M01.png"];
                 p.description = "An elegant interactive macOS platform design and high-fidelity video demonstration showcasing refined aesthetic layouts.";
                 p.role = "UI/UX Designer";
-                p.tech = "FIGMA, AFTER EFFECTS";
+                p.tech = "FIGMA";
                 p.year = "2026";
             }
         });

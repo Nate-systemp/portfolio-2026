@@ -124,7 +124,7 @@ const SEED_PROJECTS = [
         type: "casestudy",
         year: "2026",
         role: "UI/UX Designer",
-        tech: "FIGMA, AFTER EFFECTS",
+        tech: "FIGMA",
         description: "An elegant interactive macOS platform design and high-fidelity video demonstration showcasing refined aesthetic layouts.",
         casestudyId: "merge",
         gallery: ["assets/M01.png"],

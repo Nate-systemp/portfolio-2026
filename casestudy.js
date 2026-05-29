@@ -160,7 +160,7 @@ const CASE_STUDIES = {
         subtitle: 'High-Fidelity macOS Interactive Platform & Demo',
         domain: 'merge-platform.com',
         role: 'UI/UX Designer',
-        tools: 'Figma, After Effects',
+        tools: 'Figma',
         year: '2026',
         scope: 'Desktop App Design',
         overview: 'An extensive UI/UX design project for MERGE, a high-fidelity interactive macOS platform. This design features premium dark mode layouts, high density information displays, and pixel-perfect interactive mockups. The project showcases how modern desktop applications can balance aesthetic minimalism with rich technical capabilities.',
@@ -197,7 +197,7 @@ const CASE_STUDIES = {
             {
                 title: 'Interaction & Video Prototyping',
                 text: 'Created dynamic high-fidelity video walkthroughs (M02.mp4) to simulate and test desktop transitions, overlays, and responsiveness.',
-                tags: ['Motion Design', 'Video Demo', 'After Effects']
+                tags: ['Motion Design', 'Video Demo']
             }
         ],
         outcomes: [
