@@ -554,7 +554,7 @@ window.addEventListener('scroll', () => {
           '',
           '  <span class="term-gold">Contact</span>',
           '',
-          '  <span class="term-accent">Email</span>     natederek99@gmail.com',
+          '  <span class="term-accent">Email</span>     nathanielspangilinan@gmail.com',
           '  <span class="term-accent">Status</span>    <span class="term-success">\u25cf Open to opportunities</span>',
           '',
           '  <span class="term-muted">Scroll to the Contact section</span>',
@@ -1457,14 +1457,27 @@ function toggleGravity() {
         throw new Error('Failed');
       }
     } catch (err) {
-      btnSpan.textContent = 'FAILED — TRY EMAIL';
+      btnSpan.textContent = 'OPENING MAIL...';
       submitBtn.style.background = 'var(--terra)';
+      
+      const name = form.querySelector('[name="name"]').value;
+      const email = form.querySelector('[name="email"]').value;
+      const message = form.querySelector('[name="message"]').value;
+      
+      const subject = encodeURIComponent(`Bespoke Inquiry from ${name}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+      const mailtoUrl = `mailto:nathanielspangilinan@gmail.com?subject=${subject}&body=${body}`;
+      
       setTimeout(() => {
-        btnSpan.textContent = originalText;
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-        submitBtn.style.background = '';
-      }, 3000);
+        window.location.href = mailtoUrl;
+        
+        setTimeout(() => {
+          btnSpan.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '1';
+          submitBtn.style.background = '';
+        }, 2000);
+      }, 800);
     }
   });
 })();
