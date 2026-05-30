@@ -15,7 +15,7 @@ if (localStorage.getItem('theme') === 'dark') {
 // ============================================
 const curtain = document.getElementById('loadingCurtain');
 const urlParams = new URLSearchParams(window.location.search);
-const isReturning = urlParams.get('from') === 'project';
+const isReturning = urlParams.get('from') === 'project' || urlParams.get('from') === 'archive';
 
 // Prepare hero entrance (hide elements before animation)
 document.body.classList.add('hero-entrance-ready');
