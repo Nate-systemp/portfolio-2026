@@ -59,41 +59,70 @@ function triggerHeroEntrance(baseDelay = 0) {
   }, totalDuration);
 }
 
+/**
+ * Dismiss the curtain with the standard cinematic sequence.
+ * Called either automatically (skip portal) or after the portal selection.
+ */
+function dismissCurtain() {
+  // Phase 1: Let the curtain text sit visible for a moment
+  setTimeout(() => {
+    // Phase 2: Exit the text — scale, blur, dissolve
+    const curtainContent = curtain.querySelector('.curtain-content');
+    if (curtainContent) curtainContent.classList.add('curtain-exiting');
+
+    // Phase 3: Flash the splitting seam line
+    setTimeout(() => {
+      curtain.classList.add('curtain-splitting');
+    }, 400);
+
+    // Phase 4: Split the curtain open — top up, bottom down
+    setTimeout(() => {
+      curtain.classList.add('dismissed');
+      curtain.classList.remove('active-curtain');
+      document.body.classList.remove('loading-active');
+
+      // Trigger hero entrance as halves start sliding apart
+      triggerHeroEntrance(200);
+
+      // Clean up after halves have fully exited
+      setTimeout(() => curtain.style.display = 'none', 1400);
+    }, 700);
+  }, 400);
+}
+
 if (isReturning) {
   curtain.classList.add('dismissed');
   document.body.classList.remove('loading-active');
   setTimeout(() => curtain.style.display = 'none', 1400);
   // Faster entrance when returning from project
   triggerHeroEntrance(200);
+} else if (window.__skipPortal) {
+  // Role already known (URL param, localStorage, etc.) — dismiss normally
+  curtain.classList.add('active-curtain');
+  window.addEventListener('load', () => {
+    setTimeout(() => dismissCurtain(), 800);
+  });
 } else {
-  // Mark curtain as interactive while loading
+  // First-time visitor — show the role portal inside the curtain
   curtain.classList.add('active-curtain');
 
   window.addEventListener('load', () => {
-    // Phase 1: Let the curtain text sit visible for a moment
+    // Hide the default "PORTFOLIO" text and show the portal
     setTimeout(() => {
-      // Phase 2: Exit the text — scale, blur, dissolve
       const curtainContent = curtain.querySelector('.curtain-content');
       if (curtainContent) curtainContent.classList.add('curtain-exiting');
 
-      // Phase 3: Flash the splitting seam line
+      // After text fades, show the portal
       setTimeout(() => {
-        curtain.classList.add('curtain-splitting');
-      }, 400);
+        const portal = document.getElementById('rolePortal');
+        if (portal) portal.classList.add('portal-visible');
+      }, 600);
+    }, 1000);
+  });
 
-      // Phase 4: Split the curtain open — top up, bottom down
-      setTimeout(() => {
-        curtain.classList.add('dismissed');
-        curtain.classList.remove('active-curtain');
-        document.body.classList.remove('loading-active');
-
-        // Trigger hero entrance as halves start sliding apart
-        triggerHeroEntrance(200);
-
-        // Clean up after halves have fully exited
-        setTimeout(() => curtain.style.display = 'none', 1400);
-      }, 700);
-    }, 1200);
+  // Listen for portal selection
+  window.addEventListener('portal-selected', () => {
+    dismissCurtain();
   });
 }
 
@@ -1126,7 +1155,8 @@ function toggleGravity() {
   let isRendering = false;
   let pdfjsLoaded = false;
 
-  const PDF_URL = 'assets/resume.pdf';
+  // Dynamic PDF path — set by role-customizer.js, fallback to default
+  let PDF_URL = window.currentResumePdf || 'assets/PANGILINAN_FRONT-ENDDEV.pdf';
   const PDFJS_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
   const PDFJS_WORKER_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
@@ -1215,6 +1245,14 @@ function toggleGravity() {
 
   // Open viewer
   async function openViewer() {
+    // Check if role-customizer changed the PDF path
+    const newUrl = window.currentResumePdf || 'assets/PANGILINAN_FRONT-ENDDEV.pdf';
+    if (newUrl !== PDF_URL || window.__resetResumePdf) {
+      PDF_URL = newUrl;
+      pdfDoc = null;           // force reload
+      window.__resetResumePdf = false;
+    }
+
     overlay.classList.add('active');
     document.body.classList.add('no-scroll');
 

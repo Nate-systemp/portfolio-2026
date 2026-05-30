@@ -4126,3 +4126,411 @@ body.night-mode .project-share-btn {
 body.night-mode .pt-half {
     background: #0a0a0a;
 }
+
+/* ============================================
+   ROLE CUSTOMIZER — Portal, Switcher, Toast
+   ============================================ */
+
+/* ── Role Portal (inside Loading Curtain) ── */
+.role-portal {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity 0.7s cubic-bezier(0.45, 0, 0.15, 1),
+                transform 0.7s cubic-bezier(0.45, 0, 0.15, 1);
+}
+
+.role-portal.portal-visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.role-portal.portal-exiting {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+    pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.portal-content {
+    text-align: center;
+    max-width: 520px;
+    padding: 0 24px;
+}
+
+.portal-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 5px;
+    color: rgba(242, 237, 232, 0.5);
+    margin-bottom: 16px;
+}
+
+.portal-heading {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: bold;
+    color: var(--paper);
+    line-height: 1.1;
+    margin: 0 0 12px;
+}
+
+.portal-heading em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--terra);
+}
+
+.portal-subtext {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: rgba(242, 237, 232, 0.55);
+    line-height: 1.7;
+    margin: 0 0 36px;
+}
+
+/* ── Portal Option Buttons ── */
+.portal-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.portal-opt-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(242, 237, 232, 0.04);
+    border: 1px solid rgba(242, 237, 232, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.35s cubic-bezier(0.45, 0, 0.15, 1);
+    color: var(--paper);
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.portal-opt-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(196, 93, 62, 0.15), rgba(196, 93, 62, 0.05));
+    opacity: 0;
+    transition: opacity 0.35s ease;
+}
+
+.portal-opt-btn:hover {
+    border-color: rgba(196, 93, 62, 0.5);
+    transform: translateX(4px);
+    background: rgba(242, 237, 232, 0.07);
+}
+
+.portal-opt-btn:hover::before {
+    opacity: 1;
+}
+
+.portal-opt-btn:active {
+    transform: translateX(4px) scale(0.98);
+}
+
+.portal-opt-icon {
+    font-size: 18px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(242, 237, 232, 0.06);
+    border-radius: 8px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+}
+
+.portal-opt-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.portal-opt-arrow {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: rgba(242, 237, 232, 0.3);
+    transition: all 0.35s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.portal-opt-btn:hover .portal-opt-arrow {
+    color: var(--terra);
+    transform: translateX(4px);
+}
+
+.portal-opt-skip {
+    margin-top: 6px;
+    border-style: dashed;
+    background: transparent;
+}
+
+.portal-opt-skip .portal-opt-label {
+    color: rgba(242, 237, 232, 0.5);
+}
+
+/* ── Floating Quick-Switcher ── */
+.bespoke-switcher {
+    position: fixed;
+    bottom: 28px;
+    left: 28px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: switcherFadeIn 0.6s cubic-bezier(0.45, 0, 0.15, 1) 2.5s forwards;
+}
+
+@keyframes switcherFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.bespoke-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--light-line);
+    border-radius: 100px;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.bespoke-pill:hover {
+    border-color: var(--terra);
+    box-shadow: 0 4px 24px rgba(196, 93, 62, 0.2);
+}
+
+.bespoke-pill-icon {
+    font-size: 14px;
+    line-height: 1;
+}
+
+/* ── Dropdown ── */
+.bespoke-dropdown {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 0;
+    min-width: 240px;
+    background: var(--ink);
+    border: 1px solid var(--light-line);
+    border-radius: 14px;
+    padding: 8px;
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.45, 0, 0.15, 1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.bespoke-switcher.open .bespoke-dropdown {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: all;
+}
+
+.bespoke-dropdown-header {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: rgba(242, 237, 232, 0.35);
+    padding: 8px 12px 10px;
+}
+
+.bespoke-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 11px 12px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+    text-align: left;
+}
+
+.bespoke-dropdown-item:hover {
+    background: rgba(242, 237, 232, 0.06);
+}
+
+.bdi-icon {
+    font-size: 14px;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.bdi-label {
+    flex: 1;
+}
+
+.bdi-check {
+    font-size: 12px;
+    color: var(--terra);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.bespoke-dropdown-item.active .bdi-check {
+    opacity: 1;
+}
+
+.bespoke-dropdown-item.active {
+    background: rgba(196, 93, 62, 0.1);
+    color: var(--terra);
+}
+
+/* ── Toast Notification ── */
+.bespoke-toast {
+    position: fixed;
+    top: 90px;
+    right: 28px;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 22px;
+    background: var(--ink);
+    border: 1px solid var(--light-line);
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.5s cubic-bezier(0.45, 0, 0.15, 1);
+    max-width: 380px;
+}
+
+.bespoke-toast.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.bespoke-toast-icon {
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(196, 93, 62, 0.12);
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.bespoke-toast-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.bespoke-toast-title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--paper);
+}
+
+.bespoke-toast-desc {
+    font-family: var(--font-body);
+    font-size: 12px;
+    color: rgba(242, 237, 232, 0.5);
+    line-height: 1.5;
+}
+
+/* ── Night Mode Overrides ── */
+body.night-mode .bespoke-pill {
+    background: #1a1a1a;
+    border-color: rgba(242, 237, 232, 0.1);
+}
+
+body.night-mode .bespoke-dropdown {
+    background: #1a1a1a;
+    border-color: rgba(242, 237, 232, 0.08);
+}
+
+body.night-mode .bespoke-toast {
+    background: #1a1a1a;
+    border-color: rgba(242, 237, 232, 0.08);
+}
+
+/* ── Responsive: Portal ── */
+@media (max-width: 600px) {
+    .portal-heading {
+        font-size: 28px;
+    }
+
+    .portal-subtext {
+        font-size: 12px;
+    }
+
+    .portal-opt-btn {
+        padding: 14px 16px;
+    }
+
+    .portal-opt-label {
+        font-size: 11px;
+    }
+
+    .bespoke-switcher {
+        bottom: 16px;
+        left: 16px;
+    }
+
+    .bespoke-pill {
+        padding: 8px 12px;
+        font-size: 10px;
+    }
+
+    .bespoke-toast {
+        right: 12px;
+        left: 12px;
+        max-width: none;
+        top: 72px;
+    }
+
+    .bespoke-dropdown {
+        min-width: 220px;
+    }
+}

@@ -222,7 +222,7 @@
                         <span>PEEK RESUME</span>
                         <span class="peek-hint">— view without downloading</span>
                     </button>
-                    <a href="assets/resume.pdf" class="resume-link" download>
+                    <a href="assets/PANGILINAN_FRONT-ENDDEV.pdf" class="resume-link" download>
                         <span>DOWNLOAD RESUME</span>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
@@ -302,7 +302,7 @@
             </div>
             <div class="experience-right">
                 <!-- Role 1 -->
-                <div class="exp-item" data-reveal>
+                <div class="exp-item" data-reveal data-exp-role="frontend">
                     <button class="exp-header" aria-expanded="false">
                         <span class="exp-year">2026</span>
                         <span class="exp-role">Lead Frontend Developer</span>
@@ -316,7 +316,7 @@
                     </div>
                 </div>
                 <!-- Role 2 -->
-                <div class="exp-item" data-reveal>
+                <div class="exp-item" data-reveal data-exp-role="uiux">
                     <button class="exp-header" aria-expanded="false">
                         <span class="exp-year">2025</span>
                         <span class="exp-role">UI/UX Designer</span>
@@ -329,7 +329,7 @@
                     </div>
                 </div>
                 <!-- Role 3 -->
-                <div class="exp-item" data-reveal>
+                <div class="exp-item" data-reveal data-exp-role="support">
                     <button class="exp-header" aria-expanded="false">
                         <span class="exp-year">2025</span>
                         <span class="exp-role">IT Intern</span>
@@ -687,7 +687,7 @@
                         </svg>
                     </button>
                     <div class="rv-divider"></div>
-                    <a href="assets/resume.pdf" class="rv-control-btn rv-download-btn" download title="Download PDF">
+                    <a href="assets/PANGILINAN_FRONT-ENDDEV.pdf" class="rv-control-btn rv-download-btn" download title="Download PDF">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="1.5">
                             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -732,6 +732,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
     <script src="three-scene.js"></script>
     <script type="module" src="firestore-loader.js"></script>
+    <script src="role-customizer.js"></script>
     <script src="script.js"></script>
 
     <!-- Page Transition Overlay -->

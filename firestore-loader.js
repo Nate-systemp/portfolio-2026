@@ -196,6 +196,45 @@ function buildPlaceholder(num) {
 // ══════════════════════════════════════════
 // POPULATE INDEX.HTML WORK GRID
 // ══════════════════════════════════════════
+let _cachedProjects = null;
+
+/**
+ * Sort projects based on the active portfolio role.
+ * Roles prioritize certain project types (e.g., UI/UX → casestudy first).
+ */
+function sortProjectsForRole(projects, roleKey) {
+    if (!roleKey || !window.PORTFOLIO_ROLES) return projects;
+    const role = window.PORTFOLIO_ROLES[roleKey];
+    if (!role || !role.projectTypes) return projects;
+
+    const priorityType = role.projectTypes[0]; // first type is highest priority
+    return [...projects].sort((a, b) => {
+        const aMatch = (a.type || 'development') === priorityType ? 0 : 1;
+        const bMatch = (b.type || 'development') === priorityType ? 0 : 1;
+        if (aMatch !== bMatch) return aMatch - bMatch;
+        return (a.order || 99) - (b.order || 99);
+    });
+}
+
+/**
+ * Render the work grid with projects sorted for the given role.
+ */
+function renderWorkGrid(projects, roleKey) {
+    const workGrid = document.getElementById('workGrid');
+    if (!workGrid) return;
+
+    const sorted = sortProjectsForRole(projects, roleKey);
+    const preview = sorted.slice(0, 4);
+    workGrid.innerHTML = preview.map((p, i) => buildCard(p, i)).join('');
+
+    // Re-trigger reveal observer on new cards
+    if (window.__revealObserver) {
+        workGrid.querySelectorAll('[data-reveal]').forEach(el => {
+            window.__revealObserver.observe(el);
+        });
+    }
+}
+
 const workGrid = document.getElementById('workGrid');
 if (workGrid) {
     // Show 4 skeletons initially
@@ -206,19 +245,21 @@ if (workGrid) {
             // Keep skeletons or show error state if needed
             return;
         }
+        _cachedProjects = projects;
 
-        // Render only up to first 4 on index.html (preview)
-        const preview = projects.slice(0, 4);
-        workGrid.innerHTML = preview.map((p, i) => buildCard(p, i)).join('');
-
-        // Re-trigger reveal observer on new cards
-        if (window.__revealObserver) {
-            workGrid.querySelectorAll('[data-reveal]').forEach(el => {
-                window.__revealObserver.observe(el);
-            });
-        }
+        const activeRole = window.__activePortfolioRole || null;
+        renderWorkGrid(projects, activeRole);
     });
 }
+
+// ══════════════════════════════════════════
+// GLOBAL: RE-RENDER PROJECTS FOR A NEW ROLE
+// ══════════════════════════════════════════
+window.renderProjectsForRole = function(roleKey) {
+    if (_cachedProjects) {
+        renderWorkGrid(_cachedProjects, roleKey);
+    }
+};
 
 // ══════════════════════════════════════════
 // POPULATE WORK.HTML ARCHIVE GRID
@@ -250,3 +291,4 @@ if (archiveGrid) {
 
 // Export for use in project.html
 export { fetchProjects };
+
