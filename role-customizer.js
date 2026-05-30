@@ -316,12 +316,9 @@
     }
   }
 
-  // Run on DOMContentLoaded if DOM isn't ready, else immediately
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+  // Run immediately since the script is loaded at the bottom of the body,
+  // ensuring window.__skipPortal is set before script.js executes.
+  init();
 
   // Expose for external use
   window.PORTFOLIO_ROLES = ROLES;

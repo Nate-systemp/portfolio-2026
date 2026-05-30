@@ -37,7 +37,7 @@
     <title>Nathaniel — Designer & Developer</title>
 </head>
 
-<body class="site-body">
+<body class="site-body loading-active">
     <!-- Skip to main content (Accessibility) -->
     <a href="#main-content" class="skip-link">Skip to content</a>
     <!-- Scroll progress bar -->
@@ -63,6 +63,20 @@
             <div class="curtain-line"></div>
         </div>
     </div>
+    <script>
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const isReturning = params.get('from') === 'project' || params.get('from') === 'archive';
+            if (isReturning) {
+                const curtain = document.getElementById('loadingCurtain');
+                if (curtain) {
+                    curtain.classList.add('dismissed');
+                    curtain.style.display = 'none';
+                }
+                document.body.classList.remove('loading-active');
+            }
+        })();
+    </script>
 
     <!-- ═══ NAVIGATION ═══ -->
     <header class="site-header" id="siteHeader">

@@ -1117,32 +1117,27 @@ body.no-scroll {
     transform: translateY(-100%);
 }
 
-.hero-entrance-ready .hero-greeting {
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-.hero-entrance-ready .hero-name-line:first-child {
+.hero-entrance-ready .hero-marquee {
     opacity: 0;
     clip-path: inset(0 100% 0 0);
 }
 
-.hero-entrance-ready .hero-name-line-2 {
-    opacity: 0;
-    clip-path: inset(0 0 0 100%);
-}
-
-.hero-entrance-ready .hero-role {
+.hero-entrance-ready .hero-description {
     opacity: 0;
     transform: translateY(40px);
 }
 
-.hero-entrance-ready .hero-bottom {
+.hero-entrance-ready .hero-location {
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.hero-entrance-ready .hero-bottom-right {
     opacity: 0;
     transform: translateY(20px);
 }
 
-.hero-entrance-ready .hero-scroll-cue {
+.hero-entrance-ready .hero-corner-toggle {
     opacity: 0;
     transform: translateY(20px);
 }
@@ -1153,32 +1148,27 @@ body.no-scroll {
     animation-delay: var(--hero-delay, 0s);
 }
 
-.hero-animating .hero-greeting {
-    animation: heroFadeSlideUp 0.9s var(--ease-out) forwards;
-    animation-delay: var(--hero-delay, 0s);
-}
-
-.hero-animating .hero-name-line:first-child {
+.hero-animating .hero-marquee {
     animation: heroClipRevealRight 1.2s var(--ease-smooth) forwards;
     animation-delay: var(--hero-delay, 0s);
 }
 
-.hero-animating .hero-name-line-2 {
-    animation: heroClipRevealLeft 1.2s var(--ease-smooth) forwards;
-    animation-delay: var(--hero-delay, 0s);
-}
-
-.hero-animating .hero-role {
+.hero-animating .hero-description {
     animation: heroFadeSlideUp 1s var(--ease-out) forwards;
     animation-delay: var(--hero-delay, 0s);
 }
 
-.hero-animating .hero-bottom {
+.hero-animating .hero-location {
+    animation: heroFadeSlideUp 1s var(--ease-out) forwards;
+    animation-delay: var(--hero-delay, 0s);
+}
+
+.hero-animating .hero-bottom-right {
     animation: heroFadeSlideUp 0.8s var(--ease-out) forwards;
     animation-delay: var(--hero-delay, 0s);
 }
 
-.hero-animating .hero-scroll-cue {
+.hero-animating .hero-corner-toggle {
     animation: heroFadeSlideUp 0.8s var(--ease-out) forwards;
     animation-delay: var(--hero-delay, 0s);
 }
