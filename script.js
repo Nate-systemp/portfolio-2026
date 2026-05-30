@@ -99,14 +99,18 @@ if (isReturning) {
 } else if (window.__skipPortal) {
   // Role already known (URL param, localStorage, etc.) — dismiss normally
   curtain.classList.add('active-curtain');
-  window.addEventListener('load', () => {
+  if (document.readyState === 'complete') {
     setTimeout(() => dismissCurtain(), 800);
-  });
+  } else {
+    window.addEventListener('load', () => {
+      setTimeout(() => dismissCurtain(), 800);
+    });
+  }
 } else {
   // First-time visitor — show the role portal inside the curtain
   curtain.classList.add('active-curtain');
 
-  window.addEventListener('load', () => {
+  const showPortal = () => {
     // Hide the default "PORTFOLIO" text and show the portal
     setTimeout(() => {
       const curtainContent = curtain.querySelector('.curtain-content');
@@ -118,7 +122,13 @@ if (isReturning) {
         if (portal) portal.classList.add('portal-visible');
       }, 600);
     }, 1000);
-  });
+  };
+
+  if (document.readyState === 'complete') {
+    showPortal();
+  } else {
+    window.addEventListener('load', showPortal);
+  }
 
   // Listen for portal selection
   window.addEventListener('portal-selected', () => {

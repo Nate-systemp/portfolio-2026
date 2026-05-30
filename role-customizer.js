@@ -291,7 +291,7 @@
   function init() {
     const urlRole = getUrlRole();
     const savedRole = getSavedRole();
-    const isReturning = new URLSearchParams(window.location.search).get('from') === 'project';
+    const isReturning = new URLSearchParams(window.location.search).get('from') === 'project' || new URLSearchParams(window.location.search).get('from') === 'archive';
 
     // Create the quick-switcher (always available)
     createSwitcher();
