@@ -62,6 +62,7 @@ const STATIC_PROJECTS = [
         tech: "FIGMA",
         description: "A personal desktop platform design concept and interactive video demonstration showcase.",
         casestudyId: "merge",
+        liveUrl: "https://www.figma.com/design/2pTXOAeURE02anGnJP27GO/PERSONAL-PROJECTS?node-id=0-1&t=pM3IG6pywLARsrpC-1",
         gallery: ["assets/M01.png"],
     }
 ];
@@ -88,6 +89,7 @@ async function fetchProjects() {
                 p.role = "UI/UX Designer";
                 p.tech = "FIGMA";
                 p.year = "2026";
+                p.liveUrl = "https://www.figma.com/design/2pTXOAeURE02anGnJP27GO/PERSONAL-PROJECTS?node-id=0-1&t=pM3IG6pywLARsrpC-1";
             }
         });
 

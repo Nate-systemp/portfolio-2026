@@ -205,6 +205,65 @@
     color: var(--ink);
 }
 
+/* Case Study Action Links */
+.cs-hero-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 40px;
+}
+
+.cs-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    color: var(--paper);
+    background: var(--terra);
+    border: 1px solid var(--terra);
+    transition: all 0.4s var(--ease-smooth);
+    cursor: pointer;
+}
+
+.cs-link-btn:hover {
+    background: transparent;
+    color: var(--terra);
+}
+
+body.night-mode .cs-link-btn {
+    color: #0a0a0a;
+    background: var(--terra);
+}
+
+body.night-mode .cs-link-btn:hover {
+    background: transparent;
+    color: var(--terra);
+}
+
+.cs-link-secondary {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--light-line);
+}
+
+.cs-link-secondary:hover {
+    border-color: var(--terra);
+    color: var(--terra);
+}
+
+body.night-mode .cs-link-secondary {
+    color: #E8E3DE;
+    border-color: rgba(232, 227, 222, 0.15);
+}
+
+body.night-mode .cs-link-secondary:hover {
+    border-color: var(--terra);
+    color: var(--terra);
+}
+
 .cs-hero-scroll {
     position: absolute;
     bottom: 40px;

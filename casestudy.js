@@ -163,6 +163,7 @@ const CASE_STUDIES = {
         tools: 'Figma',
         year: '2026',
         scope: 'Desktop App Design',
+        figmaUrl: 'https://www.figma.com/design/2pTXOAeURE02anGnJP27GO/PERSONAL-PROJECTS?node-id=0-1&t=pM3IG6pywLARsrpC-1',
         overview: 'A self-initiated personal UI/UX design project for MERGE, a high-fidelity desktop platform concept. Designed entirely by me, this project focuses on dark mode layouts, clean information displays, and interactive mockups. The design demonstrates how desktop application dashboards can balance rich technical utilities with aesthetic minimalism.',
         problemIntro: 'Designing a complex dashboard for technical applications presents unique layout challenges, particularly around data readability and navigation efficiency.',
         problems: [
@@ -245,6 +246,25 @@ function populate() {
     set('csTools', cs.tools);
     set('csYear', cs.year);
     set('csScope', cs.scope);
+
+    // Project Links (Figma / Live Site)
+    const heroLinks = document.getElementById('csHeroLinks');
+    const projectLink = document.getElementById('csProjectLink');
+    const linkText = document.getElementById('csLinkText');
+
+    if (heroLinks && projectLink) {
+        if (cs.figmaUrl) {
+            projectLink.href = cs.figmaUrl;
+            if (linkText) linkText.textContent = cs.linkText || 'VIEW FIGMA DESIGN';
+            heroLinks.style.display = 'flex';
+        } else if (cs.liveUrl) {
+            projectLink.href = cs.liveUrl;
+            if (linkText) linkText.textContent = cs.linkText || 'VIEW LIVE SITE';
+            heroLinks.style.display = 'flex';
+        } else {
+            heroLinks.style.display = 'none';
+        }
+    }
 
     // Overview
     set('csOverview', cs.overview);

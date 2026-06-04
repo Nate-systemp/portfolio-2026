@@ -151,6 +151,7 @@ const SEED_PROJECTS = [
         description: "A personal desktop platform design concept and interactive video demonstration showcase.",
         story: "A self-initiated personal UI/UX design project for MERGE, a high-fidelity desktop platform concept. Designed entirely by me, this project focuses on clean dark mode layouts, structured information displays, and interactive mockups.",
         casestudyId: "merge",
+        liveUrl: "https://www.figma.com/design/2pTXOAeURE02anGnJP27GO/PERSONAL-PROJECTS?node-id=0-1&t=pM3IG6pywLARsrpC-1",
         gallery: ["assets/M01.png"],
     },
     {
