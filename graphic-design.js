@@ -10,211 +10,211 @@
 const AIGI_ITEMS = [
     {
         id: 1,
-        title: "AURA SKINCARE",
+        title: "KINETIX LABS ACTIVEWEAR",
         category: "advertising",
-        concept: "A minimalist visual direction for an organic skincare brand, emphasizing natural tones, botanical shadows, and a premium glass finish.",
+        concept: "High-performance half-zip athletic wear advertisement campaign featuring thermal regulation technology, clean typography, and a modern studio look.",
         image: "assets/AIGI/AIGI1.png",
-        tags: "Luxury, Skincare, Organic"
+        tags: "Fashion, Athletic, Campaign"
     },
     {
         id: 2,
-        title: "LUMEN SMART BULB",
+        title: "CANVAS SKINCARE",
         category: "branding",
-        concept: "Cyberpunk-inspired smart home lighting campaign, focusing on vibrant cyan and neon magenta glows.",
+        concept: "A product launch campaign for Hydrating Shield moisturizer, split between a dry, cracked soil background and a lush, sunny environment to emphasize protection.",
         image: "assets/AIGI/AIGI2.png",
-        tags: "Tech, Smart Home, Neon"
+        tags: "Skincare, Branding, Advertisement"
     },
     {
         id: 3,
-        title: "VELOCE ENERGY",
-        category: "advertising",
-        concept: "High-contrast sports beverage advertisement featuring explosive liquid splashes and bold retro typography.",
+        title: "ORIGIN ROAST COFFEE",
+        category: "product",
+        concept: "Eco-friendly kraft paper coffee pouch design set against a warm sunrise and mountain vista, conveying organic, high-elevation sourcing.",
         image: "assets/AIGI/AIGI3.png",
-        tags: "Beverage, Action, 90s Style"
+        tags: "Coffee, Packaging, Organic"
     },
     {
         id: 4,
-        title: "TERRA COFFEE",
+        title: "PRESS RESTART JUICE",
         category: "product",
-        concept: "Sustainable packaging and brand identity layout for a premium fair-trade coffee roaster.",
+        concept: "Vibrant and energetic visual for cold-pressed green juice, featuring explosive splashes of cucumber, apple, lemon, and kale.",
         image: "assets/AIGI/AIGI4.png",
-        tags: "Coffee, Eco-Friendly, Kraft"
+        tags: "Beverage, Splash, Fresh"
     },
     {
         id: 5,
-        title: "NEXUS BUDS",
-        category: "product",
-        concept: "Futuristic hardware design mockup showcasing wireless audio devices floating in a stark industrial concrete space.",
+        title: "FUEL THE GRIND",
+        category: "advertising",
+        concept: "High-contrast dark-mode advertisement for a premium energy drink can featuring a gold lightning bolt badge and wet droplets.",
         image: "assets/AIGI/AIGI5.png",
-        tags: "Audio, Hardware, Brutalist"
+        tags: "Energy Drink, Premium, Bold"
     },
     {
         id: 6,
-        title: "ZEPHYR SHOES",
-        category: "advertising",
-        concept: "Activewear product poster illustrating motion speed with motion-blurred clay geometry.",
+        title: "PAWCO REFLECTIVE HARNESS",
+        category: "branding",
+        concept: "A feature-rich product catalog banner for PawCo's reflective dog harness, showcasing key product details and anatomy.",
         image: "assets/AIGI/AIGI6.png",
-        tags: "Fashion, Footwear, Sports"
+        tags: "Pets, Product Design, E-commerce"
     },
     {
         id: 7,
-        title: "SOLEIL WINE",
-        category: "product",
-        concept: "Premium organic wine bottle mockup with warm gold-hour lighting and subtle shadow play.",
+        title: "ALPHA K9 TACTICAL HARNESS",
+        category: "branding",
+        concept: "A heavy-duty product features guide for Alpha K9's tactical gear, emphasizing durable alloy leash points and quick-release buckles.",
         image: "assets/AIGI/AIGI7.png",
-        tags: "Wine, Luxury, Summer"
+        tags: "Tactical, Pets, Gear"
     },
     {
         id: 8,
-        title: "KAIJU MATCHA",
-        category: "editorial",
-        concept: "Streetwear-influenced canned beverage concept featuring playful monster vector art.",
+        title: "HOUNDSAFETY COLLAR",
+        category: "branding",
+        concept: "Sophisticated branding and lifestyle layout for HoundSafety reflective dog collars, highlighting style and comfort.",
         image: "assets/AIGI/AIGI8.png",
-        tags: "Illustration, Japan, Pop-Art"
+        tags: "Pets, Fashion, Studio"
     },
     {
         id: 9,
-        title: "VALO WATCH CO.",
-        category: "advertising",
-        concept: "High-end titanium wristwatch showcase set against a raw concrete block under dramatic direct sunlight.",
+        title: "PAWS & REST ORTHOPEDIC BED",
+        category: "branding",
+        concept: "Split-screen advertising graphic demonstrating joint relief, orthopedic support, and premium comfort of a dog bed.",
         image: "assets/AIGI/AIGI9.png",
-        tags: "Horology, Premium, Studio"
+        tags: "Pets, Furniture, Lifestyle"
     },
     {
         id: 10,
-        title: "ALPIN HONEY",
-        category: "branding",
-        concept: "Eco-friendly jar mockups with amber fluid reflections and wildflower shadow textures.",
+        title: "VÉLO AXIS SLIM WALLET",
+        category: "product",
+        concept: "Premium leather MagSafe wallet showcase, highlighted with warm gold accent lighting and a minimalist, high-end feel.",
         image: "assets/AIGI/AIGI10.png",
-        tags: "Packaging, Organic, Honey"
+        tags: "Accessories, Tech, Leather"
     },
     {
         id: 11,
-        title: "HOLO WEAR",
-        category: "editorial",
-        concept: "Holographic brand apparel mockup demonstrating light-refracting futuristic textile prints.",
+        title: "TERRAFLEX ECO LEGGINGS",
+        category: "advertising",
+        concept: "Clean lifestyle poster for Aura Active's sustainable activewear, featuring earth-toned studios and minimalist typography.",
         image: "assets/AIGI/AIGI11.png",
-        tags: "Fashion, Futuristic, Hologram"
+        tags: "Fashion, Eco-Friendly, Campaign"
     },
     {
         id: 12,
-        title: "SOLIS PERFUME",
+        title: "SOLIS POLARIZED AVIATORS",
         category: "product",
-        concept: "Glass luxury perfume flacon designed for a summer collection with lens flare reflections.",
+        concept: "Sleek product layout showing Solis Horizon aviator sunglasses on a marble tabletop with matching premium accessories.",
         image: "assets/AIGI/AIGI12.png",
-        tags: "Perfume, Light, High-Fashion"
+        tags: "Eyewear, Fashion, Premium"
     },
     {
         id: 13,
-        title: "BLOOM FLORALS",
-        category: "branding",
-        concept: "Minimalist identity package for a boutique florist, using elegant neutral colors and embossed stationery.",
+        title: "NOMAD 25L WATERPROOF PACK",
+        category: "product",
+        concept: "Adventure gear advertisement highlighting the Outbound Gear waterproof backpack with integrated features and bold typography.",
         image: "assets/AIGI/AIGI13.png",
-        tags: "Stationery, Florist, Minimalist"
+        tags: "Travel, Gear, Adventure"
     },
     {
         id: 14,
-        title: "APEX GYM ADS",
+        title: "SUNVIBE MANGO BURST",
         category: "advertising",
-        concept: "Heavy-contrast fitness campaign showing a dynamic weight plate design with metallic texture overlays.",
+        concept: "Explosive, high-energy beverage ad showing a yellow mango juice can crashing through rich liquid splashes and ice.",
         image: "assets/AIGI/AIGI14.png",
-        tags: "Fitness, Bold, Metal"
+        tags: "Beverage, Action, Fresh"
     },
     {
         id: 15,
-        title: "NOVA SPARK",
-        category: "advertising",
-        concept: "Sparkling mineral water print ad emphasizing cleanliness, glass condensation, and crisp lime gradients.",
+        title: "VANTAGE WIRELESS HEADPHONES",
+        category: "product",
+        concept: "Studio shot of matte black Vantage headphones resting on raw volcanic rock with gold trim accents, representing premium sound.",
         image: "assets/AIGI/AIGI15.png",
-        tags: "Liquid, Fresh, Branding"
+        tags: "Audio, Tech, Premium"
     },
     {
         id: 16,
-        title: "ZERO WASTE CO.",
-        category: "branding",
-        concept: "Biodegradable shampoo bar packaging layout using organic pulp cartons and earthy textures.",
+        title: "TITANIUM PRO IPHONE AD",
+        category: "advertising",
+        concept: "Minimalist dark-themed layout highlighting the sleek titanium build, A17 chip, and camera capabilities of the iPhone.",
         image: "assets/AIGI/AIGI16.png",
-        tags: "Sustainable, Beauty, Pulp"
+        tags: "Tech, Smartphone, Premium"
     },
     {
         id: 17,
-        title: "LUNA SLEEP",
-        category: "branding",
-        concept: "Dark mode visual identity mockup for a wellness app, featuring deep blues, stars, and soft velvet assets.",
+        title: "MOMENTUM TRUE WIRELESS 400",
+        category: "product",
+        concept: "Flat-lay product photography for Vision Momentum earbuds, showing raw concrete textures and custom tags.",
         image: "assets/AIGI/AIGI17.png",
-        tags: "App, Meditation, Celestial"
+        tags: "Audio, Minimalist, Tech"
     },
     {
         id: 18,
-        title: "ROVE LUGGAGE",
-        category: "advertising",
-        concept: "Durable travel gear campaign illustrating a suitcase positioned in an abstract sand dune environment.",
+        title: "LIFTDOCK ADJUSTABLE STAND",
+        category: "product",
+        concept: "Modern product poster showing the Apex Workspace foldable aluminum phone stand in a warm sunset lighting scenario.",
         image: "assets/AIGI/AIGI18.png",
-        tags: "Adventure, Travel, Texture"
+        tags: "Accessories, Tech, Metal"
     },
     {
         id: 19,
-        title: "VAPOR RECORDS",
-        category: "editorial",
-        concept: "Synthwave music label magazine spread showcasing neon typography and retro grid aesthetics.",
+        title: "NEUROBREW CLARITY FLOW",
+        category: "branding",
+        concept: "Soothing product mockup for NeuroBrew nometropic blend, surrounded by fresh blueberries, lavender, and matcha powder.",
         image: "assets/AIGI/AIGI19.png",
-        tags: "Music, 80s Retro, Magazine"
+        tags: "Health, Packaging, Minimalist"
     },
     {
         id: 20,
-        title: "ORBIS SPEAKERS",
-        category: "product",
-        concept: "Spherical wireless home audio systems rendered with matte charcoal textures in a modern living room.",
+        title: "NOMAD PRO JACKET",
+        category: "advertising",
+        concept: "AeroTravel's waterproof and windproof outdoor utility jacket catalog design, highlighting technical features and clean aesthetics.",
         image: "assets/AIGI/AIGI20.png",
-        tags: "Audio, Interior, Industrial"
+        tags: "Fashion, Campaign, Outdoors"
     },
     {
         id: 21,
-        title: "FLORA CAFE",
-        category: "branding",
-        concept: "Warm-toned menu card and signage concepts for an urban greenhouse cafe.",
+        title: "PUREPOD COMPACT FILTER",
+        category: "editorial",
+        concept: "Environmental product campaign showcasing the eco-friendly PurePod water filter sitting on a rock in a flowing river.",
         image: "assets/AIGI/AIGI21.png",
-        tags: "Design System, Menu, Cafe"
+        tags: "Water, Eco-Friendly, Sustainability"
     },
     {
         id: 22,
-        title: "TITAN TOOLS",
-        category: "advertising",
-        concept: "Tough-grade hand tools advertising concept featuring high-contrast steel highlights on dark backgrounds.",
+        title: "ELEMENT HOME AIR PURIFIER",
+        category: "editorial",
+        concept: "Breathe cleaner, live better campaign showing the AuraAir purifier floating amidst swirling fresh water, ice, and lavender sprigs.",
         image: "assets/AIGI/AIGI22.png",
-        tags: "Hardware, Rugged, High-Contrast"
+        tags: "Home, Health, Clean"
     },
     {
         id: 23,
-        title: "PULSE ENERGY",
-        category: "branding",
-        concept: "Dynamic smart-grid app brand identity showing vibrant neon green vector graphics on phone screens.",
+        title: "ELEMENT COFFEE PRECISION GRINDER",
+        category: "product",
+        concept: "Premium matte-black electric coffee grinder advertisement, set on a dark slate counter with premium coffee beans.",
         image: "assets/AIGI/AIGI23.png",
-        tags: "Vector, App, Clean Energy"
+        tags: "Coffee, Kitchen, Luxury"
     },
     {
         id: 24,
-        title: "AERO DRONE",
-        category: "product",
-        concept: "Sleek matte black carbon-fiber drone mockup hovering in an abstract wind-tunnel setting.",
+        title: "AWS & PULSE SMART COLLAR",
+        category: "branding",
+        concept: "Interactive GPS tracker dog collar product visual guide, showcasing the device's sleek waterproof build and activity monitoring.",
         image: "assets/AIGI/AIGI24.png",
-        tags: "Tech, Carbon, Aerodynamic"
+        tags: "Pets, Tech, IoT"
     },
     {
         id: 25,
-        title: "HYDRA DRINK",
-        category: "advertising",
-        concept: "Isotonic sports hydration campaign showcasing a neon bottle crashing through water ripples.",
+        title: "SONICGRID SOUNDPOD GO",
+        category: "product",
+        concept: "Split design representing SonicGrid's rugged outdoor speaker, divided between a dry environment and splashing lakeside water.",
         image: "assets/AIGI/AIGI25.png",
-        tags: "Action, Water, Splash"
+        tags: "Audio, Waterproof, Adventure"
     },
     {
         id: 26,
-        title: "NORDIC HOME",
-        category: "editorial",
-        concept: "Scandinavian interior magazine design layout showing clean typography and raw oak wood products.",
+        title: "AEONIC X1 EARBUDS",
+        category: "product",
+        concept: "Cyberpunk/futuristic aesthetic showcase showing the Aeonic X1 earbuds hovering above splashing metallic liquid and speaker coils.",
         image: "assets/AIGI/AIGI26.png",
-        tags: "Interior, Magazine, Minimalist"
+        tags: "Audio, Futuristic, Tech"
     }
 ];
 
