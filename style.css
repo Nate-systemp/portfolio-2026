@@ -4524,3 +4524,706 @@ body.night-mode .bespoke-toast {
         min-width: 220px;
     }
 }
+
+/* ============================================
+   GRAPHIC DESIGN / PROMPT ARTISTRY SECTION
+   ============================================ */
+.design {
+    position: relative;
+    padding: 160px 60px;
+    background: var(--paper);
+    border-top: 1px solid var(--light-line);
+}
+
+.design-header {
+    max-width: 1400px;
+    margin: 0 auto 80px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 80px;
+    align-items: end;
+}
+
+.design-heading {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 8vw, 110px);
+    line-height: 0.95;
+    font-weight: bold;
+    color: var(--ink);
+    letter-spacing: -3px;
+    margin-top: 20px;
+}
+
+.design-heading em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    color: var(--terra);
+    font-weight: 400;
+}
+
+.design-intro-text {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 500px;
+}
+
+/* ── Filter Bar ── */
+.design-filter-bar {
+    display: inline-flex;
+    position: relative;
+    background: rgba(26, 26, 26, 0.04);
+    padding: 4px;
+    border-radius: 40px;
+    border: 1px solid var(--light-line);
+    margin: 0 auto 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.design-filter-tab {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 10px 24px;
+    border-radius: 40px;
+    border: none;
+    background: none;
+    color: var(--muted);
+    cursor: pointer;
+    z-index: 2;
+    transition: color 0.3s ease;
+}
+
+.design-filter-tab.active {
+    color: var(--paper);
+}
+
+.design-filter-indicator {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    background: var(--terra);
+    border-radius: 40px;
+    z-index: 1;
+    transition: all 0.4s var(--ease-smooth);
+}
+
+/* ── Dynamic grid ── */
+.design-grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+.design-card {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.4s var(--ease-smooth);
+}
+
+.design-card:hover {
+    transform: translateY(-8px);
+}
+
+.design-card-img-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--ink);
+}
+
+.design-card-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.6s var(--ease-smooth);
+}
+
+.design-card:hover .design-card-img {
+    transform: scale(1.05);
+}
+
+.design-card-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 4px 10px;
+    background: rgba(26, 26, 26, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 1px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.design-card-info {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.design-card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.design-card-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--terra);
+    font-weight: 700;
+    opacity: 0.7;
+}
+
+.design-card-cat {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+.design-card-title {
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0;
+    letter-spacing: -0.5px;
+    transition: color 0.3s ease;
+}
+
+.design-card:hover .design-card-title {
+    color: var(--terra);
+}
+
+/* ── Footer / Load More ── */
+.design-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+.design-load-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 36px;
+    background: transparent;
+    border: 1px solid var(--light-line);
+    border-radius: 40px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.4s var(--ease-out);
+}
+
+.design-load-more-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+    gap: 24px;
+}
+
+.design-load-more-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.design-load-more-btn:hover svg {
+    transform: translateY(3px);
+}
+
+/* ============================================
+   LIGHTBOX MODAL STYLING
+   ============================================ */
+.design-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.design-lightbox.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(20, 20, 20, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.lightbox-container {
+    position: relative;
+    z-index: 2;
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh;
+    background: var(--paper);
+    border-radius: 16px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--light-line);
+    transform: scale(0.95) translateY(30px);
+    transition: transform 0.6s var(--ease-smooth);
+}
+
+.design-lightbox.active .lightbox-container {
+    transform: scale(1) translateY(0);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(26, 26, 26, 0.05);
+    border: 1px solid var(--light-line);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.lightbox-close:hover {
+    background: var(--terra);
+    color: var(--paper);
+    border-color: var(--terra);
+    transform: rotate(90deg);
+}
+
+.lightbox-content {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    overflow: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.lightbox-img-col {
+    background: #e8e3de;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    overflow: hidden;
+    position: relative;
+}
+
+.lightbox-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    transition: opacity 0.4s ease;
+}
+
+.lightbox-spinner {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(196, 93, 62, 0.1);
+    border-top-color: var(--terra);
+    border-radius: 50%;
+    animation: lightboxSpin 0.8s linear infinite;
+    display: none;
+}
+
+@keyframes lightboxSpin {
+    to { transform: rotate(360deg); }
+}
+
+.lightbox-info-col {
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+    border-left: 1px solid var(--light-line);
+    scrollbar-width: thin;
+}
+
+.lightbox-info-col::-webkit-scrollbar {
+    width: 4px;
+}
+
+.lightbox-info-col::-webkit-scrollbar-thumb {
+    background: var(--light-line);
+    border-radius: 4px;
+}
+
+.lightbox-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.lightbox-num {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    color: var(--terra);
+    font-weight: 700;
+}
+
+.lightbox-badge {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.lightbox-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 54px);
+    line-height: 1.1;
+    font-weight: bold;
+    letter-spacing: -1.5px;
+    margin-bottom: 40px;
+    color: var(--ink);
+}
+
+.lightbox-details {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.detail-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.lightbox-info-col .detail-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+}
+
+.lightbox-info-col .detail-text {
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+.lightbox-info-col .detail-text strong {
+    font-weight: 600;
+    color: var(--terra);
+}
+
+/* ── Lightbox Navigation ── */
+.lightbox-navigation {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.lightbox-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: rgba(26, 26, 26, 0.05);
+    border: 1px solid var(--light-line);
+    border-radius: 40px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.lightbox-nav-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+}
+
+/* ── Night Mode Overrides for Designs & Lightbox ── */
+body.night-mode .design {
+    background: #141414;
+    border-color: rgba(242, 237, 232, 0.06);
+}
+
+body.night-mode .design-heading {
+    color: #E8E3DE;
+}
+
+body.night-mode .design-intro-text {
+    color: #A39E99;
+}
+
+body.night-mode .design-filter-bar {
+    background: rgba(242, 237, 232, 0.04);
+    border-color: rgba(242, 237, 232, 0.08);
+}
+
+body.night-mode .design-filter-tab.active {
+    color: #141414;
+}
+
+body.night-mode .design-card {
+    background: rgba(242, 237, 232, 0.02);
+    border-color: rgba(242, 237, 232, 0.08);
+}
+
+body.night-mode .design-card:hover {
+    background: rgba(242, 237, 232, 0.04);
+    border-color: var(--terra);
+}
+
+body.night-mode .design-card-img-wrap {
+    background: #1e1e1e;
+}
+
+body.night-mode .design-card-badge {
+    background: rgba(242, 237, 232, 0.85);
+    color: #141414;
+}
+
+body.night-mode .design-card-title {
+    color: #E8E3DE;
+}
+
+body.night-mode .design-load-more-btn {
+    border-color: rgba(242, 237, 232, 0.1);
+    color: #E8E3DE;
+}
+
+body.night-mode .design-load-more-btn:hover {
+    background: #E8E3DE;
+    color: #141414;
+    border-color: #E8E3DE;
+}
+
+body.night-mode .lightbox-container {
+    background: #141414;
+    border-color: rgba(242, 237, 232, 0.08);
+}
+
+body.night-mode .lightbox-close {
+    background: rgba(242, 237, 232, 0.05);
+    border-color: rgba(242, 237, 232, 0.1);
+    color: #E8E3DE;
+}
+
+body.night-mode .lightbox-img-col {
+    background: #1e1e1e;
+}
+
+body.night-mode .lightbox-info-col {
+    border-left-color: rgba(242, 237, 232, 0.08);
+}
+
+body.night-mode .lightbox-info-col::-webkit-scrollbar-thumb {
+    background: rgba(242, 237, 232, 0.08);
+}
+
+body.night-mode .lightbox-badge {
+    background: #E8E3DE;
+    color: #141414;
+}
+
+body.night-mode .lightbox-title {
+    color: #E8E3DE;
+}
+
+body.night-mode .lightbox-info-col .detail-text {
+    color: #C0B9B3;
+}
+
+body.night-mode .lightbox-nav-btn {
+    background: rgba(242, 237, 232, 0.05);
+    border-color: rgba(242, 237, 232, 0.1);
+    color: #E8E3DE;
+}
+
+body.night-mode .lightbox-nav-btn:hover {
+    background: #E8E3DE;
+    color: #141414;
+    border-color: #E8E3DE;
+}
+
+/* ============================================
+   RESPONSIVE LAYOUTS FOR DESIGNS
+   ============================================ */
+@media (max-width: 1200px) {
+    .design-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+    }
+
+    .lightbox-container {
+        height: 90vh;
+        width: 95%;
+    }
+}
+
+@media (max-width: 992px) {
+    .design-header {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+
+    .design-intro-text {
+        max-width: none;
+    }
+
+    .design-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lightbox-content {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1.2fr 1fr;
+        overflow-y: auto;
+    }
+
+    .lightbox-img-col {
+        padding: 30px;
+        height: 45vh;
+    }
+
+    .lightbox-info-col {
+        padding: 40px;
+        border-left: none;
+        border-top: 1px solid var(--light-line);
+        overflow-y: visible;
+    }
+
+    body.night-mode .lightbox-info-col {
+        border-top-color: rgba(242, 237, 232, 0.08);
+    }
+
+    .lightbox-title {
+        margin-bottom: 24px;
+    }
+
+    .lightbox-close {
+        top: 16px;
+        right: 16px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .lightbox-navigation {
+        position: relative;
+        bottom: 0;
+        right: 0;
+        margin-top: 40px;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 600px) {
+    .design {
+        padding: 100px 24px;
+    }
+
+    .design-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .design-filter-bar {
+        display: flex;
+        overflow-x: auto;
+        max-width: 100%;
+        scrollbar-width: none; /* Hide scrollbar for clean menu look */
+        justify-content: flex-start;
+        left: 0;
+        transform: none;
+        margin-bottom: 40px;
+        border-radius: 8px;
+    }
+
+    .design-filter-bar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .design-filter-tab {
+        padding: 8px 16px;
+        white-space: nowrap;
+    }
+
+    .design-filter-indicator {
+        display: none; /* Hide visual indicator under text for horizontal scroll list */
+    }
+
+    .design-filter-tab.active {
+        background: var(--terra);
+        color: var(--paper);
+    }
+
+    body.night-mode .design-filter-tab.active {
+        background: var(--terra);
+        color: #E8E3DE;
+    }
+
+    .lightbox-img-col {
+        height: 35vh;
+    }
+
+    .lightbox-info-col {
+        padding: 24px;
+    }
+}

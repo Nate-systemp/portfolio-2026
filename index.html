@@ -84,9 +84,10 @@
         <nav class="header-nav">
             <a href="#about-section" class="nav-item" data-nav="about"><span class="nav-num">01</span>About</a>
             <a href="#work-section" class="nav-item" data-nav="work"><span class="nav-num">02</span>Work</a>
-            <a href="#experience-section" class="nav-item" data-nav="exp"><span class="nav-num">03</span>Experience</a>
-            <a href="#seminars-section" class="nav-item" data-nav="seminars"><span class="nav-num">04</span>Seminars</a>
-            <a href="#contact-section" class="nav-item" data-nav="contact"><span class="nav-num">05</span>Contact</a>
+            <a href="#design-section" class="nav-item" data-nav="design"><span class="nav-num">03</span>Design</a>
+            <a href="#experience-section" class="nav-item" data-nav="exp"><span class="nav-num">04</span>Experience</a>
+            <a href="#seminars-section" class="nav-item" data-nav="seminars"><span class="nav-num">05</span>Seminars</a>
+            <a href="#contact-section" class="nav-item" data-nav="contact"><span class="nav-num">06</span>Contact</a>
         </nav>
         <div class="header-right-group">
             <div class="header-status">
@@ -303,10 +304,49 @@
         </div>
     </section>
 
+    <!-- ═══ GRAPHIC DESIGNS SECTION ═══ -->
+    <section class="design" id="design-section">
+        <div class="section-marker">
+            <span class="marker-num">03</span>
+            <span class="marker-line"></span>
+        </div>
+        <div class="design-header" data-reveal>
+            <div class="design-header-left">
+                <span class="section-label">PROMPT ARTISTRY</span>
+                <h2 class="design-heading">Graphic <br><em>Designs Showcase</em></h2>
+            </div>
+            <p class="design-intro-text">
+                Exploring branding, packaging mockups, and visual advertising concepts. Strategy guided by <strong>ChatGPT</strong> and styled via the <strong>Nano Banana</strong> prompt refining method.
+            </p>
+        </div>
+
+        <div class="design-filter-bar" data-reveal>
+            <button class="design-filter-tab active" data-filter="all">ALL WORK</button>
+            <button class="design-filter-tab" data-filter="advertising">ADVERTISING</button>
+            <button class="design-filter-tab" data-filter="branding">BRANDING</button>
+            <button class="design-filter-tab" data-filter="product">PRODUCT</button>
+            <button class="design-filter-tab" data-filter="editorial">EDITORIAL</button>
+            <div class="design-filter-indicator"></div>
+        </div>
+
+        <div class="design-grid" id="designGrid">
+            <!-- Dynamically populated from graphic-design.js -->
+        </div>
+
+        <div class="design-footer" data-reveal>
+            <button id="designLoadMore" class="design-load-more-btn">
+                <span>LOAD MORE DESIGNS</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 5v14M5 12l7 7 7-7" />
+                </svg>
+            </button>
+        </div>
+    </section>
+
     <!-- ═══ EXPERIENCE SECTION ═══ -->
     <section class="experience" id="experience-section">
         <div class="section-marker section-marker-light">
-            <span class="marker-num">03</span>
+            <span class="marker-num">04</span>
             <span class="marker-line"></span>
         </div>
         <div class="experience-grid">
@@ -417,7 +457,7 @@
     <!-- ═══ SEMINARS SECTION ═══ -->
     <section class="seminars" id="seminars-section">
         <div class="section-marker">
-            <span class="marker-num">04</span>
+            <span class="marker-num">05</span>
             <span class="marker-line"></span>
         </div>
         <div class="seminars-grid">
@@ -747,6 +787,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
     <script src="three-scene.js"></script>
     <script type="module" src="firestore-loader.js"></script>
+    <script type="module" src="graphic-design.js"></script>
     <script src="role-customizer.js"></script>
     <script src="script.js"></script>
 
