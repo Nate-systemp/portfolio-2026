@@ -104,62 +104,63 @@ const CASE_STUDIES = {
         id: 'merge',
         badge: 'UI/UX DESIGN',
         title: 'MERGE',
-        subtitle: 'Interactive Desktop Platform Design & Demo',
-        domain: 'merge-platform.com',
+        subtitle: 'eCommerce Storefront Design & Demo',
+        domain: 'merge-ecommerce.com',
         role: 'UI/UX Designer',
         tools: 'Figma',
         year: '2026',
-        scope: 'Desktop App Design',
+        scope: 'eCommerce Site Design',
         figmaUrl: 'https://www.figma.com/design/2pTXOAeURE02anGnJP27GO/PERSONAL-PROJECTS?node-id=0-1&t=pM3IG6pywLARsrpC-1',
-        overview: 'A self-initiated personal UI/UX design project for MERGE, a high-fidelity desktop platform concept. Designed entirely by me, this project focuses on dark mode layouts, clean information displays, and interactive mockups. The design demonstrates how desktop application dashboards can balance rich technical utilities with aesthetic minimalism.',
-        problemIntro: 'Designing a complex dashboard for technical applications presents unique layout challenges, particularly around data readability and navigation efficiency.',
+        overview: 'A self‑initiated UI/UX design project for MERGE, an eCommerce storefront concept. I focused on a dark‑mode aesthetic, intuitive product discovery, streamlined checkout, and responsive layout across devices.',
+        problemIntro: 'Designing a high‑conversion eCommerce site involves challenges around product visibility, checkout friction, and mobile usability.',
         problems: [
-            'Managing cognitive load when displaying complex data feeds',
-            'Balancing layout spacing with dense data instrumentation needs',
-            'Designing intuitive navigation flows for multi-panel dashboards',
-            'Visual clutter when multiple workspace tools are active simultaneously'
+            'Cluttered product grids making browsing difficult',
+            'Lengthy checkout process leading to cart abandonment',
+            'Inconsistent visual hierarchy across product pages',
+            'Mobile experience lacking clear touch targets and fast load times'
         ],
-        impactText: 'Without structured visual organization, users can quickly become overwhelmed by data-dense environments.',
+        impactText: 'A poorly organized storefront can reduce sales, increase bounce rates, and harm brand perception.',
         goals: [
-            { title: 'Simplify Complexity', desc: 'Present complex data streams in a clean, legible, and highly scannable visual format.' },
-            { title: 'Refined Dark Mode', desc: 'Craft a modern dark theme utilizing subtle glassmorphism and consistent layout styling.' },
-            { title: 'Fluid Interactions', desc: 'Design smooth transitions and modular interactive widgets for easy navigation.' }
+            { title: 'Product Discoverability', desc: 'Create clear, scannable product cards with prominent visuals and filters.' },
+            { title: 'Streamlined Checkout', desc: 'Design a minimal, step‑by‑step checkout flow to reduce friction.' },
+            { title: 'Responsive Design', desc: 'Ensure seamless experience on desktop, tablet, and mobile.' },
+            { title: 'Conversion Optimization', desc: 'Add trust signals, CTA prominence, and micro‑interactions to boost conversions.' }
         ],
-        researchMethod: 'I analyzed dashboard layout frameworks and information hierarchy models to design an intuitive, low-stress workstation layout.',
+        researchMethod: 'Conducted competitor analysis and usability testing of common eCommerce patterns, focusing on cart flow and product page layouts.',
         findings: [
-            'Modular widgets with collapsible panels significantly reduce layout stress',
-            'Consistent dark UI with selected highlights increases readability',
-            'Predictable navigation anchors speed up professional workflows'
+            'Clear visual hierarchy improves product scanning speed',
+            'A single‑page checkout reduces abandonment',
+            'Consistent spacing and typography enhance mobile readability'
         ],
         process: [
             {
                 title: 'Wireframing & IA',
-                text: 'Mapped out user journeys and sketched layout arrangements for key dashboard components.',
-                tags: ['Information Architecture', 'Low-Fi Sketches']
+                text: 'Mapped user journeys from homepage to checkout, establishing information architecture for product categories and cart flow.',
+                tags: ['Information Architecture', 'Low‑Fi Sketches']
             },
             {
-                title: 'High-Fidelity UI Design',
-                text: 'Engineered a cohesive desktop design system with structured typography scales and subtle shadows for visual depth.',
-                tags: ['Figma', 'UI Kits', 'Design System']
+                title: 'High‑Fidelity UI Design',
+                text: 'Developed a dark‑mode design system with modular product cards, glass‑morphic elements, and emphasis on CTA contrast.',
+                tags: ['Figma', 'Design System', 'UI Kits']
             },
             {
-                title: 'Interaction Prototyping',
-                text: 'Created dynamic video walkthroughs (M02.mp4) to demonstrate dashboard transitions and responsive adjustments.',
+                title: 'Interactive Prototype',
+                text: 'Built a clickable prototype with video walkthrough (assets/merge_checkout.mp4) showcasing product browsing and checkout interactions.',
                 tags: ['Motion Design', 'Video Demo']
             }
         ],
         outcomes: [
-            { icon: '✦', title: 'Clean Visuals', desc: 'A modern, understated dark aesthetic focusing on data clarity' },
-            { icon: '◈', title: 'Modular Control', desc: 'Flexible sidebars and widgets designed for custom layouts' },
-            { icon: '▲', title: 'Interactive Demo', desc: 'A video prototype showing UI transitions and interaction details' }
+            { icon: '✦', title: 'Clean Visuals', desc: 'Modern dark aesthetic with clear product hierarchy' },
+            { icon: '◈', title: 'Modular Product Cards', desc: 'Reusable components for quick catalog updates' },
+            { icon: '▲', title: 'Checkout Demo', desc: 'Video prototype demonstrating streamlined purchase flow' }
         ],
         learnings: [
-            'Dashboard Layout Design',
-            'Interaction Prototyping',
-            'Desktop Interface Aesthetics',
-            'Component System Engineering'
+            'eCommerce Interaction Patterns',
+            'Conversion‑Focused UI',
+            'Responsive Component Design',
+            'Micro‑interaction Implementation'
         ],
-        disclaimer: 'This is a personal, self-initiated conceptual project designed entirely by me. All original design components, layouts, mockups, and interaction demo videos were created by me.'
+        disclaimer: 'Personal conceptual project; all assets and designs are original and created by me for portfolio purposes.'
     }
 };
 
