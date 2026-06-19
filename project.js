@@ -183,47 +183,7 @@ populate();
     }, 400);
 })();
 
-// ============================================
-// CUSTOM CURSOR
-// ============================================
-(function() {
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    if (!dot || !ring) return;
-
-    // Ensure cursor doesn't block interactions
-    dot.style.pointerEvents = 'none';
-    ring.style.pointerEvents = 'none';
-
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-    const ringEase = 0.15;
-
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        dot.style.left = mouseX + 'px';
-        dot.style.top = mouseY + 'px';
-    });
-
-    function animateRing() {
-        const dx = mouseX - ringX;
-        const dy = mouseY - ringY;
-        ringX += dx * ringEase;
-        ringY += dy * ringEase;
-        ring.style.left = ringX + 'px';
-        ring.style.top = ringY + 'px';
-        requestAnimationFrame(animateRing);
-    }
-    animateRing();
-
-    // Hover states
-    const hoverables = document.querySelectorAll('a, button, .p-gallery-item');
-    hoverables.forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-    });
-})();
+// CUSTOM CURSOR REMOVED
 
 // ============================================
 // MAGNETIC EFFECTS

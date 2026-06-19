@@ -643,9 +643,6 @@ window.addEventListener('scroll', () => {
     toggle.style.transform = 'scale(1.2) rotate(360deg)';
     setTimeout(() => { toggle.style.transform = ''; }, 600);
   });
-  
-  // Add cursor interactivity hint
-  toggle.style.cursor = 'none';
 })();
 
 // ============================================
@@ -671,96 +668,7 @@ window.addEventListener('scroll', () => {
   });
 })();
 
-// ============================================
-// CUSTOM CURSOR (from original design, adapted)
-// ============================================
-(function () {
-  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-  if (isTouchDevice) return;
-
-  const dot = document.getElementById('cursorDot');
-  const ring = document.getElementById('cursorRing');
-  if (!dot || !ring) return;
-
-  // CRITICAL: Ensure cursor doesn't block clicks
-  dot.style.pointerEvents = 'none';
-  ring.style.pointerEvents = 'none';
-
-  let mouseX = 0, mouseY = 0;
-  let ringX = 0, ringY = 0;
-  const ringEase = 0.15;
-  let isRunning = false;
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    dot.style.left = mouseX + 'px';
-    dot.style.top = mouseY + 'px';
-
-    if (!isRunning) {
-      isRunning = true;
-      animateRing();
-    }
-  });
-
-  function animateRing() {
-    const dx = mouseX - ringX;
-    const dy = mouseY - ringY;
-
-    if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
-      ringX = mouseX;
-      ringY = mouseY;
-      ring.style.left = ringX + 'px';
-      ring.style.top = ringY + 'px';
-      isRunning = false;
-      return;
-    }
-
-    ringX += dx * ringEase;
-    ringY += dy * ringEase;
-    ring.style.left = ringX + 'px';
-    ring.style.top = ringY + 'px';
-
-    requestAnimationFrame(animateRing);
-  }
-
-  // Hover states for interactive elements
-  const hoverTargets = document.querySelectorAll(
-    'a, button, .work-item, .gallery-item, .intern-photo, .nav-item, .footer-social-link, .resume-link'
-  );
-
-  const textTargets = document.querySelectorAll(
-    '.hero-name, .about-heading, .experience-heading, .contact-heading, .intern-heading, .work-item-title'
-  );
-
-  hoverTargets.forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-  });
-
-  textTargets.forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-text'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-text'));
-  });
-
-  // Project Preview "VIEW" Label
-  const projectPreviews = document.querySelectorAll('.work-card, .work-item, .next-project-link, .p-gallery-item');
-  projectPreviews.forEach(el => {
-    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-view-mode'));
-    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-view-mode'));
-  });
-
-  // Hide cursor when leaving window
-  document.addEventListener('mouseleave', () => {
-    dot.style.opacity = '0';
-    ring.style.opacity = '0';
-  });
-
-  document.addEventListener('mouseenter', () => {
-    dot.style.opacity = '1';
-    ring.style.opacity = '1';
-  });
-})();
+// CUSTOM CURSOR REMOVED
 
 // ============================================
 // REVEAL ON SCROLL ENGINE

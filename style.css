@@ -849,19 +849,16 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    cursor: none;
 }
 
 a {
     color: inherit;
     text-decoration: none;
-    cursor: none;
 }
 
 button {
     border: none;
     background: none;
-    cursor: none;
     font-family: inherit;
     color: inherit;
 }
@@ -872,6 +869,10 @@ img {
 }
 
 /* ── CUSTOM CURSOR — Dot + Ring ── */
+.cursor-dot, .cursor-ring {
+    display: none !important;
+}
+
 .cursor-dot {
     position: fixed;
     top: 0;
@@ -2377,7 +2378,6 @@ body.night-mode .resume-peek-btn .peek-hint {
 .work-card-link {
     text-decoration: none;
     display: block;
-    cursor: none;
 }
 
 .work-card-img-wrap {
@@ -2527,7 +2527,6 @@ body.night-mode .work-card-link:hover .work-card-img {
 .view-all-link {
     text-decoration: none;
     color: var(--ink);
-    cursor: none;
 }
 
 .view-all-circle {
@@ -3321,7 +3320,6 @@ body.night-mode .testimonial-name {
     visibility: hidden;
     transition: opacity 0.4s var(--ease-out),
         visibility 0.4s var(--ease-out);
-    cursor: none;
 }
 
 .terminal-overlay.active {
@@ -3381,7 +3379,6 @@ body.night-mode .testimonial-name {
 
 .terminal-dot-close {
     background: #ff5f57;
-    cursor: none;
     transition: opacity 0.2s;
 }
 
@@ -3496,7 +3493,6 @@ body.night-mode .testimonial-name {
     font-size: 13px;
     color: var(--paper);
     caret-color: var(--terra);
-    cursor: none;
 }
 
 .terminal-input::placeholder {
@@ -4033,7 +4029,6 @@ body.cursor-view-mode #magneticLabel {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: none;
     transition: all 0.4s var(--ease-out);
     color: var(--ink);
     margin-left: auto;
