@@ -3,60 +3,7 @@
  * Data-driven: each case study is a static object, selected via ?id= param.
  */
 
-// ============================================
-// SMOOTH SCROLL ENGINE
-// ============================================
-class SmoothScroll {
-    constructor(opts = {}) {
-        this.ease = opts.ease || 0.08;
-        this.targetY = window.scrollY;
-        this.currentY = window.scrollY;
-        this.isRunning = false;
-        this.wheelMultiplier = opts.wheelMultiplier || 1;
 
-        if (!('ontouchstart' in window) && navigator.maxTouchPoints === 0) {
-            window.addEventListener('wheel', (e) => this._onWheel(e), { passive: false });
-        }
-
-        window.addEventListener('scroll', () => {
-            if (!this.isRunning) {
-                this.targetY = window.scrollY;
-                this.currentY = window.scrollY;
-            }
-        }, { passive: true });
-    }
-
-    _onWheel(e) {
-        if (document.body.classList.contains('no-scroll')) {
-            e.preventDefault();
-            return;
-        }
-        e.preventDefault();
-        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-        this.targetY += e.deltaY * this.wheelMultiplier;
-        this.targetY = Math.max(0, Math.min(this.targetY, maxScroll));
-
-        if (!this.isRunning) {
-            this.isRunning = true;
-            this._animate();
-        }
-    }
-
-    _animate() {
-        const diff = this.targetY - this.currentY;
-        if (Math.abs(diff) < 0.5) {
-            this.currentY = this.targetY;
-            window.scrollTo(0, this.currentY);
-            this.isRunning = false;
-            return;
-        }
-        this.currentY += diff * this.ease;
-        window.scrollTo(0, this.currentY);
-        requestAnimationFrame(() => this._animate());
-    }
-}
-
-const smoothScroll = new SmoothScroll({ ease: 0.05, wheelMultiplier: 0.8 });
 
 // ============================================
 // THEME INIT
