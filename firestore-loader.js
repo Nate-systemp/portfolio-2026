@@ -64,6 +64,19 @@ const STATIC_PROJECTS = [
         casestudyId: "merge",
         liveUrl: "https://www.figma.com/design/2pTXOAeURE02anGnJP27GO/PERSONAL-PROJECTS?node-id=0-1&t=pM3IG6pywLARsrpC-1",
         gallery: ["assets/M01.png"],
+    },
+    {
+        docId: "static-growbrain",
+        order: 9,
+        title: "GROWBRAIN",
+        category: "ASSISTIVE GAME & ADMIN PANEL",
+        type: "development",
+        year: "2026",
+        role: "Lead Full-Stack Developer",
+        tech: "FLUTTER, FIREBASE, JS, WASMER",
+        description: "An Android-based assistive cognitive rehabilitation game and web-based administration panel designed to support students with Mild Cognitive Impairments (MCI) and SPED teachers.",
+        liveUrl: "https://growbrainadmin.wasmer.app/",
+        gallery: ["assets/gb01.png", "assets/gb02.png", "assets/gb03.png"],
     }
 ];
 

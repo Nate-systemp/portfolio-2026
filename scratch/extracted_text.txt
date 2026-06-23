@@ -1,0 +1,393 @@
+GrowBrain
+User
+Manual
+Cognitive Rehabilitation and Assistive
+Android Game
+This user manual provides guidance on the use of GrowBrain, an
+assistive Android game designed to support cognitive development in
+students with mild cognitive impairments.
+Ver 1.0
+
+-- 1 of 17 --
+
+GrowBrain
+is an Android-based assistive
+cognitive rehabilitation game designed for
+students with Mild Cognitive Impairments (MCI).
+It focuses on improving four core cognitive skills:
+Memory, Attention, Logic, and Verbal Skills.
+The system is intended to support SPED teachers
+and school administrators while providing students
+with an engaging, structured, and accessible
+learning experience.
+This manual explains exactly how each user role
+uses the system, what each feature does, and how
+tasks are performed step by step.
+Overview
+
+-- 2 of 17 --
+
+TABLE OF CONTENTS
+INTRODUCTION
+Overview
+Scope
+Limitations
+System and Requirements
+Hardware Requirements
+Software Requirements
+User Accounts
+User Roles and Access Levels
+Administrator
+Teacher
+Students
+Data Privacy and Ethical Use
+Getting Started
+Student User Guidelines (TEACHER-GUIDED)
+Preparing the Student for Use
+Accessing the Game
+Playing the Game
+Teacher Supervision During Gameplay
+Ending the Session
+Teacher User
+Logging In
+Viewing Assigned Students
+Playing the Game
+Assigning Cognitive Games
+Setting Game Difficulty
+1
+1
+2
+2
+3
+3
+3
+3
+4
+4
+4
+4
+5
+6
+6
+6
+6
+7
+7
+7
+8
+8
+8
+8
+8
+8
+
+-- 3 of 17 --
+
+TABLE OF CONTENTS
+Starting a Game Session
+Monitoring Student Performance
+Ending the Session
+Administrator User
+Logging In
+Managing Teacher Accounts
+Managing Student Accounts
+Editing or Deleting Accounts
+Viewing System Analytics
+Generating Reports
+System Maintenance
+Troubleshooting and Error Handling
+9
+9
+9
+10
+10
+10
+10
+10
+11
+11
+11
+12
+
+-- 4 of 17 --
+
+INTRODUCTION
+Overview
+GrowBrain is an Android-based assistive cognitive
+rehabilitation game designed for students with Mild
+Cognitive Impairments (MCI). It focuses on improving four
+core cognitive skills: Memory, Attention, Logic, and Verbal
+Skills. The system is intended to support SPED teachers and
+school administrators while providing students with an
+engaging, structured, and accessible learning experience.
+This manual explains exactly how each user role uses the
+system, what each feature does, and how tasks are
+performed step by step
+1
+
+-- 5 of 17 --
+
+SCOPE AND LIMITATIONS
+Scope
+GrowBrain is designed as an assistive cognitive
+rehabilitation tool for students with Mild Cognitive
+Impairments (MCI). The system focuses on improving four
+core cognitive domains: Memory, Attention, Logic, and
+Verbal Skills through game-based activities. It is intended
+to support SPED teachers and school administrators in
+monitoring student progress and adjusting learning
+activities.
+Limitations
+GrowBrain does not provide medical diagnosis,
+psychological assessment, or clinical treatment. The
+system does not cover physical, emotional, or behavioral
+therapy activities. GrowBrain is designed exclusively for
+Android devices and requires teacher supervision during
+student use.
+2
+
+-- 6 of 17 --
+
+System Requirements
+2.1 Hardware Requirements
+Android smartphone or tablet
+Minimum of 2GB RAM
+Touchscreen interface
+2.2 Software Requirements
+Android OS version 8.0 or higher
+Stable internet connection (for syncing data and
+reports)
+2.3 User Accounts
+Administrator account
+Teacher account
+Student account (created by Admin or Teacher)
+3
+
+-- 7 of 17 --
+
+User Roles and Access Levels
+3.1 Administrator
+The Administrator has full control over the system,
+including:
+Creating and managing teacher accounts
+Creating and managing student profiles
+Viewing overall system analytics
+Generating performance and usage reports
+3.2 Teacher
+Teachers are responsible for:
+Managing assigned student profiles
+Assigning cognitive games
+Adjusting game difficulty levels
+Monitoring student progress and performance
+3.3 Student
+Students can:
+Access assigned cognitive games
+Play games based on teacher-defined difficulty
+Receive real-time feedback during gameplay
+4
+
+-- 8 of 17 --
+
+Data Privacy and Ethical Use
+GrowBrain handles student data strictly
+for educational and monitoring purposes. Access to
+student information is limited to authorized administrators
+and assigned teachers only. Student performance records
+are used to track cognitive progress and support
+instructional decisions. The system follows ethical guidelines
+to ensure confidentiality and responsible handling
+of data, especially since the users include
+minors and students with special
+educational needs.
+5
+
+-- 9 of 17 --
+
+GETTING STARTED
+A. STUDENT USER GUIDELINES (TEACHER-GUIDED)
+Important Note:
+Students may not be able to read or understand
+written instructions. Teachers are required to provide
+verbal guidance and supervision when students use
+the GrowBrain application.
+A.1 Preparing the Student for Use
+The teacher explains the purpose of the activity to the
+student in simple terms.
+The teacher demonstrates how to interact with the device
+(tapping, dragging, selecting).
+The teacher ensures the student is comfortable and
+attentive before starting.
+A.2 Accessing the Game
+The teacher opens the GrowBrain application.
+The teacher selects the correct student profile.
+The teacher selects the assigned game and prepares the
+session.
+The device is handed to the student once the game is
+ready.
+A.3 Playing the Game
+The student follows the instructions provided verbally by the
+teacher.
+The student interacts with the game elements as
+demonstrated.
+The application provides immediate visual and audio
+feedback.
+The student continues until the game session is completed
+or stopped by the teacher.
+6
+
+-- 10 of 17 --
+
+A. STUDENT USER GUIDELINES (TEACHER-GUIDED)
+Important Note:
+Students may not be able to read or understand
+written instructions. Teachers are required to provide
+verbal guidance and supervision when students use
+the GrowBrain application.
+A.4 Teacher Supervision During Gameplay
+The teacher observes the student’s interaction and
+response.
+Assistance is provided if the student shows difficulty or
+confusion.
+The teacher may pause or end the session when necessary.
+A.5 Ending the Session
+The teacher ends the game session.
+The teacher reassures the student and provides positive
+feedback.
+The teacher returns the device to the system dashboard.
+Student User
+7
+
+-- 11 of 17 --
+
+B. TEACHER USER GUIDELINES
+B.1 Logging In
+Open the GrowBrain application.
+Enter the registered teacher username and password.
+Access the “For Teachers” to access the teacher dashboard.
+B.2 Viewing Assigned Students
+From the dashboard, select My Students.
+View the list of assigned student profiles.
+Select a student to view personal records.
+B.3 Assigning Cognitive Games
+Select a student profile.
+Click Assign Games.
+Choose one or more cognitive categories:
+Memory
+Attention
+Logic
+Verbal
+Select specific games under each category.
+Save the game assignment.
+B.4 Setting Game Difficulty
+While assigning a game, select the difficulty level.
+Adjust difficulty based on the student’s ability and progress.
+Save the selected difficulty settings.
+Teacher User
+8
+
+-- 12 of 17 --
+
+B. TEACHER USER GUIDELINES
+B.5 Starting a Game Session
+Select the student profile.
+Click Start Session.
+Explain the game to the student verbally.
+Hand the device to the student and supervise gameplay.
+AI Recommendations
+The system provides intelligent recommendations:
+Click “Bulb icon” button
+The system analyzes the student’s last 50 game records
+Identifies weak areas (domains with <70% average
+accuracy)
+Recommends games to improve weak areas
+Suggests maintaining balance with strong areas
+B.6 Monitoring Student Performance
+After the session, open Performance Tab.
+Review accuracy, completion time, and attempt records.
+Use the data to adjust future game assignments.
+B.7 Ending the Session
+Click End Session.
+Ensure performance data is saved.
+Log out of the system if finished.
+Teacher User
+How AI Recommendations Work: The system computes
+the student’s average accuracy in each cognitive
+domain. It identifies which domains need improvement
+and recommends games that focus on those areas. At
+the same time, the system maintains activities in
+domains where the student performs.
+9
+
+-- 13 of 17 --
+
+C. ADMINISTRATOR USER GUIDELINES
+C.1 Logging In
+Open the GrowBrain’s Admin Website.
+https://growbrainadmin.wasmer.app/
+Enter administrator credentials.
+Username: admin
+Password: 123456
+Access the admin dashboard.
+C.2 Managing Teacher Accounts
+Navigate to User Management.
+Select Add Teacher.
+Enter teacher details (name, username, credentials).
+Save the teacher account.
+C.3 Managing Student Accounts
+Navigate to Student Management.
+Select Add Student.
+Enter student details:
+Name
+Age
+Cognitive classification
+Assigned teacher
+Save the student profile.
+C.4 Editing or Deleting Accounts
+Select a teacher or student profile.
+Choose Edit or Delete.
+Confirm changes.
+Administrator
+10
+
+-- 14 of 17 --
+
+C. ADMINISTRATOR USER GUIDELINES
+C.5 Viewing System Analytics
+Navigate to Reports and Analytics.
+View system usage statistics.
+Monitor overall student performance trends.
+C.6 Generating Reports
+Select Generate Report.
+Choose report type (student, teacher, system).
+Export or view the report.
+C.7 System Maintenance
+Monitor user activity and system status.
+Coordinate updates and maintenance when required.
+Ensure data integrity and system availability.
+Administrator
+11
+
+-- 15 of 17 --
+
+Troubleshooting and Error Handling
+Issue 	Possible Cause 	Solution
+Unable to log in Incorrect username or
+password Verify login credentials
+Game not loading 	Internet connection
+issue
+Check internet
+connection or restart
+the app
+Progress not saved Application used offline Reconnect to the
+internet to sync data
+Application not
+responding System or memory issue Restart the application
+or device
+12
+
+-- 16 of 17 --
+
+END OF PAGE
+
+-- 17 of 17 --
+

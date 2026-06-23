@@ -39,6 +39,19 @@ const STATIC_PROJECTS = [
         description: "Figma Skill Test Assessment for Wellevate — a Junior UI/UX Designer application. Includes a full AI-powered energy analytics Dashboard and a responsive Landing Page for GridSense AI.",
         story: "Submitted as a Figma Skill Test (FST) for a Junior UI/UX Designer role at Wellevate. The brief required designing two core screens for GridSense AI: an analytics dashboard surfacing real-time grid data, and a marketing landing page communicating the product's value proposition. The design system was built from scratch — from color tokens and typography to component libraries — ensuring visual consistency across both deliverables.",
         gallery: ["assets/FST.png", "assets/FST1.png", "assets/FST2.png"],
+    },
+    {
+        docId: "static-growbrain",
+        order: 9,
+        title: "GROWBRAIN",
+        category: "ASSISTIVE GAME & ADMIN PANEL",
+        year: "2026",
+        role: "Lead Full-Stack Developer",
+        tech: "FLUTTER, FIREBASE, JS, WASMER",
+        description: "An Android-based assistive cognitive rehabilitation game and web-based administration panel designed to support students with Mild Cognitive Impairments (MCI) and SPED teachers.",
+        story: "Developed as a Capstone project, GrowBrain features a Flutter mobile client for student gameplay and a web-based admin portal for teachers and administrators to manage accounts and track performance. The system focuses on four core cognitive domains — Memory, Attention, Logic, and Verbal Skills — through game-based activities supervised by SPED teachers. It incorporates an AI recommendation engine that computes the student's average accuracy in each cognitive domain over the last 50 game records, identifies weak areas (accuracy < 70%), and intelligently suggests target games. The web admin dashboard is deployed on Wasmer, enabling seamless management of teacher accounts, student profiles, game assignments, and performance analytics.",
+        liveUrl: "https://growbrainadmin.wasmer.app/",
+        gallery: ["assets/gb01.png", "assets/gb02.png", "assets/gb03.png"],
     }
 ];
 

@@ -191,6 +191,19 @@ const SEED_PROJECTS = [
         story: "A self-initiated UX/UI redesign of The BlackCoders Group Inc.'s About page focused on improving visual hierarchy, readability, trust-building, and overall user experience. This conceptual redesign was created to analyze usability issues within the existing interface and propose a cleaner, more modern, and conversion-focused experience for potential clients and visitors.",
         casestudyId: "bcgi",
         gallery: ["assets/bcgi_aboutus.png"],
+    },
+    {
+        order: 9,
+        title: "GROWBRAIN",
+        category: "ASSISTIVE GAME & ADMIN PANEL",
+        type: "development",
+        year: "2026",
+        role: "Lead Full-Stack Developer",
+        tech: "FLUTTER, FIREBASE, JS, WASMER",
+        description: "An Android-based assistive cognitive rehabilitation game and web-based administration panel designed to support students with Mild Cognitive Impairments (MCI) and SPED teachers.",
+        story: "Developed as a Capstone project, GrowBrain features a Flutter mobile client for student gameplay and a web-based admin portal for teachers and administrators to manage accounts and track performance. The system focuses on four core cognitive domains — Memory, Attention, Logic, and Verbal Skills — through game-based activities supervised by SPED teachers. It incorporates an AI recommendation engine that computes the student's average accuracy in each cognitive domain over the last 50 game records, identifies weak areas (accuracy < 70%), and intelligently suggests target games.",
+        liveUrl: "https://growbrainadmin.wasmer.app/",
+        gallery: ["assets/gb01.png", "assets/gb02.png", "assets/gb03.png"],
     }
 ];
 
@@ -286,11 +299,29 @@ async function seedMerge() {
     }
 }
 
+async function seedGrowbrain() {
+    try {
+        const growbrain = SEED_PROJECTS.find(p => p.title === "GROWBRAIN");
+        if (!growbrain) return;
+
+        await addDoc(collection(db, 'projects'), {
+            ...growbrain,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        });
+        showToast('GROWBRAIN imported successfully ✓');
+        loadProjects();
+    } catch (e) {
+        showToast('Import failed: ' + e.message, true);
+    }
+}
+
 window.seedProjects = seedProjects;
 window.seedVantage = seedVantage;
 window.seedGridsense = seedGridsense;
 window.seedBcgi = seedBcgi;
 window.seedMerge = seedMerge;
+window.seedGrowbrain = seedGrowbrain;
 
 // ══════════════════════════════════════════════
 // 4. RENDER PROJECTS
@@ -310,6 +341,7 @@ function renderProjects() {
     const hasGridsense = allProjects.some(p => p.title === "GRIDSENSE AI");
     const hasBcgi = allProjects.some(p => p.title === "BCGI");
     const hasMerge = allProjects.some(p => p.title === "MERGE");
+    const hasGrowbrain = allProjects.some(p => p.title === "GROWBRAIN");
     
     let syncHtml = '';
     if (!hasVantage) {
@@ -353,6 +385,17 @@ function renderProjects() {
                     <span class="sync-desc">Not found in your live Firestore database.</span>
                 </div>
                 <button class="btn btn-primary" onclick="seedMerge()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
+            </div>
+        `;
+    }
+    if (!hasGrowbrain) {
+        syncHtml += `
+            <div class="sync-banner">
+                <div class="sync-info">
+                    <span class="sync-title">NEW PROJECT DETECTED: GROWBRAIN</span>
+                    <span class="sync-desc">Not found in your live Firestore database.</span>
+                </div>
+                <button class="btn btn-primary" onclick="seedGrowbrain()" style="padding:8px 16px;">IMPORT TO DATABASE</button>
             </div>
         `;
     }

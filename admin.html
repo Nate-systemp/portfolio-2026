@@ -30,34 +30,56 @@
             font-style: normal;
         }
 
+        /* ═══════════════════════════════════════
+           DESIGN TOKENS
+           ═══════════════════════════════════════ */
         :root {
-            --paper: #F2EDE8;
+            --paper: #F5F1EC;
             --ink: #1A1A1A;
             --terra: #C45D3E;
+            --terra-light: rgba(196, 93, 62, 0.08);
+            --terra-glow: rgba(196, 93, 62, 0.15);
             --gold: #D4A853;
+            --green: #2D8B5F;
+            --green-light: rgba(45, 139, 95, 0.08);
             --muted: #8A8580;
-            --line: rgba(26,26,26,0.1);
+            --subtle: #B5B0AB;
+            --line: rgba(26,26,26,0.08);
+            --line-strong: rgba(26,26,26,0.14);
             --input-bg: #FFFFFF;
             --card-bg: #FFFFFF;
+            --sidebar-bg: #1A1A1A;
             --font-display: 'Tusker Grotesk', 'Arial Black', sans-serif;
             --font-serif: 'DM Serif Display', Georgia, serif;
             --font-mono: 'Space Mono', monospace;
             --font-body: 'Inter', sans-serif;
             --ease-out: cubic-bezier(0.25, 1, 0.5, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
         }
 
         body.night-mode {
-            --paper: #141414;
+            --paper: #0e0e0e;
             --ink: #E8E3DE;
-            --muted: #A39E99;
-            --line: rgba(242, 237, 232, 0.12);
-            --input-bg: #1e1e1e;
-            --card-bg: rgba(255, 255, 255, 0.03);
-            background: #141414;
-            color: #E8E3DE;
+            --muted: #7A7572;
+            --subtle: #555250;
+            --line: rgba(255, 255, 255, 0.07);
+            --line-strong: rgba(255, 255, 255, 0.12);
+            --input-bg: #1a1a1a;
+            --card-bg: rgba(255, 255, 255, 0.025);
+            --sidebar-bg: #0a0a0a;
+            --terra-light: rgba(196, 93, 62, 0.12);
+            --green-light: rgba(45, 139, 95, 0.12);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ═══════════════════════════════════════
+           RESET & BASE
+           ═══════════════════════════════════════ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
             background: var(--paper);
@@ -65,31 +87,33 @@
             font-family: var(--font-body);
             min-height: 100vh;
             overflow-x: hidden;
-            background-image: radial-gradient(circle at 80% 20%, rgba(196, 93, 62, 0.04) 0%, transparent 60%);
-            transition: background-color 0.6s var(--ease-out), color 0.6s var(--ease-out), background-image 0.6s var(--ease-out);
+            transition: background-color 0.5s var(--ease-out), color 0.5s var(--ease-out);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        body.night-mode {
-            background-image: radial-gradient(circle at 80% 20%, rgba(196, 93, 62, 0.08) 0%, transparent 60%);
+        /* Smooth transitions for theme switch */
+        .stat-card, .project-row, .modal, .toast, input, textarea, select, .sync-banner {
+            transition: background-color 0.4s var(--ease-out), color 0.4s var(--ease-out), 
+                        border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
         }
 
-        /* Smooth state transitions */
-        .stat-card, .project-row, .modal, .toast, input, textarea, select {
-            transition: background-color 0.4s var(--ease-out), color 0.4s var(--ease-out), border-color 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
-        }
+        .no-scroll { overflow: hidden; }
 
-        /* ── THEME TOGGLE ── */
+        /* ═══════════════════════════════════════
+           THEME TOGGLE
+           ═══════════════════════════════════════ */
         .theme-toggle {
             background: none;
             border: 1px solid var(--line);
             border-radius: 50%;
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            color: var(--ink);
+            color: var(--muted);
             transition: all 0.3s var(--ease-out);
             flex-shrink: 0;
         }
@@ -97,7 +121,8 @@
         .theme-toggle:hover {
             border-color: var(--terra);
             color: var(--terra);
-            transform: scale(1.05);
+            transform: scale(1.08);
+            background: var(--terra-light);
         }
 
         .theme-icon-moon { display: none; }
@@ -105,81 +130,205 @@
         body.night-mode .theme-icon-moon { display: block; }
         body.night-mode .theme-icon-sun { display: none; }
 
-        /* ── LOGIN ── */
+        /* ═══════════════════════════════════════
+           LOGIN SECTION — Split Layout
+           ═══════════════════════════════════════ */
         #loginSection {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .login-brand {
+            flex: 0 0 42%;
+            background: var(--sidebar-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-brand::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(196, 93, 62, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(212, 168, 83, 0.12) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .login-brand::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+
+        .login-brand-logo {
+            font-family: var(--font-display);
+            font-size: 28px;
+            color: #fff;
+            letter-spacing: -1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-brand-logo span { color: var(--terra); }
+
+        .login-brand-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-brand-heading {
+            font-family: var(--font-display);
+            font-size: clamp(48px, 5vw, 72px);
+            color: #fff;
+            line-height: 0.92;
+            letter-spacing: -3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .login-brand-heading em {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--terra);
+            font-weight: 400;
+            text-transform: lowercase;
+        }
+
+        .login-brand-sub {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.35);
+            text-transform: uppercase;
+            line-height: 1.8;
+        }
+
+        .login-brand-footer {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-form-side {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 40px 20px;
+            padding: 48px;
         }
 
         .login-card {
-            background: var(--card-bg);
-            border: 1px solid var(--line);
-            padding: 48px;
-            border-radius: 6px;
             width: 100%;
-            max-width: 460px;
-            box-shadow: 0 24px 64px rgba(26,26,26,0.04);
-            backdrop-filter: blur(10px);
+            max-width: 400px;
+            animation: loginFadeIn 0.8s var(--ease-out);
         }
 
-        body.night-mode .login-card {
-            box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+        .login-eyebrow {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 12px;
         }
 
         .login-title {
             font-family: var(--font-display);
-            font-size: 56px;
-            line-height: 0.9;
-            margin-bottom: 40px;
+            font-size: 48px;
+            line-height: 0.92;
+            margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: -2px;
         }
 
-        .login-title span { color: var(--terra); font-family: var(--font-serif); font-style: italic; font-weight: 400; text-transform: lowercase; }
+        .login-title span {
+            color: var(--terra);
+            font-family: var(--font-serif);
+            font-style: italic;
+            font-weight: 400;
+            text-transform: lowercase;
+        }
 
+        .login-subtitle {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        @keyframes loginFadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ═══════════════════════════════════════
+           FORM ELEMENTS
+           ═══════════════════════════════════════ */
         .field-group { width: 100%; margin-bottom: 20px; }
 
         .field-group label {
             display: block;
             font-family: var(--font-mono);
             font-size: 9px;
-            letter-spacing: 2px;
+            letter-spacing: 2.5px;
             color: var(--muted);
             margin-bottom: 8px;
             font-weight: 700;
+            text-transform: uppercase;
         }
 
         input[type="email"], input[type="password"], input[type="text"], input[type="number"], textarea, select {
             width: 100%;
-            padding: 12px 16px;
+            padding: 13px 16px;
             background: var(--input-bg);
-            border: 1px solid var(--line);
+            border: 1.5px solid var(--line);
             color: var(--ink);
             font-family: var(--font-body);
             font-size: 14px;
             outline: none;
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
+            transition: all 0.25s var(--ease-out);
         }
 
-        input:focus, textarea:focus, select:focus { 
-            border-color: var(--terra); 
-            box-shadow: 0 0 0 2px rgba(196,93,62,0.15);
+        input:hover, textarea:hover, select:hover {
+            border-color: var(--line-strong);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--terra);
+            box-shadow: 0 0 0 3px var(--terra-glow);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: var(--subtle);
         }
         
         textarea { resize: vertical; min-height: 100px; }
 
-        /* Buttons */
+        /* ═══════════════════════════════════════
+           BUTTONS
+           ═══════════════════════════════════════ */
         .btn {
             padding: 12px 24px;
             border: none;
-            border-radius: 4px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             font-family: var(--font-mono);
-            font-size: 11px;
+            font-size: 10px;
             letter-spacing: 2px;
             font-weight: 700;
             display: inline-flex;
@@ -187,17 +336,44 @@
             justify-content: center;
             gap: 8px;
             transition: all 0.3s var(--ease-out);
+            text-transform: uppercase;
         }
 
-        .btn-primary { background: var(--ink); color: var(--paper); }
-        .btn-primary:hover { background: var(--terra); color: #FFFFFF; transform: translateY(-1px); }
+        .btn-primary {
+            background: var(--ink);
+            color: var(--paper);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .btn-primary:hover {
+            background: var(--terra);
+            color: #FFFFFF;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(196, 93, 62, 0.2);
+        }
+        .btn-primary:active { transform: translateY(0); }
         
-        .btn-danger { background: transparent; color: var(--terra); border: 1px solid var(--terra); }
-        .btn-danger:hover { background: var(--terra); color: #FFFFFF; }
+        .btn-danger {
+            background: transparent;
+            color: var(--terra);
+            border: 1px solid rgba(196, 93, 62, 0.3);
+        }
+        .btn-danger:hover {
+            background: var(--terra);
+            color: #FFFFFF;
+            border-color: var(--terra);
+        }
         
-        .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--line); }
-        .btn-ghost:hover { border-color: var(--ink); background: rgba(26,26,26,0.03); }
-        body.night-mode .btn-ghost:hover { background: rgba(255,255,255,0.03); }
+        .btn-ghost {
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--line);
+        }
+        .btn-ghost:hover {
+            border-color: var(--ink);
+            color: var(--ink);
+            background: var(--terra-light);
+        }
+        body.night-mode .btn-ghost:hover { background: rgba(255,255,255,0.04); }
 
         .error-msg {
             font-family: var(--font-mono);
@@ -205,74 +381,197 @@
             color: var(--terra);
             margin-top: 16px;
             display: none;
+            padding: 10px 14px;
+            background: var(--terra-light);
+            border-radius: var(--radius-sm);
         }
 
-        /* ── DASHBOARD ── */
+        /* ═══════════════════════════════════════
+           DASHBOARD LAYOUT
+           ═══════════════════════════════════════ */
         #dashboardSection { display: none; }
 
         .dash-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 24px 60px;
+            padding: 20px 48px;
             border-bottom: 1px solid var(--line);
             position: sticky;
             top: 0;
-            background: rgba(242, 237, 232, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(245, 241, 236, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             z-index: 100;
-            transition: background-color 0.6s var(--ease-out), border-color 0.6s var(--ease-out);
+            transition: background-color 0.5s var(--ease-out), border-color 0.5s var(--ease-out);
         }
 
         body.night-mode .dash-header {
-            background: rgba(20, 20, 20, 0.85);
+            background: rgba(14, 14, 14, 0.92);
+        }
+
+        .dash-header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
         }
 
         .dash-logo {
             font-family: var(--font-display);
-            font-size: 32px;
+            font-size: 26px;
             letter-spacing: -1px;
             text-transform: uppercase;
+            text-decoration: none;
+            color: var(--ink);
         }
 
         .dash-logo span { color: var(--terra); }
 
+        .dash-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--green-light);
+            border-radius: 20px;
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 1.5px;
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .dash-status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: pulse 2s ease infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
         .dash-user {
             display: flex;
             align-items: center;
-            gap: 20px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--muted);
+            gap: 16px;
         }
 
-        .dash-body { padding: 60px; max-width: 1400px; margin: 0 auto; }
+        .dash-user-email {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 0.5px;
+        }
 
+        .dash-body {
+            padding: 48px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* ═══════════════════════════════════════
+           WELCOME BAR
+           ═══════════════════════════════════════ */
+        .dash-welcome {
+            margin-bottom: 40px;
+        }
+
+        .dash-welcome-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .dash-welcome-title {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 4vw, 48px);
+            letter-spacing: -1.5px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .dash-welcome-title em {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: var(--terra);
+            font-weight: 400;
+            text-transform: lowercase;
+        }
+
+        /* ═══════════════════════════════════════
+           STAT CARDS — Refined
+           ═══════════════════════════════════════ */
         .dash-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-            margin-bottom: 60px;
+            gap: 20px;
+            margin-bottom: 48px;
         }
 
         .stat-card {
-            padding: 32px;
+            padding: 28px 28px 24px;
             border: 1px solid var(--line);
             background: var(--card-bg);
-            border-radius: 6px;
+            border-radius: var(--radius-md);
+            position: relative;
+            overflow: hidden;
         }
 
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--terra), var(--gold));
+            opacity: 0;
+            transition: opacity 0.3s var(--ease-out);
+        }
+
+        .stat-card:hover::before { opacity: 1; }
+
         .stat-card:hover {
-            transform: translateY(-2px);
-            border-color: var(--terra);
-            box-shadow: 0 12px 32px rgba(196,93,62,0.04);
+            transform: translateY(-3px);
+            border-color: var(--line-strong);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+        }
+
+        body.night-mode .stat-card:hover {
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            background: var(--terra-light);
+            color: var(--terra);
         }
 
         .stat-num {
             font-family: var(--font-display);
-            font-size: 56px;
+            font-size: 48px;
             line-height: 1;
-            color: var(--terra);
+            color: var(--ink);
+            letter-spacing: -2px;
         }
 
         .stat-label {
@@ -280,64 +579,93 @@
             font-size: 9px;
             letter-spacing: 2px;
             color: var(--muted);
-            margin-top: 8px;
+            margin-top: 6px;
             font-weight: 700;
         }
 
+        /* ═══════════════════════════════════════
+           SECTION HEADER
+           ═══════════════════════════════════════ */
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
             padding-bottom: 16px;
             border-bottom: 1px solid var(--line);
         }
 
+        .section-header-left {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
         .section-title {
             font-family: var(--font-display);
-            font-size: 40px;
+            font-size: 32px;
             letter-spacing: -1px;
             text-transform: uppercase;
         }
 
-        /* ── PROJECT LIST ── */
-        .project-grid { display: flex; flex-direction: column; gap: 16px; margin-bottom: 60px; }
+        .section-count {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--muted);
+            letter-spacing: 1px;
+            background: var(--terra-light);
+            padding: 4px 10px;
+            border-radius: 12px;
+            color: var(--terra);
+            font-weight: 700;
+        }
+
+        /* ═══════════════════════════════════════
+           PROJECT LIST — Polished
+           ═══════════════════════════════════════ */
+        .project-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 60px;
+        }
 
         .project-row {
             display: grid;
-            grid-template-columns: 40px 70px 1.5fr 1fr 1fr 100px auto;
+            grid-template-columns: 36px 72px 1.6fr 1fr 0.8fr 80px auto;
             align-items: center;
-            gap: 20px;
-            padding: 16px 24px;
+            gap: 16px;
+            padding: 14px 20px;
             background: var(--card-bg);
             border: 1px solid var(--line);
-            border-radius: 6px;
+            border-radius: var(--radius-sm);
+            cursor: default;
         }
 
         .project-row:hover { 
-            border-color: var(--terra); 
-            transform: translateY(-1px);
-            box-shadow: 0 8px 24px rgba(196,93,62,0.03);
+            border-color: var(--line-strong);
+            background: var(--terra-light);
+            transform: translateX(4px);
         }
 
         .project-row-num {
             font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--muted);
+            font-size: 10px;
+            color: var(--subtle);
             font-weight: 700;
         }
 
         .project-row-thumb {
-            width: 70px;
-            height: 48px;
+            width: 72px;
+            height: 46px;
             object-fit: cover;
             background: var(--line);
-            border-radius: 2px;
+            border-radius: 4px;
         }
 
         .project-row-title {
             font-family: var(--font-body);
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -346,37 +674,53 @@
 
         .project-row-cat {
             font-family: var(--font-mono);
-            font-size: 10px;
+            font-size: 9px;
             letter-spacing: 1px;
             color: var(--muted);
         }
 
         .project-row-year {
             font-family: var(--font-mono);
-            font-size: 11px;
+            font-size: 10px;
+            color: var(--subtle);
         }
 
-        .project-row-actions { display: flex; gap: 8px; justify-content: flex-end; }
+        .project-row-actions {
+            display: flex;
+            gap: 6px;
+            justify-content: flex-end;
+            opacity: 0.5;
+            transition: opacity 0.2s;
+        }
+
+        .project-row:hover .project-row-actions { opacity: 1; }
+
+        .project-row-actions .btn {
+            padding: 7px 14px;
+            font-size: 9px;
+            letter-spacing: 1.5px;
+        }
 
         /* Project Type Badges */
         .project-badge {
-            display: inline-block;
-            padding: 3px 6px;
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 8px;
             font-family: var(--font-mono);
             font-size: 8px;
             font-weight: 700;
             letter-spacing: 1px;
-            border-radius: 2px;
+            border-radius: 3px;
             text-transform: uppercase;
         }
 
         .badge-dev {
-            background: rgba(26, 26, 26, 0.05);
-            color: var(--ink);
+            background: rgba(26, 26, 26, 0.04);
+            color: var(--muted);
             border: 1px solid var(--line);
         }
         body.night-mode .badge-dev {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .badge-casestudy {
@@ -384,49 +728,83 @@
             color: #FFFFFF;
         }
 
-        /* Seeding and Sync Banners */
+        /* ═══════════════════════════════════════
+           SYNC BANNERS — Improved
+           ═══════════════════════════════════════ */
         .sync-banner {
-            margin-bottom: 20px;
-            padding: 16px 24px;
-            background: rgba(196,93,62,0.04);
-            border-left: 4px solid var(--terra);
-            border-radius: 4px;
+            margin-bottom: 12px;
+            padding: 14px 20px;
+            background: var(--terra-light);
+            border: 1px solid rgba(196, 93, 62, 0.12);
+            border-radius: var(--radius-sm);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            animation: fadeIn 0.4s var(--ease-out);
+            animation: slideIn 0.4s var(--ease-out);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .sync-info {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 3px;
         }
         
         .sync-title {
             font-family: var(--font-body);
             font-size: 12px;
             font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sync-title::before {
+            content: '↓';
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            background: var(--terra);
+            color: #fff;
+            border-radius: 50%;
+            font-size: 10px;
+            flex-shrink: 0;
         }
         
         .sync-desc {
             font-family: var(--font-mono);
-            font-size: 10px;
+            font-size: 9px;
             color: var(--muted);
+            padding-left: 28px;
         }
 
-        /* ── MODAL ── */
+        .sync-banner .btn {
+            padding: 8px 16px;
+            font-size: 9px;
+            white-space: nowrap;
+        }
+
+        /* ═══════════════════════════════════════
+           MODAL — Refined
+           ═══════════════════════════════════════ */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(14, 14, 14, 0.6);
-            backdrop-filter: blur(8px);
+            background: rgba(10, 10, 10, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 1000;
             overflow-y: auto;
             align-items: flex-start;
             justify-content: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
         }
 
         .modal-overlay.active { display: flex; }
@@ -435,29 +813,58 @@
             background: var(--paper);
             width: 100%;
             max-width: 760px;
-            padding: 48px;
-            border-radius: 8px;
+            border-radius: var(--radius-lg);
             border: 1px solid var(--line);
-            box-shadow: 0 32px 80px rgba(0,0,0,0.15);
-            animation: slideDown 0.4s var(--ease-out);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.18);
+            animation: modalIn 0.4s var(--ease-spring);
+            overflow: hidden;
         }
 
         body.night-mode .modal {
-            box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+        }
+
+        @keyframes modalIn {
+            from { transform: translateY(-16px) scale(0.98); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 32px 40px 24px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .modal-title {
             font-family: var(--font-display);
-            font-size: 40px;
-            margin-bottom: 32px;
+            font-size: 32px;
             letter-spacing: -1px;
             text-transform: uppercase;
+        }
+
+        .modal-body {
+            padding: 32px 40px;
+        }
+
+        .form-section-label {
+            font-family: var(--font-mono);
+            font-size: 9px;
+            letter-spacing: 3px;
+            color: var(--terra);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            margin-top: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--line);
+            font-weight: 700;
         }
 
         .form-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 18px;
         }
 
         .form-full { grid-column: 1 / -1; }
@@ -467,38 +874,48 @@
         .gallery-hint {
             font-family: var(--font-mono);
             font-size: 9px;
-            color: var(--muted);
+            color: var(--subtle);
             margin-bottom: 8px;
-            line-height: 1.4;
+            line-height: 1.6;
         }
 
-        .modal-actions { display: flex; gap: 16px; margin-top: 40px; }
+        .modal-footer {
+            padding: 20px 40px 32px;
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
 
-        /* Toast Component */
+        /* ═══════════════════════════════════════
+           TOAST — Refined
+           ═══════════════════════════════════════ */
         .toast {
             position: fixed;
             bottom: 32px;
             right: 32px;
             background: var(--ink);
             color: var(--paper);
-            padding: 16px 24px;
+            padding: 14px 24px;
             font-family: var(--font-mono);
             font-size: 11px;
             letter-spacing: 1px;
             z-index: 9999;
             transform: translateY(100px);
             opacity: 0;
-            transition: all 0.4s var(--ease-out);
-            border-radius: 4px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            transition: all 0.4s var(--ease-spring);
+            border-radius: var(--radius-sm);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
             font-weight: 700;
+            max-width: 380px;
         }
 
         .toast.show { transform: translateY(0); opacity: 1; }
-        .toast.success { border-left: 4px solid var(--terra); }
+        .toast.success { border-left: 4px solid var(--green); }
         .toast.error { border-left: 4px solid #d9534f; }
 
-        /* Animations */
+        /* ═══════════════════════════════════════
+           ANIMATIONS
+           ═══════════════════════════════════════ */
         @keyframes slideDown {
             from { transform: translateY(-20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
@@ -509,19 +926,39 @@
             to { opacity: 1; }
         }
 
-        .no-scroll { overflow: hidden; }
+        /* ═══════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════ */
+        @media (max-width: 1024px) {
+            .login-brand { flex: 0 0 38%; padding: 32px; }
+            .login-brand-heading { font-size: 40px; letter-spacing: -2px; }
+            .dash-header { padding: 20px 32px; }
+            .dash-body { padding: 32px; }
+        }
 
         @media (max-width: 768px) {
-            .dash-header { padding: 20px 24px; }
-            .dash-body { padding: 24px; }
-            .dash-stats { grid-template-columns: 1fr; gap: 16px; }
+            #loginSection { flex-direction: column; }
+            .login-brand { 
+                flex: none; 
+                padding: 32px 24px;
+                min-height: auto;
+            }
+            .login-brand-content { display: none; }
+            .login-brand-footer { display: none; }
+            .login-form-side { padding: 32px 24px; }
+            .dash-header { padding: 16px 20px; }
+            .dash-body { padding: 20px; }
+            .dash-stats { grid-template-columns: 1fr; gap: 12px; }
             .project-row {
                 grid-template-columns: 1fr auto;
                 gap: 12px;
+                padding: 12px 16px;
             }
             .project-row-num, .project-row-thumb, .project-row-cat, .project-row-year { display: none; }
-            .modal { padding: 24px; }
+            .modal-header, .modal-body, .modal-footer { padding-left: 24px; padding-right: 24px; }
             .form-grid { grid-template-columns: 1fr; }
+            .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .dash-welcome-title { font-size: 28px; }
         }
     </style>
 </head>
@@ -529,27 +966,45 @@
 
     <!-- ══ LOGIN ══ -->
     <div id="loginSection">
-        <div class="login-card">
-            <h1 class="login-title">CMS<br><span>Access</span></h1>
-            <div class="field-group">
-                <label>ADMIN EMAIL</label>
-                <input type="email" id="emailInput" placeholder="your@email.com">
+        <div class="login-brand">
+            <div class="login-brand-logo">N.<span>CMS</span></div>
+            <div class="login-brand-content">
+                <h2 class="login-brand-heading">Content<br>Management<br><em>System</em></h2>
+                <p class="login-brand-sub">Manage your portfolio projects,<br>case studies, and media assets.</p>
             </div>
-            <div class="field-group">
-                <label>PASSWORD</label>
-                <input type="password" id="passwordInput" placeholder="••••••••">
+            <div class="login-brand-footer">© 2026 NATHANIEL — PORTFOLIO CMS</div>
+        </div>
+        <div class="login-form-side">
+            <div class="login-card">
+                <div class="login-eyebrow">ADMIN ACCESS</div>
+                <h1 class="login-title">Sign <span>in</span></h1>
+                <p class="login-subtitle">Enter your credentials to access the project dashboard.</p>
+                <div class="field-group">
+                    <label>EMAIL ADDRESS</label>
+                    <input type="email" id="emailInput" placeholder="your@email.com">
+                </div>
+                <div class="field-group">
+                    <label>PASSWORD</label>
+                    <input type="password" id="passwordInput" placeholder="••••••••">
+                </div>
+                <button id="loginBtn" class="btn btn-primary" style="width: 100%; padding: 14px 24px;">SIGN IN →</button>
+                <p id="loginError" class="error-msg"></p>
             </div>
-            <button id="loginBtn" class="btn btn-primary" style="width: 100%;">LOGIN →</button>
-            <p id="loginError" class="error-msg"></p>
         </div>
     </div>
 
     <!-- ══ DASHBOARD ══ -->
     <div id="dashboardSection">
         <header class="dash-header">
-            <div class="dash-logo">N.<span>CMS</span></div>
+            <div class="dash-header-left">
+                <div class="dash-logo">N.<span>CMS</span></div>
+                <div class="dash-status">
+                    <span class="dash-status-dot"></span>
+                    CONNECTED
+                </div>
+            </div>
             <div class="dash-user">
-                <span id="userEmail">—</span>
+                <span class="dash-user-email" id="userEmail">—</span>
                 <button id="themeToggle" class="theme-toggle" title="Toggle Theme">
                     <!-- Sun icon -->
                     <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -573,17 +1028,38 @@
         </header>
 
         <div class="dash-body">
+            <!-- Welcome -->
+            <div class="dash-welcome">
+                <div class="dash-welcome-label">DASHBOARD</div>
+                <h1 class="dash-welcome-title">Portfolio <em>Manager</em></h1>
+            </div>
+
             <!-- Stats -->
             <div class="dash-stats">
                 <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                        </div>
+                    </div>
                     <div class="stat-num" id="statTotal">0</div>
                     <div class="stat-label">TOTAL PROJECTS</div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                    </div>
                     <div class="stat-num" id="statSlots">12</div>
                     <div class="stat-label">ARCHIVE SLOTS</div>
                 </div>
                 <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        </div>
+                    </div>
                     <div class="stat-num" id="statAvail">12</div>
                     <div class="stat-label">SLOTS REMAINING</div>
                 </div>
@@ -591,12 +1067,14 @@
 
             <!-- Project List -->
             <div class="section-header">
-                <h2 class="section-title">Projects</h2>
+                <div class="section-header-left">
+                    <h2 class="section-title">Projects</h2>
+                </div>
                 <button id="addProjectBtn" class="btn btn-primary">+ ADD PROJECT</button>
             </div>
 
             <div id="projectGrid" class="project-grid">
-                <p style="font-family: var(--font-mono); font-size: 12px; color: var(--muted);">Loading projects...</p>
+                <p style="font-family: var(--font-mono); font-size: 11px; color: var(--muted); padding: 32px 0;">Loading projects...</p>
             </div>
         </div>
     </div>
@@ -604,75 +1082,91 @@
     <!-- ══ MODAL: Add / Edit Project ══ -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
-            <h2 class="modal-title" id="modalTitle">Add Project</h2>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Add Project</h2>
+            </div>
             <input type="hidden" id="editDocId">
 
-            <div class="form-grid">
-                <div class="field-group">
-                    <label>PROJECT TITLE *</label>
-                    <input type="text" id="fTitle" placeholder="e.g. FRACT ERA">
+            <div class="modal-body">
+                <!-- Section: Basic Info -->
+                <div class="form-section-label">BASIC INFORMATION</div>
+                <div class="form-grid">
+                    <div class="field-group">
+                        <label>PROJECT TITLE *</label>
+                        <input type="text" id="fTitle" placeholder="e.g. FRACT ERA">
+                    </div>
+                    <div class="field-group">
+                        <label>CATEGORY *</label>
+                        <input type="text" id="fCategory" placeholder="e.g. GAME DESIGN">
+                    </div>
+                    <div class="field-group">
+                        <label>PROJECT TYPE *</label>
+                        <select id="fType">
+                            <option value="development">Development / Design Project</option>
+                            <option value="casestudy">UX Case Study</option>
+                        </select>
+                    </div>
+                    <div class="field-group" id="casestudyIdField" style="display: none;">
+                        <label>CASE STUDY ID *</label>
+                        <input type="text" id="fCasestudyId" placeholder="e.g. merge">
+                    </div>
+                    <div class="field-group">
+                        <label>YEAR</label>
+                        <input type="number" id="fYear" placeholder="2026">
+                    </div>
+                    <div class="field-group">
+                        <label>ROLE</label>
+                        <input type="text" id="fRole" placeholder="e.g. Lead Game Designer">
+                    </div>
+                    <div class="field-group">
+                        <label>TOOLS / TECH</label>
+                        <input type="text" id="fTech" placeholder="e.g. GameMaker, Figma">
+                    </div>
+                    <div class="field-group">
+                        <label>SORT ORDER (#)</label>
+                        <input type="number" id="fOrder" placeholder="1" min="1" max="12">
+                    </div>
                 </div>
-                <div class="field-group">
-                    <label>CATEGORY *</label>
-                    <input type="text" id="fCategory" placeholder="e.g. GAME DESIGN">
+
+                <!-- Section: Content -->
+                <div class="form-section-label" style="margin-top: 28px;">CONTENT</div>
+                <div class="form-grid">
+                    <div class="field-group form-full">
+                        <label>SHORT DESCRIPTION *</label>
+                        <textarea id="fDescription" placeholder="One sentence about the project..."></textarea>
+                    </div>
+                    <div class="field-group form-full">
+                        <label>STORY / PROCESS</label>
+                        <textarea id="fStory" placeholder="The deeper story and creative process..." style="min-height: 120px;"></textarea>
+                    </div>
                 </div>
-                <div class="field-group">
-                    <label>PROJECT TYPE *</label>
-                    <select id="fType">
-                        <option value="development">Development / Design Project</option>
-                        <option value="casestudy">UX Case Study</option>
-                    </select>
-                </div>
-                <div class="field-group" id="casestudyIdField" style="display: none;">
-                    <label>CASE STUDY ID *</label>
-                    <input type="text" id="fCasestudyId" placeholder="e.g. merge">
-                </div>
-                <div class="field-group">
-                    <label>YEAR</label>
-                    <input type="number" id="fYear" placeholder="2026">
-                </div>
-                <div class="field-group">
-                    <label>ROLE</label>
-                    <input type="text" id="fRole" placeholder="e.g. Lead Game Designer">
-                </div>
-                <div class="field-group">
-                    <label>TOOLS / TECH</label>
-                    <input type="text" id="fTech" placeholder="e.g. GameMaker, Figma">
-                </div>
-                <div class="field-group">
-                    <label>SORT ORDER (#)</label>
-                    <input type="number" id="fOrder" placeholder="1" min="1" max="12">
-                </div>
-                <div class="field-group form-full">
-                    <label>SHORT DESCRIPTION *</label>
-                    <textarea id="fDescription" placeholder="One sentence about the project..."></textarea>
-                </div>
-                <div class="field-group form-full">
-                    <label>STORY / PROCESS</label>
-                    <textarea id="fStory" placeholder="The deeper story and creative process..." style="min-height: 120px;"></textarea>
-                </div>
-                <div class="field-group">
-                    <label>LIVE DEMO URL</label>
-                    <input type="text" id="fLiveUrl" placeholder="https://your-project.vercel.app">
-                </div>
-                <div class="field-group">
-                    <label>SOURCE CODE URL</label>
-                    <input type="text" id="fSourceUrl" placeholder="https://github.com/username/repo">
-                </div>
-                <div class="field-group form-full">
-                    <label>GALLERY IMAGE PATHS</label>
-                    <p class="gallery-hint">Enter the path to each image relative to your /assets folder (e.g. assets/FRACERA1.webp). One per line.</p>
-                    <div class="gallery-inputs" id="galleryInputs">
-                        <input type="text" class="gallery-img" placeholder="assets/your-image-1.webp">
-                        <input type="text" class="gallery-img" placeholder="assets/your-image-2.webp">
-                        <input type="text" class="gallery-img" placeholder="assets/your-image-3.webp">
+
+                <!-- Section: Links & Media -->
+                <div class="form-section-label" style="margin-top: 28px;">LINKS & MEDIA</div>
+                <div class="form-grid">
+                    <div class="field-group">
+                        <label>LIVE DEMO URL</label>
+                        <input type="text" id="fLiveUrl" placeholder="https://your-project.vercel.app">
+                    </div>
+                    <div class="field-group">
+                        <label>SOURCE CODE URL</label>
+                        <input type="text" id="fSourceUrl" placeholder="https://github.com/username/repo">
+                    </div>
+                    <div class="field-group form-full">
+                        <label>GALLERY IMAGE PATHS</label>
+                        <p class="gallery-hint">Enter the path to each image relative to your /assets folder (e.g. assets/FRACERA1.webp). One per line.</p>
+                        <div class="gallery-inputs" id="galleryInputs">
+                            <input type="text" class="gallery-img" placeholder="assets/your-image-1.webp">
+                            <input type="text" class="gallery-img" placeholder="assets/your-image-2.webp">
+                            <input type="text" class="gallery-img" placeholder="assets/your-image-3.webp">
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="modal-actions">
-                <button id="saveProjectBtn" class="btn btn-primary">SAVE PROJECT</button>
+            <div class="modal-footer">
                 <button id="cancelModalBtn" class="btn btn-ghost">CANCEL</button>
+                <button id="saveProjectBtn" class="btn btn-primary">SAVE PROJECT</button>
             </div>
         </div>
     </div>
